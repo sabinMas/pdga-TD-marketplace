@@ -1,0 +1,158 @@
+<!-- TODO:
+       -Still need to add mobile query
+       -Set it up so they can only purchase items if logged in
+       -Create event page?
+       -Sign in page?
+       -Search bar filtering mechanics -->
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDGA Marketplace</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="main.js"></script>
+</head>
+<body>
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <a class="brand" href="index.html">PDGA Marketplace</a>
+
+    <ul class="nav">
+      <li><a href="index.html" aria-current="page">Home</a></li>
+      <li><a href="tournamentItems.html">Tournament Items</a></li>
+      <li><a href="customItems.html">Custom Items</a></li>
+    </ul>
+
+    <form role="search" class="search">
+      <label for="q" class="sr-only">Search</label>
+      <input id="q" name="q" type="search" placeholder="Search…" />
+    </form>
+
+    <!--How do we incorporate backend for Log-In-->
+    <div class="header-actions">
+      <a href="tournamentDirectorPage.html" class="btn">Create Event</a>
+      <a href="tournamentDirectorPage.html" class="btn btn-box">Sign In</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <h1>The #1 Store for Tournament Directors of the PDGA</h1>
+        <p>
+          Build your own player packs, order course materials, and upload custom designs for
+          event merch.
+        </p>
+        <p class="actions">
+          <a href="tournamentItems.html" class="btn">Shop Tournament Items</a>
+          <a href="customItems.html" class="btn btn-box">Create Custom Items</a>
+        </p>
+      </div>
+
+      <figure aria-hidden="true">
+        <div class="disc"></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="info">
+    <div class="container">
+      <h2>How ordering works</h2>
+      <ol class="steps">
+        <li>
+          <h3>Create an event as a Tournament Director</h3>
+          <p class="muted">
+            Select the event you’d like to order for (you can create multiple events).
+          </p>
+        </li>
+        <li>
+          <h3>Select items & upload artwork</h3>
+          <p class="muted">Include custom logos/designs for apparel or discs.</p>
+          <p class="muted">Use filters to find materials that fit your course needs.</p>
+        </li>
+        <li>
+          <h3>Checkout or save for later</h3>
+          <p class="muted">Complete payment or export a quote of your cart.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- START YOUR ORDER -->
+  <section class="catalog">
+    <div class="container">
+      <h2>Start your order</h2>
+      <p class="muted">Jump into the most commonly ordered items for TDs.</p>
+
+      <div class="cards">
+        <a class="card" href="tournamentItems.html">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Tournament Items</h3>
+          <p class="muted">Banners, OB flags, paint, signage, and more.</p>
+        </a>
+
+        <a class="card" href="customItems.html">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Custom Event Merch</h3>
+          <p class="muted">Upload your event logo for discs, shirts, towels, and more.</p>
+        </a>
+
+        <a class="card" href="tournamentItems.html#player-packs">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Player Packs</h3>
+          <p class="muted">Curated packs at TD pricing.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="featured">
+    <div class="container">
+      <h2>Featured this season</h2>
+      <p class="muted">Popular picks for upcoming events.</p>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Premium Player Pack</h3>
+          <p class="muted">Includes disc + mini marker + towel + water bottle.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Custom Printed Tournament Disc</h3>
+          <p class="muted">Browse our certified partners customizable discs</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon"></div>
+          <h3 class="card-title">OB Boundary Flags</h3>
+          <p class="muted">High-visibility, course-ready.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer">
+    <p>
+      <strong>PDGA Marketplace</strong><br />
+      <span class="muted">Built for Tournament Directors & Clubs.</span>
+    </p>
+    <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
+  </div>
+</footer>
+</body>
+</html>
