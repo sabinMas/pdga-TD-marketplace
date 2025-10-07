@@ -1,21 +1,26 @@
+/* ===============================================
+   PDGA Marketplace Stylesheet
+   Unified Layout + PDGA-Inspired Colors & Gradients
+   =============================================== */
 
-/*Root is the main stylings for reused colors and items within our CSS*/
+/* Root PDGA color theme (renamed vars) */
 :root {
-    --mainBlue: royalblue;
-    --darkBlue: midnightblue;
-    --lightgrey: gainsboro;
-    --text: black;
+    --mainColor:#00A35D;   
+    --secondColor: #003F7D;         
+    --thirdColor: #005BAA;          
+    --accentGradient: linear-gradient(135deg, var(--thirdColor) 0%, var(--mainColor) 100%);
+
+    --lightgrey: #e6ebee;
+    --text: #005BAA;
     --muted: #667085;
-    --bg: #f8fafc;
-    --surface: #fff;
-    --border: #e2e8f0;
+    --bg: #f6f8f9;
+    --surface: #ffffff;
+    --border: #d9e1e6;
     --radius: 12px;
     --shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -30,12 +35,15 @@ body {
     padding: 0 20px;
 }
 
+/* === HEADER === */
 header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--accentGradient);
+    color: #fff;
+    border-bottom: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 header .container {
@@ -49,7 +57,7 @@ header .container {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--mainBlue);
+    color: #fff;
     text-decoration: none;
     font-weight: 700;
 }
@@ -64,15 +72,15 @@ header .container {
 
 .nav a {
     text-decoration: none;
-    color: #334155;
+    color: #fff;
     padding: 8px 10px;
     border-radius: 8px;
+    transition: background 0.2s ease;
 }
 
 .nav a:hover,
 .nav a[aria-current='page'] {
-    background: var(--lightgrey);
-    color: var(--mainBlue);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .search input[type='search'] {
@@ -82,13 +90,13 @@ header .container {
     background: var(--surface);
 }
 
-section {
-    padding: 56px 0;
-}
+/* === SECTIONS / HERO === */
+section { padding: 56px 0; }
 
 .hero {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--accentGradient);
+    color: #fff;
+    border-bottom: none;
 }
 
 .hero .container {
@@ -101,19 +109,20 @@ section {
 .hero h1 {
     margin: 0 0 10px;
     font-size: clamp(28px, 3.4vw, 44px);
+    color: #fff;
 }
 
 .hero p {
     margin: 0 0 18px;
-    color: var(--muted);
+    color: #f0f6f8;
 }
 
 .actions {
     display: flex;
     gap: 12px;
 }
-/* Disc styles and animation */
-/*Need to find a real image or make an image of a disc we can use as a loading wheel*/
+
+/* Disc animation */
 .disc {
     width: 220px;
     height: 220px;
@@ -122,20 +131,16 @@ section {
     box-shadow: 0 24px 40px rgba(0, 0, 0, 0.08);
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
-/*This is the start of the Card icons and the grid layout*/
+
+/* === CARDS === */
 .cards {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .card {
@@ -144,14 +149,12 @@ section {
     border-radius: var(--radius);
     background: var(--surface);
     box-shadow: var(--shadow);
+    background-image: linear-gradient(to bottom, #f9fbfc 0%, var(--surface) 80%);
     text-decoration: none;
     color: inherit;
     transition: transform 0.15s ease;
 }
-
-.card:hover {
-    transform: translateY(-2px);
-}
+.card:hover { transform: translateY(-2px); }
 
 .card-icon {
     width: 44px;
@@ -160,56 +163,157 @@ section {
     display: grid;
     place-items: center;
     background: var(--lightgrey);
-    color: var(--mainBlue);
+    color: var(--thirdColor);
     margin-bottom: 10px;
 }
+.card-title { font-weight: 700; margin-bottom: 6px; }
 
-.card-title {
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-/*Muted is the greyed out or not upfront text*/
-.muted {
-    color: var(--muted);
-}
-/*Button styling below incorporates hover element and a boxed background
-for each buton*/
+.muted { color: var(--muted); }
+
+/* === BUTTONS === */
 .btn {
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
     border: 2px solid transparent;
-    transition: 0.2s;
-}
-
-.btn-box {
-    background: transparent;
-    color: var(--mainBlue);
-    border-color: var(--mainBlue);
-}
-
-.btn-box:hover {
-    background: var(--lightgrey);
+    transition: all 0.25s ease;
 }
 
 .btn:not(.btn-box) {
-    background: var(--mainBlue);
+    background: var(--accentGradient);
+    color: #fff;
+}
+.btn:not(.btn-box):hover { filter: brightness(1.1); }
+
+.btn-box {
+    background: var(--lightgrey);
+    color: var(--mainColor);
+    border-color: var(--mainColor);
+}
+.btn-box:hover {
+    background: var(--thirdColor);
     color: #fff;
 }
 
-.btn:not(.btn-box):hover {
-    background: var(--darkBlue);
-}
-
+/* === FOOTER === */
 footer {
-    background: var(--surface);
-    border-top: 1px solid var(--border);
+    background: var(--accentGradient);
+    color: #fff;
+    border-top: none;
 }
-
 footer .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 32px 0;
 }
+footer .muted { color: rgba(255,255,255,0.85); }
+
+/* === CUSTOM ITEMS PAGE (simpler names) === */
+.custom-page-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+  padding: 32px 0;
+}
+
+/* Left filters */
+.filter-sidebar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+}
+.filter-sidebar h3 { margin: 0 0 .5rem; }
+.filter-sidebar hr {
+  margin: 12px 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.filter-sidebar label {
+  display: block;
+  margin: 6px 0;
+  color: var(--text);
+}
+
+/* Header above products (title + sort) */
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.product-header select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color:var(--muted);
+}
+
+/* Product grid */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 16px;
+  align-items: stretch;;
+}
+
+/* Product card */
+.product-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Image */
+.product-image {
+  width: 100%;
+  background: var(--lightgrey);
+  overflow: hidden;
+}
+.product-image > img {
+  width: 100%;
+  height: auto;          
+  object-fit: contain;   
+  display: block;
+  background: #fff;      
+  padding: 8px;          
+}
+
+
+/* Text/details */
+.product-details { padding: 12px; }
+.product-details h3 {
+  margin: .25rem 0 0;
+  font-weight: 700;
+}
+.product-details .quantityInfo {
+  margin: .15rem 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.product-details .price {
+  margin: .25rem 0;
+  font-weight: 700;
+}
+
+/* Buttons (Customize, Add later, etc.) */
+.product-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+
+
