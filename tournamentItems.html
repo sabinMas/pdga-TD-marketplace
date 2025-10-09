@@ -1,10 +1,89 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tournament Items</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<!-- HEADER -->
+<header>
+    <div class="container">
+        <a class="brand" href="index.html">PDGA Marketplace</a>
+
+        <ul class="nav">
+            <li><a href="index.html" >Home</a></li>
+            <li><a href="tournamentItems.html" aria-current="page" >Tournament Items</a></li>
+            <li><a href="customItems.html">Custom Items</a></li>
+        </ul>
+
+        <form role="search" class="search">
+            <label for="q" class="sr-only">Search</label>
+            <input id="q" name="q" type="search" placeholder="Search…" />
+        </form>
+
+        <!--How do we incorporate backend for Log-In-->
+        <div class="header-actions">
+            <a href="tournamentDirectorPage.html" class="btn">Create Event</a>
+            <a href="tournamentDirectorPage.html" class="btn btn-box">Sign In</a>
+        </div>
+    </div>
+
+    <ul id="planning">
+        <li><a href="#Safety">Safety</a></li>
+        <li><a href="#courseSetup">Course Setup</a></li>
+        <li><a href="#etc">etc</a></li>
+    </ul>
+
+    <img class='test' src="images/cone.webp">
+    
+</header>
+
+    <div id="top">
+
+        <label>local<input type="radio"> </label>
+        <label>international<input type="radio"> </label>
+        <label>find park<input type='text' id="parksEvents" placeholder="Search Park"> </label>
+    
+        <h3>Previous events at park</h3>
+    
+        <h3 id="parkInfo">Park info</h3>
+
+    </div>
+
+    <div id="Safety" class="form">
+        <ul>
+            <li>vests</li>
+            <li>cones</li>
+            <li>lights</li>
+            <li>first aid</li>
+        </ul>
+    </div>
+
+    <div id="courseSetup" class="form">
+        <ul>
+            <li>flags</li>
+            <li>portable baskets</li>
+            <li>whitsle</li>
+            <li>signs</li>
+            <li>spray can</li>
+            <li>Pens</li>
+        </ul>
+
+    </div>
+
+    <div id="etc" class="form">
+        <ul>
+            <li>tape</li>
+            <li>banners</li>
+            <li>measuring wheele</li>
+            <li>extra disk</li>
+            <li>player stickers</li>
+            <li>Camera</li>
+        </ul>
+
+    </div>
 
 </body>
 </html>
