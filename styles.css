@@ -5,7 +5,7 @@
 
 /* Root PDGA color theme (renamed vars) */
 :root {
-    --mainColor:#00A35D;   
+    --mainColor:#016f52;   
     --secondColor: #003F7D;         
     --thirdColor: #005BAA;          
     --accentGradient: linear-gradient(135deg, var(--thirdColor) 0%, var(--mainColor) 100%);
