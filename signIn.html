@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sign In — PDGA Marketplace</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Page-specific light tweaks (kept minimal) */
+      .auth-wrap {
+        max-width: 560px;
+        margin: 40px auto;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 24px;
+      }
+      .field { display: grid; gap: 6px; margin-bottom: 14px; }
+      .field input {
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+      .error {
+        color: #b00020;
+        font-size: 0.9rem;
+        margin-top: 6px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        font-size: 0.85rem;
+      }
+      .recommend-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .rec-card {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex; flex-direction: column;
+      }
+      .rec-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+      .rec-card .body { padding: 12px; display: grid; gap: 6px; }
+      .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+      .actions { display: flex; gap: 10px; }
+      .muted.small { font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container">
+        <a class="brand" href="index.html">PDGA Marketplace</a>
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tournamentItems.html">Event Supplies</a></li>
+          <li><a href="customItems.html">Custom Items</a></li>
+        </ul>
+        <div class="header-actions">
+          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
+          <a href="signIn.html" class="btn btn-box" aria-current="page">Sign In</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Sign In Card -->
+      <section id="authSection" class="auth-wrap">
+        <h2 style="margin-top:0;">Sign in</h2>
+        <p class="muted small">Use one of the demo accounts below to preview tiered recommendations.</p>
+        <ul class="muted small" style="margin-top:6px;">
+          <li><b>Mason</b> / <code>1111</code> → Tier A (Pro/Elite)</li>
+          <li><b>JohnCarlo</b> / <code>2222</code> → Tier B (Standard)</li>
+          <li><b>Tyler</b> / <code>3333</code> → Tier C (Local/Base)</li>
+        </ul>
+
+        <form id="loginForm" style="margin-top:16px;">
+          <div class="field">
+            <label for="username"><b>Username</b></label>
+            <input id="username" name="username" type="text" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="password"><b>Password</b></label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="btn" type="submit">Sign In</button>
+          <div id="error" class="error" role="alert" aria-live="polite" style="display:none;"></div>
+        </form>
+      </section>
+
+      <!-- Recommendations (hidden until login) -->
+      <section id="recSection" style="display:none;">
+        <div class="row">
+          <h2 style="margin:0;">Recommended for <span id="displayName"></span>'s event</h2>
+          <span class="pill">Tier <span id="tierLabel"></span></span>
+        </div>
+        <p class="muted small" id="tierCopy" style="margin-top:8px;"></p>
+
+        <div id="recGrid" class="recommend-grid" aria-live="polite"></div>
+
+        <div class="actions" style="margin-top:16px;">
+          <a class="btn" href="tournamentItems.html">Browse All Tournament Items</a>
+          <button id="logoutBtn" class="btn btn-box" type="button">Log out</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer">
+        <p><b>PDGA Marketplace</b><br />Built for Tournament Directors & Clubs.</p>
+        <p class="muted">© PDGA Marketplace</p>
+      </div>
+    </footer>
+
+    <script>
+      // --- Demo "database" we will implement a database via PHP/MYSQL later
+      const USERS = [
+        { username: "Mason",  password: "1111", tier: "A", name: "Mason"  },
+        { username: "JohnCarlo", password: "2222", tier: "B", name: "JohnCarlo" },
+        { username: "Tyler",  password: "3333", tier: "C", name: "Tyler"  },
+      ];
+
+      // Simple recommended items per tier (replace with real picks later)
+      const RECS = {
+        A: [
+          { title: "Tier A Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg", href: "tournamentItems.html#PlayerPacks" },
+          { title: "Mando Arrows 25 pack", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#courseSetup" },
+          { title: "Orange Marking Paint 50 pack", img: "https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950", href: "tournamentItems.html#courseSetup" },
+        ],
+        B: [
+          { title: "Tier B Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",              href: "tournamentItems.html#PlayerPacks" },
+          { title: "Navigational Arrow Signs (Bulk)", img: "star-shine-linear.svg", href: "tournamentItems.html#Safety" },
+          { title: "Marking Paint (Case)", img: "flag-banner-fold-fill.svg", href: "tournamentItems.html#courseSetup" },
+        ],
+        C: [
+          { title: "Tier C Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",                href: "tournamentItems.html#PlayerPacks" },
+          { title: "Orange Safety Cones", img: "star-shine-linear.svg", href: "tournamentItems.html#Safety" },
+          { title: "Basic Rope & Stake Kit", img: "flag.svg", href: "tournamentItems.html#courseSetup" },
+        ]
+      };
+
+      const TIER_COPY = {
+        A: "Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.",
+        B: "Great fit for solid regional events: reliable packs and course essentials at smart prices.",
+        C: "Starter friendly: cost-effective gear to run smooth local events."
+      };
+
+      const loginForm   = document.getElementById("loginForm");
+      const authSection = document.getElementById("authSection");
+      const recSection  = document.getElementById("recSection");
+      const errorBox    = document.getElementById("error");
+      const displayName = document.getElementById("displayName");
+      const tierLabel   = document.getElementById("tierLabel");
+      const tierCopy    = document.getElementById("tierCopy");
+      const recGrid     = document.getElementById("recGrid");
+      const logoutBtn   = document.getElementById("logoutBtn");
+
+      function renderRecs(tier) {
+        recGrid.innerHTML = "";
+        (RECS[tier] || []).forEach(item => {
+          const card = document.createElement("article");
+          card.className = "rec-card";
+          card.innerHTML = `
+            <img src="${item.img}" alt="">
+            <div class="body">
+              <h3 style="margin:0;">${item.title}</h3>
+              <div class="actions">
+                <a class="btn" href="${item.href}">add to cart</a>
+              </div>
+            </div>
+          `;
+          recGrid.appendChild(card);
+        });
+      }
+
+      function showRecommendations(user) {
+        displayName.textContent = user.name;
+        tierLabel.textContent   = user.tier;
+        tierCopy.textContent    = TIER_COPY[user.tier] || "";
+        renderRecs(user.tier);
+
+        // Persist simple "session"
+        localStorage.setItem("pdga_user", JSON.stringify(user));
+
+        authSection.style.display = "none";
+        recSection.style.display  = "block";
+      }
+
+      function handleLogin(e) {
+        e.preventDefault();
+        const username = (document.getElementById("username").value || "").trim();
+        const password = (document.getElementById("password").value || "").trim();
+
+        const user = USERS.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+        if (!user) {
+          errorBox.style.display = "block";
+          errorBox.textContent = "Invalid username or password for the demo accounts above.";
+          return;
+        }
+        errorBox.style.display = "none";
+        showRecommendations(user);
+      }
+
+      function initFromStorage() {
+        try {
+          const saved = JSON.parse(localStorage.getItem("pdga_user") || "null");
+          if (saved && saved.username && saved.tier) {
+            showRecommendations(saved);
+          }
+        } catch (_) {}
+      }
+
+      loginForm.addEventListener("submit", handleLogin);
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("pdga_user");
+        recSection.style.display  = "none";
+        authSection.style.display = "block";
+        loginForm.reset();
+        document.getElementById("username").focus();
+      });
+
+      initFromStorage();
+    </script>
+  </body>
+</html>
