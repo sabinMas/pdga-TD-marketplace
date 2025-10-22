@@ -454,9 +454,49 @@ h2[id] {
   }
 }
 
-.checkout {
-  
-  
+/* Small utility tweaks kept intentionally minimal */
+
+/* Checkout page css  */
+#checkoutHeader {
+  text-align: left;
+  padding: 1% 2% 0%; 
+  grid-area: header;
 }
 
-/* Small utility tweaks kept intentionally minimal */
+#cartSummary{
+  grid-area: cartSummary;
+  padding-left: 5%;
+}
+
+#payment{
+  grid-area: payment;
+}
+
+#bank-img {
+  grid-area: bankImg;
+}
+
+#bank-img img{
+  width: 150px;
+  height: 150px;
+}
+
+#cardpay {
+  grid-area: cardpay;
+}
+
+.container-fluid{
+  padding-top:10px;
+}
+
+.row{
+  background-color: #C4C8CF;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-gap: 10px;
+  grid-template-areas: 
+  "header      header  header"
+  "cartSummary payment payment"
+  "x           bankImg bankImg"
+  "x           cardpay cardpay";
+}
