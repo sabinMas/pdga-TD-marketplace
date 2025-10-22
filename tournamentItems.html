@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Tournament Items</title>
+    <title>Event Supplies - PDGA Marketplace</title>
     <link rel="stylesheet" href="styles.css" />
+    <script defer src="main.js"></script>
   </head>
   <body>
     <!-- HEADER -->
@@ -12,8 +13,8 @@
         <a class="brand" href="index.html">PDGA Marketplace</a>
 
         <ul class="nav">
-          <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="tournamentItems.html">Event Supplies</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="tournamentItems.html" aria-current="page">Event Supplies</a></li>
         </ul>
 
         <form role="search" class="search">
@@ -24,7 +25,7 @@
         <!--How do we incorporate backend for Log-In-->
         <div class="header-actions">
           <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
-          <a href="tournamentDirectorPage.html" class="btn btn-box">Sign In</a>
+          <a href="checkoutpage.html" class="btn btn-box" id="numCheckOut">Check Out: 0</a>
         </div>
       </div>
     </header>
@@ -79,7 +80,7 @@
               <p class="quantityInfo">no minimum quantity</p>
               <p class="price">$9.98</p>
               <div class="product-buttons">
-                <button class="btn">+ add to list</button>
+                <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
