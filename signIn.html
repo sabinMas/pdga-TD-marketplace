@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,7 +20,11 @@
         box-shadow: var(--shadow);
         padding: 24px;
       }
-      .field { display: grid; gap: 6px; margin-bottom: 14px; }
+      .field {
+        display: grid;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
       .field input {
         padding: 10px 12px;
         border: 1px solid var(--border);
@@ -52,13 +56,32 @@
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         overflow: hidden;
-        display: flex; flex-direction: column;
+        display: flex;
+        flex-direction: column;
       }
-      .rec-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
-      .rec-card .body { padding: 12px; display: grid; gap: 6px; }
-      .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-      .actions { display: flex; gap: 10px; }
-      .muted.small { font-size: 0.9rem; }
+      .rec-card img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+      }
+      .rec-card .body {
+        padding: 12px;
+        display: grid;
+        gap: 6px;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+      .muted.small {
+        font-size: 0.9rem;
+      }
     </style>
   </head>
   <body>
@@ -70,9 +93,11 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="tournamentItems.html">Event Supplies</a></li>
         </ul>
-        <div class="header-actions">
-          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
-          <a href="signIn.html" class="btn btn-box" aria-current="page">Sign In</a>
+        <div class="header-actions" id="authActions">
+          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
+            >Create Event</a
+          >
+          <a id="signInLink" href="signIn.html" class="btn btn-box" aria-current="page">Sign In</a>
         </div>
       </div>
     </header>
@@ -80,39 +105,47 @@
     <main class="container">
       <!-- Sign In Card -->
       <section id="authSection" class="auth-wrap">
-        <h2 style="margin-top:0;">Sign in</h2>
-        <p class="muted small">Use one of the demo accounts below to preview tiered recommendations.</p>
-        <ul class="muted small" style="margin-top:6px;">
+        <h2 style="margin-top: 0">Sign in</h2>
+        <p class="muted small">
+          Use one of the demo accounts below to preview tiered recommendations.
+        </p>
+        <ul class="muted small" style="margin-top: 6px">
           <li><b>Mason</b> / <code>1111</code> → Tier A (Pro/Elite)</li>
           <li><b>JohnCarlo</b> / <code>2222</code> → Tier B (Standard)</li>
           <li><b>Tyler</b> / <code>3333</code> → Tier C (Local/Base)</li>
         </ul>
 
-        <form id="loginForm" style="margin-top:16px;">
+        <form id="loginForm" style="margin-top: 16px">
           <div class="field">
             <label for="username"><b>Username</b></label>
             <input id="username" name="username" type="text" autocomplete="username" required />
           </div>
           <div class="field">
             <label for="password"><b>Password</b></label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
           </div>
           <button class="btn" type="submit">Sign In</button>
-          <div id="error" class="error" role="alert" aria-live="polite" style="display:none;"></div>
+          <div id="error" class="error" role="alert" aria-live="polite" style="display: none"></div>
         </form>
       </section>
 
       <!-- Recommendations (hidden until login) -->
-      <section id="recSection" style="display:none;">
+      <section id="recSection" style="display: none">
         <div class="row">
-          <h2 style="margin:0;">Recommended for <span id="displayName"></span>'s event</h2>
+          <h2 style="margin: 0">Recommended for <span id="displayName"></span>'s event</h2>
           <span class="pill">Tier <span id="tierLabel"></span></span>
         </div>
-        <p class="muted small" id="tierCopy" style="margin-top:8px;"></p>
+        <p class="muted small" id="tierCopy" style="margin-top: 8px"></p>
 
         <div id="recGrid" class="recommend-grid" aria-live="polite"></div>
 
-        <div class="actions" style="margin-top:16px;">
+        <div class="actions" style="margin-top: 16px">
           <a class="btn" href="tournamentItems.html">Browse All Tournament Items</a>
           <button id="logoutBtn" class="btn btn-box" type="button">Log out</button>
         </div>
@@ -127,53 +160,112 @@
     </footer>
 
     <script>
+      const EVENT_BY_USER = {
+        Mason: {
+          eventName: "Discraft's Cascade Challenge",
+          eventTier: 'A',
+          eventLocation: 'Shelton, WA',
+          eventDates: 'Apr 26–28, 2026',
+          eventUrl: 'https://www.pdga.com/tour/event/79560',
+        },
+        JohnCarlo:{
+          eventName: 'The Spokane Open',
+          eventTier: 'B',
+          eventLocation: 'Spokane, WA',
+          eventDates: 'Oct 28-29, 2026',
+          eventUrl: 'https://www.pdga.com/tour/event/64547',
+        },
+        Tyler: {
+          eventName: 'Echo Valley Fall Challenge',
+          eventTier: 'C',
+          eventLocation: 'Springboro, OH',
+          eventDates: 'Oct 28, 2026',
+          eventUrl: 'https://www.pdga.com/tour/event/62748',
+        },
+      };
       // --- Demo "database" we will implement a database via PHP/MYSQL later
       const USERS = [
-        { username: "Mason",  password: "1111", tier: "A", name: "Mason"  },
-        { username: "JohnCarlo", password: "2222", tier: "B", name: "JohnCarlo" },
-        { username: "Tyler",  password: "3333", tier: "C", name: "Tyler"  },
+        { username: 'Mason', password: '1111', tier: 'A', name: 'Mason' },
+        { username: 'JohnCarlo', password: '2222', tier: 'B', name: 'JohnCarlo' },
+        { username: 'Tyler', password: '3333', tier: 'C', name: 'Tyler' },
       ];
 
       // Simple recommended items per tier (replace with real picks later)
       const RECS = {
         A: [
-          { title: "Tier A Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg", href: "tournamentItems.html#PlayerPacks" },
-          { title: "Mando Arrows 25 count", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#courseSetup" },
-          { title: "Orange Marking Paint 50 count", img: "https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950", href: "tournamentItems.html#courseSetup" },
+          {
+            title: 'Tier A Player Packs',
+            img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
+            href: 'tournamentItems.html#PlayerPacks',
+          },
+          {
+            title: 'Mando Arrows 25 count',
+            img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
+            href: 'tournamentItems.html#courseSetup',
+          },
+          {
+            title: 'Orange Marking Paint 50 count',
+            img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
+            href: 'tournamentItems.html#courseSetup',
+          },
         ],
         B: [
-          { title: "Tier B Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",              href: "tournamentItems.html#PlayerPacks" },
-          { title: "Mando Arrows 10 count", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#Safety" },
-          { title: "Orange Marking Paint 20 count", img: "flag-banner-fold-fill.svg", href: "tournamentItems.html#courseSetup" },
+          {
+            title: 'Tier B Player Packs',
+            img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
+            href: 'tournamentItems.html#PlayerPacks',
+          },
+          {
+            title: 'Mando Arrows 10 count',
+            img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
+            href: 'tournamentItems.html#Safety',
+          },
+          {
+            title: 'Orange Marking Paint 20 count',
+            img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
+            href: 'tournamentItems.html#courseSetup',
+          },
         ],
         C: [
-          { title: "Tier C Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",  href: "tournamentItems.html#PlayerPacks" },
-          { title: "Orange Safety Cones 15 count", img: "https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism", href: "tournamentItems.html#Safety" },
-          { title: "Stakes Kit 10 count", img: "https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl", href: "tournamentItems.html#Safety" },
-        ]
+          {
+            title: 'Tier C Player Packs',
+            img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
+            href: 'tournamentItems.html#PlayerPacks',
+          },
+          {
+            title: 'Orange Safety Cones 15 count',
+            img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
+            href: 'tournamentItems.html#Safety',
+          },
+          {
+            title: 'Stakes Kit 10 count',
+            img: 'https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl',
+            href: 'tournamentItems.html#Safety',
+          },
+        ],
       };
 
       const TIER_COPY = {
-        A: "Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.",
-        B: "Great fit for solid regional events: reliable packs and course essentials at smart prices.",
-        C: "Starter friendly: cost-effective gear to run smooth local events."
+        A: 'Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.',
+        B: 'Great fit for solid regional events: reliable packs and course essentials at smart prices.',
+        C: 'Starter friendly: cost-effective gear to run smooth local events.',
       };
 
-      const loginForm   = document.getElementById("loginForm");
-      const authSection = document.getElementById("authSection");
-      const recSection  = document.getElementById("recSection");
-      const errorBox    = document.getElementById("error");
-      const displayName = document.getElementById("displayName");
-      const tierLabel   = document.getElementById("tierLabel");
-      const tierCopy    = document.getElementById("tierCopy");
-      const recGrid     = document.getElementById("recGrid");
-      const logoutBtn   = document.getElementById("logoutBtn");
+      const loginForm = document.getElementById('loginForm');
+      const authSection = document.getElementById('authSection');
+      const recSection = document.getElementById('recSection');
+      const errorBox = document.getElementById('error');
+      const displayName = document.getElementById('displayName');
+      const tierLabel = document.getElementById('tierLabel');
+      const tierCopy = document.getElementById('tierCopy');
+      const recGrid = document.getElementById('recGrid');
+      const logoutBtn = document.getElementById('logoutBtn');
 
       function renderRecs(tier) {
-        recGrid.innerHTML = "";
-        (RECS[tier] || []).forEach(item => {
-          const card = document.createElement("article");
-          card.className = "rec-card";
+        recGrid.innerHTML = '';
+        (RECS[tier] || []).forEach((item) => {
+          const card = document.createElement('article');
+          card.className = 'rec-card';
           card.innerHTML = `
             <img src="${item.img}" alt="">
             <div class="body">
@@ -188,52 +280,85 @@
       }
 
       function showRecommendations(user) {
-        displayName.textContent = user.name;
-        tierLabel.textContent   = user.tier;
-        tierCopy.textContent    = TIER_COPY[user.tier] || "";
-        renderRecs(user.tier);
+        // Merge in event info by username (if any)
+        const enriched = {
+          ...user,
+          ...(EVENT_BY_USER[user.username] || {}),
+        };
 
-        // Persist simple "session"
-        localStorage.setItem("pdga_user", JSON.stringify(user));
+        // UI
+        displayName.textContent = enriched.name;
+        tierLabel.textContent = enriched.tier;
+        tierCopy.textContent = TIER_COPY[enriched.tier] || '';
+        renderRecs(enriched.tier);
 
-        authSection.style.display = "none";
-        recSection.style.display  = "block";
+        // Persist simple "session" (now includes event fields)
+        localStorage.setItem('pdga_user', JSON.stringify(enriched));
+
+        // Toggle sections
+        authSection.style.display = 'none';
+        recSection.style.display = 'block';
+
+        // Update header buttons for logged-in state
+        updateHeaderForLogin(enriched);
       }
 
       function handleLogin(e) {
         e.preventDefault();
-        const username = (document.getElementById("username").value || "").trim();
-        const password = (document.getElementById("password").value || "").trim();
+        const username = (document.getElementById('username').value || '').trim();
+        const password = (document.getElementById('password').value || '').trim();
 
-        const user = USERS.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+        const user = USERS.find(
+          (u) => u.username.toLowerCase() === username.toLowerCase() && u.password === password
+        );
         if (!user) {
-          errorBox.style.display = "block";
-          errorBox.textContent = "Invalid username or password for the demo accounts above.";
+          errorBox.style.display = 'block';
+          errorBox.textContent = 'Invalid username or password for the demo accounts above.';
           return;
         }
-        errorBox.style.display = "none";
+        errorBox.style.display = 'none';
         showRecommendations(user);
       }
 
       function initFromStorage() {
         try {
-          const saved = JSON.parse(localStorage.getItem("pdga_user") || "null");
+          const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
           if (saved && saved.username && saved.tier) {
             showRecommendations(saved);
           }
         } catch (_) {}
       }
 
-      loginForm.addEventListener("submit", handleLogin);
-      logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("pdga_user");
-        recSection.style.display  = "none";
-        authSection.style.display = "block";
+      loginForm.addEventListener('submit', handleLogin);
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('pdga_user');
+        recSection.style.display = 'none';
+        authSection.style.display = 'block';
         loginForm.reset();
-        document.getElementById("username").focus();
+        document.getElementById('username').focus();
       });
 
       initFromStorage();
+
+      const signInLink = document.getElementById('signInLink');
+      const authActions = document.getElementById('authActions');
+
+      function updateHeaderForLogin(user) {
+        if (!authActions) return;
+        if (user) {
+          authActions.innerHTML = `
+      <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
+      <button id="logoutHeaderBtn" class="btn btn-box" type="button">Log out</button>
+    `;
+          document.getElementById('logoutHeaderBtn').addEventListener('click', () => {
+            localStorage.removeItem('pdga_user');
+            location.reload();
+          });
+        }
+      }
+
+      const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+      if (savedUser) updateHeaderForLogin(savedUser);
     </script>
   </body>
 </html>

@@ -8,6 +8,19 @@
 section {
   padding: 56px 0;
 }
+/* === Home Page Icon Tweaks === */
+.cards .card-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.cards .card-icon img,
+.cards .card-icon svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
 
 .hero {
   background: var(--accentGradient);
@@ -45,6 +58,7 @@ section {
 .spin {
   animation: spin 5s linear infinite;
 }
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

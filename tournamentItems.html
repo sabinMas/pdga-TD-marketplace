@@ -28,7 +28,9 @@
 
         <!--How do we incorporate backend for Log-In-->
         <div class="header-actions">
-          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
+          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
+            >Create Event</a
+          >
           <a href="checkoutpage.html" class="btn btn-box" id="numCheckOut">Check Out: 0</a>
         </div>
       </div>
@@ -36,7 +38,7 @@
 
     <!-- Anchor navigation -->
     <ul id="planning">
-       <li>
+      <li>
         <a href="#PlayerPacks"><b>Player Packs</b></a>
       </li>
       <li>
@@ -58,14 +60,39 @@
         </label>
       </div>
 
-      <h3 id="eventInfo">Event info</h3>
-      <div id="parkInfo">
-        <label>
-          <b>Find Park</b>
-          <input type="text" id="parksEvents" placeholder="Search Park" />
-        </label>
-        <label><b>Local</b><input type="radio" name="shipScope" value="local" /></label>
-        <label><b>International</b><input type="radio" name="shipScope" value="intl" /></label>
+      <h3 id="eventInfo">Event Info</h3>
+
+      <div id="userInfo" class="event-user" hidden>
+        <h4 style="margin: 0">
+          Signed in as <span id="userName"></span>
+          <span class="pill">Tier <span id="userTier"></span></span>
+        </h4>
+
+        <!-- NEW EVENT FIELDS -->
+        <div class="muted" style="margin-top: 0.25rem">
+          <b id="evtName"></b>
+          <span id="evtTier" class="pill" style="margin-left: 6px"></span>
+          <div id="evtMeta" style="margin-top: 0.25rem"></div>
+        </div>
+
+        <button id="logoutInline" class="btn btn-box" type="button" style="margin-top: 0.5rem">
+          Log out
+        </button>
+      </div>
+
+      <div id="guestInfo" class="event-user" hidden>
+        <p class="muted" style="margin: 0.25rem 0">
+          Not signed in. <a href="signIn.html" class="btn btn-box">Sign in</a>
+        </p>
+      </div>
+
+      <!-- Guest state -->
+      <div id="guestInfo" class="event-user" hidden>
+        <p class="muted" style="margin: 0.25rem 0">
+          Not signed in.
+          <a href="signIn.html" class="btn btn-box" style="margin-left: 0.25rem">Sign in</a> to link
+          items to your event.
+        </p>
       </div>
 
       <!-- Player Packs section -->
@@ -181,9 +208,7 @@
             </div>
             <div class="product-details">
               <h3>High Visibility Navigational Arrows</h3>
-              <p class="quantityInfo">
-                no minimum quantity — bulk discounts at 36+
-              </p>
+              <p class="quantityInfo">no minimum quantity — bulk discounts at 36+</p>
               <p class="price">$15 – $30</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
@@ -424,7 +449,10 @@
           <!-- PDGA event t‑shirts bulk -->
           <article class="product-card">
             <div class="product-image">
-              <img src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp" alt="PDGA event t‑shirts bulk" />
+              <img
+                src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp"
+                alt="PDGA event t‑shirts bulk"
+              />
             </div>
             <div class="product-details">
               <h3>PDGA Event T‑Shirts Bulk</h3>
@@ -520,5 +548,45 @@
         <p class="muted">© PDGA Marketplace</p>
       </div>
     </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+        const userInfo = document.getElementById('userInfo');
+        const guestInfo = document.getElementById('guestInfo');
+
+        if (saved && saved.username) {
+          userInfo.hidden = false;
+
+          // show basic user
+          document.getElementById('userName').textContent = saved.name || saved.username;
+          document.getElementById('userTier').textContent = saved.tier || '';
+
+          // show event info
+          const evtName = document.getElementById('evtName');
+          const evtTier = document.getElementById('evtTier');
+          const evtMeta = document.getElementById('evtMeta');
+
+          if (saved.eventName) {
+            evtName.innerHTML = saved.eventUrl
+              ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
+              : saved.eventName;
+            evtTier.textContent = `${saved.eventTier}-Tier Event`;
+            evtMeta.textContent = `${saved.eventLocation} • ${saved.eventDates}`;
+          } else {
+            evtName.textContent = 'No event linked yet';
+            evtTier.textContent = '';
+            evtMeta.textContent = '';
+          }
+
+          // logout button
+          document.getElementById('logoutInline').addEventListener('click', () => {
+            localStorage.removeItem('pdga_user');
+            location.reload();
+          });
+        } else {
+          guestInfo.hidden = false;
+        }
+      });
+    </script>
   </body>
 </html>
