@@ -3,14 +3,18 @@ const numCheckOutref = document.getElementById("numCheckOut");
 var numCheckOut = 0;
 
 for(var btn of addToListBtns){
-    btn.addEventListener('click',()=>{
+    btn.addEventListener('click', ()=> {
         console.log("added to list");
         numCheckOut++;
         numCheckOutref.innerHTML="Check Out: " + numCheckOut;
     })
 };
 
+<<<<<<< HEAD
+
 /* Search Bar Mechanisim */
+=======
+>>>>>>> 9e68e26759c939248cfc8eba4ea3f3f0ff6ffd33
 // Note: this is only currently working for the tournamentItems.html page
 document.addEventListener('DOMContentLoaded',()=> {
     const searchInput = document.getElementById('q');
@@ -35,5 +39,4 @@ document.addEventListener('DOMContentLoaded',()=> {
             }
         });
     }
-});
-
+}); 
