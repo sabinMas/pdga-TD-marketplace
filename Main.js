@@ -10,7 +10,6 @@ for(var btn of addToListBtns){
     })
 };
 
-
 /* Search Bar Mechanisim */
 // Note: this is only currently working for the tournamentItems.html page
 document.addEventListener('DOMContentLoaded',()=> {

@@ -1,0 +1,262 @@
+/* === Tournament items page === */
+/* Auto-split from styles.css on refactor.
+   File: pages/tournament.css
+   NOTE: Review and adjust as needed. */
+
+   /* New styles to unify product cards and maintain bold/muted text */
+
+/* Grid layout for all product sections */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  /* Space above and below each grid on the page */
+  margin-bottom: 2rem;
+}
+
+/* Two-column grid on medium screens */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Single column on small screens */
+@media (max-width: 640px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card container */
+.product-card {
+  background-color: var(--surface, #fff);
+  border: 2px solid var(--border, #e5e5e5);
+  border-radius: var(--radius, 12px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Image area fills width and maintains aspect */
+.product-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Details wrapper with padding */
+.product-details {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Product title styling */
+.product-details h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text, #222);
+}
+
+/* Quantity/description text is smaller and muted */
+.quantityInfo {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-muted, #6b7280);
+  margin: 0 0 0.5rem 0;
+}
+
+/* Price styling is bold and uses accent color */
+.price {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  color: var(--accent, #007FAF);
+}
+
+/* Product buttons container */
+.product-buttons {
+  margin-top: auto;
+}
+
+/* Ensure add-to-list/customize buttons inherit existing button styling */
+.product-buttons .btn {
+  width: 100%;
+  display: inline-block;
+}
+
+/* === CUSTOM ITEMS PAGE === */
+.custom-page-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+  padding: 32px 0;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.product-header select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+/* Use the same grid rules as for Player Packs */
+.course-setup-products,
+.safety-products {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(01,1fr));
+    gap: 1rem;
+}
+
+/* === Product Card Hover Effects === */
+.product-list {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--thirdColor);
+}
+
+/* Slight zoom for images */
+.product-item:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-image img {
+  transition: transform 0.3s ease;
+}
+
+/* Subtle button color shift */
+.product-buttons .btn:hover {
+  background: var(--accentGradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 6px 12px rgba(0, 91, 170, 0.25);
+}
+
+/* === Full Card Hover Effect === */
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--thirdColor);
+  box-shadow: 0 12px 24px rgba(0, 91, 170, 0.15);
+}
+
+/* Image zoom on hover (tied to card hover) */
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-image img {
+  transition: transform 0.3s ease;
+}
+
+/* Optional: highlight text color on hover */
+.product-card:hover h3 {
+  color: var(--thirdColor);
+  transition: color 0.3s ease;
+}
+/* smooth anchor jumps */
+html { scroll-behavior: smooth; }
+
+/* offset targets so sticky header + subnav don't cover them */
+.tournament-page-layout h2[id],
+.tournament-page-layout h3[id] {
+  scroll-margin-top: 140px; /* tune this value */
+}
+
+/* fine-tune for smaller screens if your bars get taller/shorter */
+@media (max-width: 900px) {
+  .tournament-page-layout h2[id],
+  .tournament-page-layout h3[id] {
+    scroll-margin-top: 152px;
+  }
+}
+@media (max-width: 560px) {
+  .tournament-page-layout h2[id],
+  .tournament-page-layout h3[id] {
+    scroll-margin-top: 168px;
+  }
+}
+
+
+/* Tournament / Top strip */
+.tournament-page-layout {
+  display: block;
+  padding-top: 16px;
+}
+#top {
+  background: var(--thirdColor);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin: 12px 0 8px;
+}
+#top label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  justify-content: flex-start;
+}
+#top input[type='text'],
+#top input[type='search'] {
+  flex: 1;
+  min-width: 260px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+/* Planning / In-page nav (consolidated) */
+#planning {
+  position: sticky;
+  top: 64px; /* below header */
+  z-index: 40;
+  list-style: none;
+  margin: 0;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+#planning li {
+  margin: 0;
+  padding: 0;
+}
+#planning a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--thirdColor);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+#planning a:hover {
+  background: var(--lightgrey);
+  color: var(--mainColor);
+}
