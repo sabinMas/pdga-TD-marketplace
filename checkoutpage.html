@@ -15,30 +15,65 @@
         </div>
     </header>
     
-    <main> 
+    <main class="container-fluid checkout-layout"> 
       <div id="checkoutHeader">
-        <h2>Tournament Director Checkout</h2>
+        <h1>Tournament Director Checkout</h1>
+        <hr>
       </div>
-        <section class="container-fluid">
-          <div class="row paybar">
-            <div class="col-sm-8" id="cartSummary">
-              <h1>Cart Summary</h1>
-              <hr>
-              <h3>Cart is currently empty</h3>
+      
+      <div class="wrap-content">
+        <div class="cart">
+          <h2>Cart</h2>
+          <hr>
+          <h4>Your cart is currently empty</h4>
+        </div>
+          
+        <aside class="payment-sidebar">
+          <h2>Choose your payment</h2>
+          <hr>
+
+          <h3>Express Checkout</h3>
+          <hr>
+            <div class="four-payments">
+              <div class="bank-logos">  
+                <div class="shop-logo">
+                  <img src="https://images.seeklogo.com/logo-png/45/2/shop-pay-logo-png_seeklogo-450730.png" alt="Shop pay logo">
+                </div>
+                <div class="paypal-logo">
+                  <img src="https://freepngimg.com/thumb/paypal/2-2-paypal-logo-transparent-png-thumb.png" alt="Paypal logo">
+                </div>
+                <div class="amazon-logo">
+                  <img src="https://www.omt.de/uploads/2020/06/Amazon-Pay-.png" alt="amazon pay logo">
+                </div>
+                <div class="applepay-logo">
+                  <img src="https://cdn-icons-png.flaticon.com/512/5977/5977576.png" alt="apple pay logo">
+                </div>
+              </div>
             </div>
-            <div class="col-sm-4" id="payment">
-              <h1>Choose your payment</h1>
-              <h3>Payment options</h3>
-            </div>
-            <div class="col-sm-6" id="bank-img">
-              <h3>Express Checkout</h3>
-              <img src="https://pngimg.com/uploads/paypal/paypal_PNG9.png" alt="paypal logo">
-            </div>
-            <div class="col-sm-12" id="cardpay">
-              <h3>Pay with card</h3>
-            </div>
+
+          <h3>Pay with card</h3>
+          <hr>
+          <div class="card-payment-logos">
+            <img src="https://vectorified.com/image/visa-mastercard-american-express-discover-vector-3.jpg" alt="Visa, master card, discover, american express logos">
           </div>
-        </section>
+
+          <div class="total-pay">
+            <h3>Total</h3>
+            <hr>
+            <p>$0.00</p>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+      <div class="container footer">
+        <p>
+          <strong>PDGA Marketplace</strong><br />
+          <span class="muted">Built for Tournament Directors & Clubs.</span>
+        </p>
+        <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
+      </div>
+    </footer>
     </main>
 
 </body>

@@ -457,46 +457,95 @@ h2[id] {
 /* Small utility tweaks kept intentionally minimal */
 
 /* Checkout page css  */
-#checkoutHeader {
-  text-align: left;
-  padding: 1% 2% 0%; 
-  grid-area: header;
+#checkoutHeader h1{
+  padding-left: 35px;
 }
 
-#cartSummary{
-  grid-area: cartSummary;
-  padding-left: 5%;
+#checkoutHeader hr {
+  border: none;
+  height: 5px;
+  background-color: #353941;
 }
 
-#payment{
-  grid-area: payment;
-}
 
-#bank-img {
-  grid-area: bankImg;
-}
+/*
+#paypal {
+  background-color: #ffd344;  saved color for later
+}*/
 
-#bank-img img{
-  width: 150px;
-  height: 150px;
-}
-
-#cardpay {
-  grid-area: cardpay;
-}
-
-.container-fluid{
-  padding-top:10px;
-}
-
-.row{
-  background-color: #C4C8CF;
+.wrap-content {
+  background-color: #EEEEEE;
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
-  grid-gap: 10px;
-  grid-template-areas: 
-  "header      header  header"
-  "cartSummary payment payment"
-  "x           bankImg bankImg"
-  "x           cardpay cardpay";
+  grid-template-columns: 1400px 450px;
+  height: 100%;
+  padding-bottom: 50px;
 }
+
+.cart{
+  padding-left: 4%;
+  
+}
+
+.cart hr {
+  border: none;
+  height: 10px;
+  background-color: #353941;
+  width: 95%;
+  margin-left: 0%;
+}
+
+.cart h2{
+  padding-left: 2%;
+  font-size: 30px;
+  padding-top: 1%;
+}
+
+.cart h4 {
+  padding-left: 4%;
+}
+
+.payment-sidebar {
+  background-color: whitesmoke;
+  border: solid 1px #353941;
+  margin-top: 30px;
+}
+
+.payment-sidebar h2{
+  text-align: center;
+}
+
+.payment-sidebar h3, .payment-sidebar p {
+  padding-left: 15px;
+}
+
+.payment-sidebar hr {
+  border: none;
+  height: 5px;
+  background-color: #353941;
+  width: 50%;
+  margin-left: 3%;
+}
+
+.four-payments{
+  display: grid;
+  grid-template-columns: 50px 50px;
+  padding-left: 7%;
+}
+
+.bank-logos img {
+  height: 100px;
+  width: 100px;
+}
+
+.card-payment-logos img {
+  height: 90px;
+  width: auto;
+  padding-left: 30px;
+}
+
+
+
+
+
+
+
