@@ -10,11 +10,8 @@ for(var btn of addToListBtns){
     })
 };
 
-<<<<<<< HEAD
 
 /* Search Bar Mechanisim */
-=======
->>>>>>> 9e68e26759c939248cfc8eba4ea3f3f0ff6ffd33
 // Note: this is only currently working for the tournamentItems.html page
 document.addEventListener('DOMContentLoaded',()=> {
     const searchInput = document.getElementById('q');
