@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>Sign In — PDGA Marketplace</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="assets/css/root.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/utilities.css" />
+    <link rel="stylesheet" href="assets/css/pages/signIn.css" />
+
     <style>
       /* Page-specific light tweaks (kept minimal) */
       .auth-wrap {
@@ -58,7 +63,7 @@
   </head>
   <body>
     <!-- HEADER -->
-    <header>
+    <header class="site-header">
       <div class="container">
         <a class="brand" href="index.html">PDGA Marketplace</a>
         <ul class="nav">
@@ -133,18 +138,18 @@
       const RECS = {
         A: [
           { title: "Tier A Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg", href: "tournamentItems.html#PlayerPacks" },
-          { title: "Mando Arrows 25 pack", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#courseSetup" },
-          { title: "Orange Marking Paint 50 pack", img: "https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950", href: "tournamentItems.html#courseSetup" },
+          { title: "Mando Arrows 25 count", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#courseSetup" },
+          { title: "Orange Marking Paint 50 count", img: "https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950", href: "tournamentItems.html#courseSetup" },
         ],
         B: [
           { title: "Tier B Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",              href: "tournamentItems.html#PlayerPacks" },
-          { title: "Navigational Arrow Signs (Bulk)", img: "star-shine-linear.svg", href: "tournamentItems.html#Safety" },
-          { title: "Marking Paint (Case)", img: "flag-banner-fold-fill.svg", href: "tournamentItems.html#courseSetup" },
+          { title: "Mando Arrows 10 count", img: "https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php", href: "tournamentItems.html#Safety" },
+          { title: "Orange Marking Paint 20 count", img: "flag-banner-fold-fill.svg", href: "tournamentItems.html#courseSetup" },
         ],
         C: [
-          { title: "Tier C Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",                href: "tournamentItems.html#PlayerPacks" },
-          { title: "Orange Safety Cones", img: "star-shine-linear.svg", href: "tournamentItems.html#Safety" },
-          { title: "Basic Rope & Stake Kit", img: "flag.svg", href: "tournamentItems.html#courseSetup" },
+          { title: "Tier C Player Packs", img: "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",  href: "tournamentItems.html#PlayerPacks" },
+          { title: "Orange Safety Cones 15 count", img: "https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism", href: "tournamentItems.html#Safety" },
+          { title: "Stakes Kit 10 count", img: "https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl", href: "tournamentItems.html#Safety" },
         ]
       };
 

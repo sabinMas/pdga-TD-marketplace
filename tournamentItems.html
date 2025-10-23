@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <title>Event Supplies - PDGA Marketplace</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="assets/css/root.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/utilities.css" />
+    <link rel="stylesheet" href="assets/css/pages/tournament.css" />
     <script defer src="main.js"></script>
   </head>
   <body>
     <!-- HEADER -->
-     <header>
+    <header class="site-header">
       <div class="container">
         <a class="brand" href="index.html">PDGA Marketplace</a>
 
@@ -30,7 +34,11 @@
       </div>
     </header>
 
+    <!-- Anchor navigation -->
     <ul id="planning">
+       <li>
+        <a href="#PlayerPacks"><b>Player Packs</b></a>
+      </li>
       <li>
         <a href="#courseSetup"><b>Course Setup</b></a>
       </li>
@@ -38,43 +46,119 @@
         <a href="#Safety"><b>Safety</b></a>
       </li>
       <li>
-        <a href="#PlayerPacks"><b>Player Packs</b></a>
-      </li>
-      <li>
         <a href="#Extras"><b>Extras</b></a>
       </li>
-      <!--<li>
-        <a href="#etc"><b>etc</b></a>
-      </li> -->
     </ul>
 
     <main class="container tournament-page-layout">
       <div id="top">
-        <label
-        ><b>Event ID</b> <input type="text" id="eventId" placeholder="Event ID#" />
-      </label>
+        <label>
+          <b>Search Parks</b>
+          <input type="text" id="eventId" placeholder="search" />
+        </label>
       </div>
 
       <h3 id="eventInfo">Event info</h3>
       <div id="parkInfo">
-        <label
-          ><b>Find Park</b> <input type="text" id="parksEvents" placeholder="Search Park" />
+        <label>
+          <b>Find Park</b>
+          <input type="text" id="parksEvents" placeholder="Search Park" />
         </label>
         <label><b>Local</b><input type="radio" name="shipScope" value="local" /></label>
         <label><b>International</b><input type="radio" name="shipScope" value="intl" /></label>
-
       </div>
 
+      <!-- Player Packs section -->
       <section>
-        <!--Course Setup Products-->
+        <h2 id="PlayerPacks">Player Packs</h2>
+        <div class="product-grid">
+          <!-- Tier A pack -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                alt="Player pack tier A"
+              />
+            </div>
+            <div class="product-details">
+              <h3>Tier A</h3>
+              <p class="quantityInfo">Included In Pack</p>
+              <ul class="quantityInfo">
+                <li>2 Discs</li>
+                <li>Shirt</li>
+                <li>Water Bottle</li>
+                <li>Hat</li>
+                <li>Stickers</li>
+                <li>Mini Disc</li>
+                <li>Golf Towel</li>
+              </ul>
+              <p class="price">$35.00–$50.00</p>
+              <div class="product-buttons">
+                <button class="btn addToList">+ add to list</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tier B pack -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                alt="Player pack tier B"
+              />
+            </div>
+            <div class="product-details">
+              <h3>Tier B</h3>
+              <p class="quantityInfo">Included In Pack</p>
+              <ul class="quantityInfo">
+                <li>Mid Range or Putter Disc</li>
+                <li>Shirt</li>
+                <li>Water Bottle</li>
+                <li>Hat</li>
+                <li>Sticker</li>
+              </ul>
+              <p class="price">$15.99–$30.00</p>
+              <div class="product-buttons">
+                <button class="btn addToList">+ add to list</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Tier C pack -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                alt="Player pack tier C"
+              />
+            </div>
+            <div class="product-details">
+              <h3>Tier C</h3>
+              <p class="quantityInfo">Included In Pack</p>
+              <ul class="quantityInfo">
+                <li>Mid Range or Putter Disc</li>
+                <li>Shirt</li>
+                <li>Water Bottle</li>
+              </ul>
+              <p class="price">$5.00–$13.99</p>
+              <div class="product-buttons">
+                <button class="btn addToList">+ add to list</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Course Setup Products section -->
+      <section>
         <h2 id="courseSetup">Course Setup Products</h2>
-        <div class="product-list">
-          <!--Marking Spray Paint Cans-->
-          <article class="product-item">
+        <div class="product-grid">
+          <!-- Marking spray paint -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950"
-                alt="White Spray Can"
+                alt="White spray can"
               />
             </div>
             <div class="product-details">
@@ -87,48 +171,50 @@
             </div>
           </article>
 
-          <!--Navigational Arrows-->
-          <article class="product-item">
+          <!-- Navigational arrows -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php"
-                alt="Navigational Arrows Signs"
+                alt="Navigational arrows signs"
               />
             </div>
             <div class="product-details">
               <h3>High Visibility Navigational Arrows</h3>
-              <p class="quantityInfo">no minimum quantity - bulk discounts at 36+</p>
-              <p class="price">$15 - $30</p>
+              <p class="quantityInfo">
+                no minimum quantity — bulk discounts at 36+
+              </p>
+              <p class="price">$15 – $30</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
 
-          <!--Mando Arrows-->
-          <article class="product-item">
+          <!-- Mando arrows -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php"
-                alt="Mando Arrow Sign"
+                alt="Mando arrow sign"
               />
             </div>
             <div class="product-details">
               <h3>High Visibility Mando Arrows</h3>
               <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$30 - $75</p>
+              <p class="price">$30 – $75</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
 
-          <!--Tee Pads-->
-          <article class="product-item">
+          <!-- Artificial turf tee pad -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://discstore.com/cdn/shop/files/Teepad-3.jpg?v=1738258016&width=1400"
-                alt="Artificial Disc Golf Tee Pad"
+                alt="Artificial disc golf tee pad"
               />
             </div>
             <div class="product-details">
@@ -141,52 +227,54 @@
             </div>
           </article>
 
-          <!--Portable Disc Golf Baskets-->
-          <article class="product-item">
+          <!-- Portable disc golf baskets -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-macro-disc-golf-basket-359898.jpg?v=1723190785&width=1380"
-                alt="Portable Disc Golf Basket"
+                alt="Portable disc golf basket"
               />
             </div>
             <div class="product-details">
               <h3>Disc Golf Portable Baskets</h3>
               <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$100 - $175</p>
+              <p class="price">$100 – $175</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
 
-          <!--Permanent Disc Golf Baskets-->
-          <article class="product-item">
+          <!-- Permanent disc golf baskets -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-portal-disc-golf-basket-permanent-version-2-272889.jpg?v=1759445108&width=1380"
-                alt="Permanent Disc Golf Basket"
+                alt="Permanent disc golf basket"
               />
             </div>
             <div class="product-details">
               <h3>Disc Golf Permanent Baskets</h3>
               <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$400 - $700</p>
+              <p class="price">$400 – $700</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
         </div>
+      </section>
 
-        <!--Safety Products-->
+      <!-- Safety Products section -->
+      <section>
         <h2 id="Safety">Safety Products</h2>
-        <div class="product-list">
-          <!--High Visibility Safety Vest-->
-          <article class="product-item">
+        <div class="product-grid">
+          <!-- Safety vest -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism"
-                alt="High Visibility Safety Vest"
+                alt="High visibility safety vest"
               />
             </div>
             <div class="product-details">
@@ -199,30 +287,30 @@
             </div>
           </article>
 
-          <!--Cones-->
-          <article class="product-item">
+          <!-- Orange safety cones -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism"
-                alt="Orange Safety Cone"
+                alt="Orange safety cone"
               />
             </div>
             <div class="product-details">
               <h3>Orange Safety Cones</h3>
               <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$12.99 - $15.99</p>
+              <p class="price">$12.99 – $15.99</p>
               <div class="product-buttons">
                 <button class="btn addToList">+ add to list</button>
               </div>
             </div>
           </article>
 
-          <!--First Aid Kit-->
-          <article class="product-item">
+          <!-- First aid kit -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://firstaidsuppliesonline.com/wp-content/uploads/2023/10/68-BANSI-RR-1024x1024.png"
-                alt="First Aid Box"
+                alt="First aid kit"
               />
             </div>
             <div class="product-details">
@@ -235,12 +323,12 @@
             </div>
           </article>
 
-          <!--Stake-->
-          <article class="product-item">
+          <!-- Landscape stake -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl"
-                alt="Landscape Stake"
+                alt="Landscape stake"
               />
             </div>
             <div class="product-details">
@@ -253,16 +341,16 @@
             </div>
           </article>
 
-          <!--Whistle-->
-          <article class="product-item">
+          <!-- Safety whistle -->
+          <article class="product-card">
             <div class="product-image">
               <img
                 src="https://mobileimages.lowes.com/productimages/d7ff1e22-4686-48c5-8375-057327b23d1e/49882355.jpg?size=xl"
-                alt="whitsle"
+                alt="Safety whistle"
               />
             </div>
             <div class="product-details">
-              <h3>Safety whistle</h3>
+              <h3>Safety Whistle</h3>
               <p class="quantityInfo">no minimum quantity</p>
               <p class="price">$3.99</p>
               <div class="product-buttons">
@@ -271,218 +359,166 @@
             </div>
           </article>
         </div>
+      </section>
 
-      <!--Player Packs A-C Tiers-->
-      <h2 id="PlayerPacks">Player Packs</h2>
-      <div class="product-list">
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg" alt="Custom disc example">
-          </div>
-          <div class="product-details">
-            <h3>Tier A</h3>
-            <p class="quantityInfo">Included In Pack</p>
-            <ul class="quantityInfo">
-              <li>2 Discs</li>
-              <li>Shirt</li>
-              <li>Water Bottle</li>
-              <li>Hat</li>
-              <li>Stickers</li>
-              <li>Mini Disc</li>
-              <li>Golf Towel</li>
-            </ul>
-            <p class = "price">$35.00-$50.00</p>
-            <div class="product-buttons">
-              <button class="btn addToList">+ add to list</button>
+      <!-- Extras section -->
+      <section>
+        <div class="product-header">
+          <h2 id="Extras">Extras</h2>
+        </div>
+        <div class="product-grid">
+          <!-- Custom DyeMax disc or marker -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946"
+                alt="Custom DyeMax disc or marker"
+              />
             </div>
-          </div>
-        </article>
+            <div class="product-details">
+              <h3>Custom DyeMax Disc or Marker</h3>
+              <p class="quantityInfo">no minimum quantity</p>
+              <p class="price">$7.99 – $24.99</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
 
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg" alt="Custom disc example">
-          </div>
-          <div class="product-details">
-            <h3>Tier B</h3>
-            <p class="quantityInfo">Included In Pack</p>
-            <ul class="quantityInfo">
-              <li>Mid Range or Putter Disc</li>
-              <li>Shirt</li>
-              <li>Water Bottle</li>
-              <li>Hat</li>
-              <li>Sticker</li>
-            </ul>
-            <p class = "price">$15.99-$30.00</p>
-            <div class="product-buttons">
-              <button class="btn addToList">+ add to list</button>
+          <!-- Backstock PDGA discs bulk -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUmKUOpPEGAQTqbb1Z294tv3uuhLTuhDFL8Q&s"
+                alt="Backstock PDGA discs bulk"
+              />
             </div>
-          </div>
-        </article>
+            <div class="product-details">
+              <h3>Backstock PDGA Discs Bulk</h3>
+              <p class="quantityInfo">minimum quantity 25</p>
+              <p class="price">$6.00 – $14.00</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
 
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg" alt="Custom disc example">
-          </div>
-          <div class="product-details">
-            <h3>Tier C</h3>
-            <p class="quantityInfo">Included In Pack</p>
-            <ul class="quantityInfo">
-              <li>Mid Range or Putter Disc</li>
-              <li>Shirt</li>
-              <li>Water Bottle</li>
-            </ul>
-            <p class = "price">$5.00-$13.99</p>
-            <div class="product-buttons">
-              <button class="btn addToList">+ add to list</button>
+          <!-- Sport-Tek tee -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent"
+                alt="Sport‑Tek tee"
+              />
             </div>
-          </div>
-        </article>
+            <div class="product-details">
+              <h3>Sport‑Tek Tee</h3>
+              <p class="quantityInfo">no minimum quantity</p>
+              <p class="price">$7.53 – $12.90</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
 
-      <!--etc products, change name later
-      <h2 id="etc">Etc...</h2>
-      <div class="product-list">
-        Other items will go here
-        <article class="product-item">
-          <div class="product-image">
-            <img src="" alt="" />
-          </div>
-          <div class="product-details">
-            <h3>item</h3>
-            <p class="quantityInfo">no minimum quantity</p>
-            <p class="price">$</p>
-            <div class="product-buttons">
-              <button class="btn">+ add to list</button>
+          <!-- PDGA event t‑shirts bulk -->
+          <article class="product-card">
+            <div class="product-image">
+              <img src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp" alt="PDGA event t‑shirts bulk" />
             </div>
-          </div>
-        </article> -->
+            <div class="product-details">
+              <h3>PDGA Event T‑Shirts Bulk</h3>
+              <p class="quantityInfo">minimum quantity 25</p>
+              <p class="price">$2.50 – $8.00</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
 
-      </div>
-      <div class="product-header">
-        <h2 id="Extras">Extras</h2>
-      </div>
-      <div class="product-list">
-        <!-- Custom Dye Disc -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946" alt="Custom disc example">
-          </div>
-          <div class="product-details">
-            <h3>Custom DyeMax Disc or Marker</h3>
-            <p class="quantityInfo">no minimum quantity</p>
-            <p class="price">$7.99 - $24.99</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
+          <!-- Montego water bottle -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://mms-images.out.customink.com/mms/images/catalog/cfaa4708e469a82caff0647cc72b69b5/styles/872600/supporting/2.jpg?ixq=60&ixw=700"
+                alt="21 oz Montego water bottle"
+              />
             </div>
-          </div>
-        </article>
-         <!-- Backstock PDGA Discs Bulk -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUmKUOpPEGAQTqbb1Z294tv3uuhLTuhDFL8Q&s" alt="Custom disc example">
-          </div>
-          <div class="product-details">
-            <h3>Backstock PDGA Discs Bulk</h3>
-            <p class="quantityInfo">minimum quantity 25</p>
-            <p class="price">$6.00 - 14.00</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
+            <div class="product-details">
+              <h3>21 oz Montego Water Bottle</h3>
+              <p class="quantityInfo">minimum quantity 36</p>
+              <p class="price">$4.50/ea for 100 items</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
             </div>
-          </div>
-        </article>
-        <!-- Custom Wearables — Tee -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent" alt="Custom wearables tee preview">
-          </div>
-          <div class="product-details">
-            <h3>Sport-Tek Tee</h3>
-            <p class="quantityInfo">no minimum quantity</p>
-            <p class="price">$7.53 - $12.90</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
-            </div>
-          </div>
-        </article>
-        <!--Extra Event Tees PDGA Pro events-->
-          <article class="product-item">
-          <div class="product-image">
-            <img src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp" alt="Bulk Backstock T-Shirts">
-          </div>
-          <div class="product-details">
-            <h3>PDGA Event T-Shirts Bulk</h3>
-            <p class="quantityInfo">minimum quantity 25</p>
-            <p class="price">$2.50 - $8.00</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
-            </div>
-          </div>
-        </article>
-        <!-- Custom Water Bottle -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://mms-images.out.customink.com/mms/images/catalog/cfaa4708e469a82caff0647cc72b69b5/styles/872600/supporting/2.jpg?ixq=60&ixw=700" alt="Custom water bottle">
-          </div>
-          <div class="product-details">
-            <h3>21.oz Montego Water Bottle</h3>
-            <p class="quantityInfo">minimum quantity 36</p>
-            <p class="price">4.50/ea for 100 items</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
-            </div>
-          </div>
-        </article>
-        <!-- Custom Hat -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://rendering.mcp.cimpress.com/v2/vp/preview?height=816&width=816&scene=https%3A%2F%2Fcdn.scenes.documents.cimpress.io%2Fv3%2Fassets%2F4dc716a5-1d96-4665-b302-6c8bdbd167b9%2Fcontent&overrideThreadId=mcp3544" alt="Custom hat preview">
-          </div>
-          <div class="product-details">
-            <h3>Custom Hat</h3>
-            <p class="quantityInfo">no minimum quantity</p>
-            <p class="price">$8.57 -  $29.36</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
-            </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- Custom Towels — Cotton -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://mms-images.out.customink.com/mms/images/catalog/458c6b518aa3c0abc3e2491b23df7fea/colors/334203/views/alt/front_large.png?autoNegate=1&design=nmp0-00cp-p60w&digest=000000028&imembroider=1&ixbg=%23f5f5f5&ixfm=jpeg&ixq=60&ixw=900&placeMax=1&placeMaxPct=0.8&placeUseProduct=1&placeUseView=front" alt="Custom towel cotton">
-          </div>
-          <div class="product-details">
-            <h3>Custom Towels — Cotton</h3>
-            <p class="quantityInfo">minimum quantity 25</p>
-            <p class="price">25.05/ea for 75 items</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
+          <!-- Custom hat -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://rendering.mcp.cimpress.com/v2/vp/preview?height=816&width=816&scene=https%3A%2F%2Fcdn.scenes.documents.cimpress.io%2Fv3%2Fassets%2F4dc716a5-1d96-4665-b302-6c8bdbd167b9%2Fcontent&overrideThreadId=mcp3544"
+                alt="Custom hat preview"
+              />
             </div>
-          </div>
-        </article>
-        <!-- Custom Disc Golf Stickers -->
-        <article class="product-item">
-          <div class="product-image">
-            <img src="https://dgcoursecollector.com/cdn/shop/files/custompdgaplayerstickerlow3.jpg?v=1723034157&width=1445" alt="Custom disc golf stickers">
-          </div>
-          <div class="product-details">
-            <h3>Custom Disc Golf Stickers</h3>
-            <p class="quantityInfo">minimum quantity 10</p>
-            <p class="price">$9.99 for 10</p>
-            <div class="product-buttons">
-              <button class="btn">+ Customize</button>
+            <div class="product-details">
+              <h3>Custom Hat</h3>
+              <p class="quantityInfo">no minimum quantity</p>
+              <p class="price">$8.57 – $29.36</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
             </div>
-          </div>
-        </article>
-      </div>
-    </section>
+          </article>
 
+          <!-- Custom towels (cotton) -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://mms-images.out.customink.com/mms/images/catalog/458c6b518aa3c0abc3e2491b23df7fea/colors/334203/views/alt/front_large.png?autoNegate=1&design=nmp0-00cp-p60w&digest=000000028&imembroider=1&ixbg=%23f5f5f5&ixfm=jpeg&ixq=60&ixw=900&placeMax=1&placeMaxPct=0.8&placeUseProduct=1&placeUseView=front"
+                alt="Custom towel cotton"
+              />
+            </div>
+            <div class="product-details">
+              <h3>Custom Towels — Cotton</h3>
+              <p class="quantityInfo">minimum quantity 25</p>
+              <p class="price">$25.05/ea for 75 items</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Custom disc golf stickers -->
+          <article class="product-card">
+            <div class="product-image">
+              <img
+                src="https://dgcoursecollector.com/cdn/shop/files/custompdgaplayerstickerlow3.jpg?v=1723034157&width=1445"
+                alt="Custom disc golf stickers"
+              />
+            </div>
+            <div class="product-details">
+              <h3>Custom Disc Golf Stickers</h3>
+              <p class="quantityInfo">minimum quantity 10</p>
+              <p class="price">$9.99 for 10</p>
+              <div class="product-buttons">
+                <button class="btn">+ Customize</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
+
     <footer>
       <div class="container footer">
-        <p><b>PDGA Marketplace</b><br />Built for Tournament Directors & Clubs.</p>
+        <p>
+          <b>PDGA Marketplace</b><br />
+          Built for Tournament Directors & Clubs.
+        </p>
         <p class="muted">© PDGA Marketplace</p>
       </div>
     </footer>
   </body>
-</html> 
+</html>
