@@ -5,17 +5,25 @@ const cartCount = document.getElementById('cartCount');
 //function add/updates number of items to cart (doesn't fully add to cart yet)
 for (var btn of addToListBtns) {
   var e = btn.closest('.product-details'); 
-  
-  btn.addEventListener('click', addtoList(itemDetails));
-  cartCount.textContent = numCheckOut;
+  btn.addEventListener('click', () => {
+    //in work to figure out how to pass node to anoyoumous function
+
+    //var name = e.children[0].innerHTML;
+    //console.log(name);
+    numCheckOut++;
+    cartCount.textContent = numCheckOut;
+  } );
 }
 
+//breaks cart counter   
+//note to self: add this call to btn event listener later addtoList(e)
+//kinda works when called in the above forloop, 
+//but not adding it yet cause its not complete
 function addtoList(itemDetails) {
   var name = itemDetails.children[0].innerHTML;
   console.log(name);
   numCheckOut++;
-  numCheckOutref.innerHTML = 'Check Out: ' + numCheckOut;
-
+  cartCount.textContent = numCheckOut;
 }
 
 /* Search Bar Mechanisim */
