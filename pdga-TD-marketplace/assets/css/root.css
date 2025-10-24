@@ -1,0 +1,29 @@
+/* === Root tokens & base === */
+:root {
+  --mainColor:#016f52;
+  --secondColor:#003F7D;
+  --thirdColor:#005BAA;
+  --accentGradient: linear-gradient(135deg, var(--thirdColor) 0%, var(--mainColor) 100%);
+
+  --lightgrey:#e6ebee;
+  --text:#005baa;
+  --muted:#667085;
+  --bg:#f6f8f9;
+  --surface:#ffffff;
+  --border:#d9e1e6;
+  --radius:12px;
+  --shadow:0 10px 20px rgba(0,0,0,0.06);
+  --icon-size:24px;
+}
+
+/* Base element styles that affect all pages */
+* { box-sizing: border-box; }
+
+html, body { margin:0; }
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
