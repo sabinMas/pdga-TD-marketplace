@@ -202,6 +202,18 @@ html { scroll-behavior: smooth; }
 }
 
 
+#logoutInline.btn.btn-box {
+  color: var(--thirdColor) !important;
+  border-color: var(--thirdColor);
+  background: var(--lightgrey);
+}
+
+#logoutInline.btn.btn-box:hover {
+  background: var(--thirdColor);
+  color: #fff !important;
+}
+
+
 /* Tournament / Top strip */
 .tournament-page-layout {
   display: block;

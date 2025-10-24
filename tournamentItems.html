@@ -33,7 +33,7 @@
           >
           <div class="icon">
             <a href="checkoutpage.html" class="btn btn-box" id="numCheckOut">
-              <img src="images/cart.svg" alt="cart icon">
+              <img src="images/cart.svg" alt="cart icon" />
               <span id="cartCount">0</span>
             </a>
           </div>
@@ -60,28 +60,19 @@
     <main class="container tournament-page-layout">
       <div id="top">
         <label>
-          <b>Event ID</b>
-          <input type="text" id="searchEventId" placeholder="search" />
+          <b>Search Park</b>
+          <input type="text" id="searchPark" placeholder="search" />
         </label>
       </div>
       <h3 id="eventInfo">Event Info</h3>
-      <label>
-        <b>Search Park</b>
-        <input type="text" id="searchPark" placeholder="search" />
-      </label>
-
-
       <div id="userInfo" class="event-user" hidden>
-        <h4 style="margin: 0">
-          Signed in as <span id="userName"></span>
-          <span class="pill">Tier <span id="userTier"></span></span>
-        </h4>
+        <h4 style="margin: 0">Signed in as <span id="userName"></span></h4>
 
-        <!-- NEW EVENT FIELDS -->
         <div class="muted" style="margin-top: 0.25rem">
           <b id="evtName"></b>
           <span id="evtTier" class="pill" style="margin-left: 6px"></span>
           <div id="evtMeta" style="margin-top: 0.25rem"></div>
+          <div id="evtId" class="muted" style="margin-top: 0.25rem"></div>
         </div>
 
         <button id="logoutInline" class="btn btn-box" type="button" style="margin-top: 0.5rem">
@@ -92,15 +83,6 @@
       <div id="guestInfo" class="event-user" hidden>
         <p class="muted" style="margin: 0.25rem 0">
           Not signed in. <a href="signIn.html" class="btn btn-box">Sign in</a>
-        </p>
-      </div>
-
-      <!-- Guest state -->
-      <div id="guestInfo" class="event-user" hidden>
-        <p class="muted" style="margin: 0.25rem 0">
-          Not signed in.
-          <a href="signIn.html" class="btn btn-box" style="margin-left: 0.25rem">Sign in</a> to link
-          items to your event.
         </p>
       </div>
 
@@ -568,12 +550,13 @@
 
           // show basic user
           document.getElementById('userName').textContent = saved.name || saved.username;
-          document.getElementById('userTier').textContent = saved.tier || '';
+          //document.getElementById('userTier').textContent = saved.tier || '';
 
           // show event info
           const evtName = document.getElementById('evtName');
           const evtTier = document.getElementById('evtTier');
           const evtMeta = document.getElementById('evtMeta');
+          const evtId = document.getElementById('evtId');
 
           if (saved.eventName) {
             evtName.innerHTML = saved.eventUrl
@@ -585,6 +568,11 @@
             evtName.textContent = 'No event linked yet';
             evtTier.textContent = '';
             evtMeta.textContent = '';
+          }
+          if (saved.eventId) {
+            evtId.textContent = `Event ID: ${saved.eventId}`;
+          } else {
+            evtId.textContent = '';
           }
 
           // logout button
