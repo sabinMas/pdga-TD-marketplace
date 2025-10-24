@@ -1,12 +1,13 @@
 var addToListBtns = document.getElementsByClassName('addToList');
-const numCheckOutref = document.getElementById('numCheckOut');
 var numCheckOut = 0;
+const cartCount = document.getElementById('cartCount');
 
+//function add/updates number of items to cart (doesn't fully add to cart yet)
 for (var btn of addToListBtns) {
   btn.addEventListener('click', () => {
     console.log('added to list');
     numCheckOut++;
-    numCheckOutref.innerHTML = 'Check Out: ' + numCheckOut;
+    cartCount.textContent = numCheckOut;
   });
 }
 
