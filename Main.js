@@ -1,13 +1,25 @@
 var addToListBtns = document.getElementsByClassName('addToList');
+
 const numCheckOutref = document.getElementById('numCheckOut');
 var numCheckOut = 0;
 
+var addToListBtns = document.getElementsByClassName('addToList');
+
+var shoppingList = [];
+
 for (var btn of addToListBtns) {
-  btn.addEventListener('click', () => {
-    console.log('added to list');
-    numCheckOut++;
-    numCheckOutref.innerHTML = 'Check Out: ' + numCheckOut;
-  });
+  var e = btn.closest('.product-details'); 
+  
+  
+  btn.addEventListener('click', addtoList(itemDetails));
+}
+
+function addtoList(itemDetails) {
+  var name = itemDetails.children[0].innerHTML;
+  console.log(name);
+  numCheckOut++;
+  numCheckOutref.innerHTML = 'Check Out: ' + numCheckOut;
+
 }
 
 /* Search Bar Mechanisim */
