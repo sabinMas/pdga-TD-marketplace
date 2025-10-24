@@ -260,6 +260,7 @@ html { scroll-behavior: smooth; }
   background: var(--lightgrey);
   color: var(--mainColor);
 }
+<<<<<<< HEAD
 
 .icon img{
   width: var(--icon-size) !important;
@@ -272,3 +273,5 @@ html { scroll-behavior: smooth; }
   display: flex;
   gap: 12px;
 }
+=======
+>>>>>>> 7c1451ed33e4aecae3228325cb1e063270180b0f

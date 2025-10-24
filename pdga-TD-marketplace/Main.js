@@ -1,13 +1,23 @@
 var addToListBtns = document.getElementsByClassName('addToList');
+<<<<<<< HEAD
 var numCheckOut = 0;
 const cartCount = document.getElementById('cartCount');
 
 //function add/updates number of items to cart (doesn't fully add to cart yet)
+=======
+const numCheckOutref = document.getElementById('numCheckOut');
+var numCheckOut = 0;
+
+>>>>>>> 7c1451ed33e4aecae3228325cb1e063270180b0f
 for (var btn of addToListBtns) {
   btn.addEventListener('click', () => {
     console.log('added to list');
     numCheckOut++;
+<<<<<<< HEAD
     cartCount.textContent = numCheckOut;
+=======
+    numCheckOutref.innerHTML = 'Check Out: ' + numCheckOut;
+>>>>>>> 7c1451ed33e4aecae3228325cb1e063270180b0f
   });
 }
 
