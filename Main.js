@@ -4,15 +4,18 @@ const cartCount = document.getElementById('cartCount');
 
 //function add/updates number of items to cart (doesn't fully add to cart yet)
 for (var btn of addToListBtns) {
-  var e = btn.closest('.product-details'); 
-  btn.addEventListener('click', () => {
-    //in work to figure out how to pass node to anoyoumous function
 
-    //var name = e.children[0].innerHTML;
-    //console.log(name);
+  btn.addEventListener('click', (event) => {
+
+    var currentProduct = event.target.closest('.product-details');
+    var name = currentProduct.children[0].innerHTML;
+    console.log(name)
+    
+    
     numCheckOut++;
     cartCount.textContent = numCheckOut;
-  } );
+  });
+   
 }
 
 //breaks cart counter   
