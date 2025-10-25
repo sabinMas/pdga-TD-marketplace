@@ -1,6 +1,9 @@
 var addToListBtns = document.getElementsByClassName('addToList');
 var numCheckOut = 0;
 const cartCount = document.getElementById('cartCount');
+const listBtn = document.getElementById('listBtn');
+
+var list = {}
 
 //function add/updates number of items to cart (doesn't fully add to cart yet)
 for (var btn of addToListBtns) {
@@ -9,25 +12,31 @@ for (var btn of addToListBtns) {
 
     var currentProduct = event.target.closest('.product-details');
     var name = currentProduct.children[0].innerHTML;
-    console.log(name)
     
+    var inList = false;
+    for(var item in list) {
+      if(name === item) {inList = true;}
+    }
+
+    if(!inList) {
+      list[name] = 1
+    } else {
+      list[name]++;
+    }
     
+    console.log(list);
     numCheckOut++;
     cartCount.textContent = numCheckOut;
   });
    
 }
 
-//breaks cart counter   
-//note to self: add this call to btn event listener later addtoList(e)
-//kinda works when called in the above forloop, 
-//but not adding it yet cause its not complete
-function addtoList(itemDetails) {
-  var name = itemDetails.children[0].innerHTML;
-  console.log(name);
-  numCheckOut++;
-  cartCount.textContent = numCheckOut;
-}
+listBtn.addEventListener('click') = function() {
+  for(item in list) {
+
+  }
+};
+
 
 /* Search Bar Mechanisim */
 // Note: this is only currently working for the tournamentItems.html page

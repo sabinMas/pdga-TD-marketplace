@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>List View</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src ="Main.js" defer></script>    
+    </head>
+    <body>
+        <h2>List of Items</h2>
+        <p>Stores close to: [park name here]</p>
+        <label>Radius(miles) <input type="range" min="100" max="300"></label>
+        <br>
+        <br>
+        <button>Generate</button>
+        <div id="listOutput">
+            <div class="item-details">
+                <p>item [item] --SPACING-- quantity [quantity]<input type="number" value="0"></p>
+                
+                <label>Local<input type="radio"></label>
+                <label>International<input type="radio"></label>
+            </div>
+        </div>
+    </body>
+</html>
