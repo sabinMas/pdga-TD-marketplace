@@ -34,10 +34,6 @@ for (var btn of addToListBtns) {
   });
 }
 
-//not functioning yet because list.html doesn't see the the listBtn on tournementItems.html
-//may need to do an on load or something
-//listBtn.addEventListener('click', listLoader);
-
 
 
   document.addEventListener('DOMContentLoaded', () => {

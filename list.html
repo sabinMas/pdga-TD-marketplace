@@ -14,7 +14,7 @@
         <a href="tournamentItems.html">return to stopping</a>
         <p class="showPark">Stores close to: [park name here]</p>
         <label>Radius(miles) 
-            <select name="radius">Radisu(miles)
+            <select name="radius">Radius(miles)
                 <option value="100">100mi</option>
                 <option value="200">200mi</option>
                 <option value="300">300mi</option>
@@ -27,8 +27,8 @@
         <!-- Generate: will create a list of stores that they can buy all local item from --> 
         <button>Generate</button>
         <span>--or--</span>
-        <button>All Online</button>
-        <button>All Local</button>
+        <button id="allOnline">All Online</button>
+        <button id="allLocal">All Local</button>
         
         <!-- List output -->
         <div id="listOutput">
@@ -38,7 +38,7 @@
                 <br>
                 <br>
                 <label>Local<input type="radio"></label>
-                <label>International<input type="radio"></label>
+                <label>Online<input type="radio"></label>
                 <span></span>
             </div>
         </div>
