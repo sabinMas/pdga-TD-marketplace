@@ -1,4 +1,4 @@
-
+//Javascript for list.html
 
 var listOutput = document.getElementById('listOutput')
 const allOnlineBtn = document.getElementById('allOnline');
@@ -21,20 +21,13 @@ var locOnlnUpdate = function(option) {
             if(wrapper.children[i].tagName == 'INPUT') {
                 console.log('inside input');
                 if(wrapper.children[i].value == option) {
-                    console.log('true');
                     wrapper.children[i].checked = true;
                 } else {
-                    console.log('false');
                     wrapper.children[i].checked = false;
                 }
             }
         }
     }
-    //get a list of all the wrappers
-    //loop through list of wrappers
-        //go through both label/inputs
-        //if the label != option then set checked to false
-        //if the label == option then set checked to true
 }
 
 document.addEventListener('DOMContentLoaded',() => {
