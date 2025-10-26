@@ -1,0 +1,69 @@
+/* index.css (migrated from home.css) */
+
+/* Auto-split from styles.css on refactor.
+   File: pages/home.css
+   NOTE: Review and adjust as needed. */
+
+/* === SECTIONS / HERO === */
+section {
+  padding: 56px 0;
+}
+/* === Home Page Icon Tweaks === */
+.cards .card-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.cards .card-icon img,
+.cards .card-icon svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+
+.hero {
+  background: var(--accentGradient);
+  color: #fff;
+  border-bottom: none;
+}
+.hero .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 3.4vw, 44px);
+  color: #fff;
+}
+.hero p {
+  margin: 0 0 18px;
+  color: #f0f6f8;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+/* Disc animation */
+.disc {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.spin {
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
