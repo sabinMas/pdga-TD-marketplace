@@ -5,9 +5,9 @@ const listBtn = document.getElementById('listBtn');
 
 var list = {}
 
-//function add/updates number of items to cart (doesn't fully add to cart yet)
+//for loop to add eventListeners to all 'add to list' buttons
 for (var btn of addToListBtns) {
-
+  //adds items to a list object, and counter for number of items in cart
   btn.addEventListener('click', (event) => {
 
     var currentProduct = event.target.closest('.product-details');
@@ -28,14 +28,47 @@ for (var btn of addToListBtns) {
     numCheckOut++;
     cartCount.textContent = numCheckOut;
   });
-   
 }
 
-listBtn.addEventListener('click') = function() {
+//not functioning yet because list.html doesn't see the the listBtn on tournementItems.html
+//may need to do an on load or something
+listBtn.addEventListener('click', function() {
+  var listOutput = document.getElementById('listOutput')
   for(item in list) {
+    var listItem = document.createElement('div');
+    listItem.classList.add('item-details');
+    var text = `
+      item: ${item} ==SPACING-- Qty: ${list[item]}`
+    var textNode = document.createTextNode(text)
+    console.log(textNode)
+    var newP = document.createElement('p')
+    newP.appendChild(textNode);
+    listItem.appendChild(newP);
+    
+    console.log(newP)
+    console.log(listItem);
+
+    var localTextNode = document.createTextNode('local');
+    var newLabel = document.createElement('label');
+    var newBtn = document.createElement('input');
+    newBtn.type = 'radio';
+    newLabel.appendChild(localTextNode);
+    newLabel.appendChild(newBtn)
+    listItem.appendChild(newLabel);
+
+    var IntTextNode = document.createTextNode('International');
+    newLabel = document.createElement('label');
+    newBtn = document.createElement('input');
+    newBtn.type = 'radio';
+    newLabel.appendChild(IntTextNode);
+    newLabel.appendChild(newBtn)
+    listItem.appendChild(newLabel);
+
+    listOutput.appendChild(listItem);
+    //console.log(listOutput);
 
   }
-};
+});
 
 
 /* Search Bar Mechanisim */
