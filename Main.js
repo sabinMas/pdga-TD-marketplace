@@ -24,51 +24,21 @@ for (var btn of addToListBtns) {
       list[name]++;
     }
     
+    localStorage.setItem('localList', JSON.stringify(list));
+    
     console.log(list);
     numCheckOut++;
     cartCount.textContent = numCheckOut;
+    console.log(localStorage.getItem('localList'))
+
   });
 }
 
 //not functioning yet because list.html doesn't see the the listBtn on tournementItems.html
 //may need to do an on load or something
-listBtn.addEventListener('click', function() {
-  var listOutput = document.getElementById('listOutput')
-  for(item in list) {
-    var listItem = document.createElement('div');
-    listItem.classList.add('item-details');
-    var text = `
-      item: ${item} ==SPACING-- Qty: ${list[item]}`
-    var textNode = document.createTextNode(text)
-    console.log(textNode)
-    var newP = document.createElement('p')
-    newP.appendChild(textNode);
-    listItem.appendChild(newP);
-    
-    console.log(newP)
-    console.log(listItem);
+//listBtn.addEventListener('click', listLoader);
 
-    var localTextNode = document.createTextNode('local');
-    var newLabel = document.createElement('label');
-    var newBtn = document.createElement('input');
-    newBtn.type = 'radio';
-    newLabel.appendChild(localTextNode);
-    newLabel.appendChild(newBtn)
-    listItem.appendChild(newLabel);
 
-    var IntTextNode = document.createTextNode('International');
-    newLabel = document.createElement('label');
-    newBtn = document.createElement('input');
-    newBtn.type = 'radio';
-    newLabel.appendChild(IntTextNode);
-    newLabel.appendChild(newBtn)
-    listItem.appendChild(newLabel);
-
-    listOutput.appendChild(listItem);
-    //console.log(listOutput);
-
-  }
-});
 
   document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('q');
