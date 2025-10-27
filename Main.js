@@ -2,6 +2,10 @@ var addToListBtns = document.getElementsByClassName('addToList');
 var numCheckOut = 0;
 const cartCount = document.getElementById('cartCount');
 const listBtn = document.getElementById('listBtn');
+if (listBtn) {
+    listBtn.addEventListener('click', function() {
+    });
+}
 
 var list = {}
 
@@ -34,30 +38,13 @@ for (var btn of addToListBtns) {
   });
 }
 
-
-
   document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.querySelector('.search');
     const searchInput = document.getElementById('q');
     const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
     const userInfo = document.getElementById('userInfo');
     const guestInfo = document.getElementById('guestInfo');
 
-    if (saved && saved.username) {
-      userInfo.hidden = false;
-      document.getElementById('userName').textContent = saved.name || saved.username;
-      document.getElementById('userTier').textContent = saved.tier || '';
-
-      document.getElementById('logoutInline').addEventListener('click', () => {
-        localStorage.removeItem('pdga_user');
-        location.reload();
-      });
-    } else {
-      guestInfo.hidden = false;
-    }
-
-    if (searchInput) {
-      searchInput.addEventListener('keyup', filterProducts)
-    }
     // function to filter products based on user input
     function filterProducts() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -74,5 +61,28 @@ for (var btn of addToListBtns) {
                 product.style.display = 'none'; // hides the product
             }
         });
+    }
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', (event) => {
+            event.preventDefault(); 
+        });
+    }
+
+    if (saved && saved.username) {
+      userInfo.hidden = false;
+      document.getElementById('userName').textContent = saved.name || saved.username;
+      document.getElementById('userTier').textContent = saved.tier || '';
+
+      document.getElementById('logoutInline').addEventListener('click', () => {
+        localStorage.removeItem('pdga_user');
+        location.reload();
+      });
+    } else {
+      guestInfo.hidden = false;
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('keyup', filterProducts)
     }
 });
