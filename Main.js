@@ -39,7 +39,6 @@ for (var btn of addToListBtns) {
 }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.querySelector('.search');
     const searchInput = document.getElementById('q');
     const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
     const userInfo = document.getElementById('userInfo');
@@ -60,12 +59,6 @@ for (var btn of addToListBtns) {
             } else {
                 product.style.display = 'none'; // hides the product
             }
-        });
-    }
-
-    if (searchForm) {
-        searchForm.addEventListener('submit', (event) => {
-            event.preventDefault(); 
         });
     }
 
