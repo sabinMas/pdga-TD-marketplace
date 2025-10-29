@@ -48,7 +48,7 @@ for (var btn of addToListBtns) {
     // function to filter products based on user input
     function filterProducts() {
         const searchTerm = searchInput.value.toLowerCase();
-        const products = document.querySelectorAll('.product-card');
+        const products = document.querySelectorAll(' .product-grid article.product-card');
 
         // looping through each product for user input match if corresponds
         // too h3 value
@@ -64,7 +64,7 @@ for (var btn of addToListBtns) {
     }
 
     if (searchForm) {
-        searchForm.addEventListener('submit', (event) => {
+        searchForm.addEventListener('input', (event) => {
             event.preventDefault(); 
         });
     }
