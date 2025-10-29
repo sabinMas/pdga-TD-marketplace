@@ -39,7 +39,6 @@ for (var btn of addToListBtns) {
 }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.querySelector('.search');
     const searchInput = document.getElementById('q');
     const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
     const userInfo = document.getElementById('userInfo');
