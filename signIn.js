@@ -127,25 +127,25 @@ function addToLocalList(name, qty = 1) {
         title: 'Mando Arrows',
         img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
         href: 'tournamentItems.html#Safety',
-        qty: 1
+        qty: 10
       },
       {
-        title: 'Orange Marking Paint case of 12',
+        title: 'Orange Marking Paint',
         img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
         href: 'tournamentItems.html#courseSetup',
-        qty: 1
+        qty: 12
       },
       {
         title: 'High Visibility Safety Vest 5 count',
         img: 'https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism',
         href: 'tournamentItems.html#PlayerPacks',
-        qty: 1
+        qty: 5
       },
       {
-        title: 'Orange Safety Cones 36',
+        title: 'Orange Safety Cones 18',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
         href: 'tournamentItems.html#courseSetup',
-        qty: 1
+        qty: 18
       },
 
       {
@@ -172,32 +172,33 @@ function addToLocalList(name, qty = 1) {
         title: 'Starter Player Packs',
         img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
         href: 'tournamentItems.html#PlayerPacks',
-        qty: 1
+        customize: true,
+        customizeHref:''
       },
       {
         title: 'Mando Arrows',
         img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
         href: 'tournamentItems.html#Safety',
-        qty: 1
+        qty: 6
       },
       {
-        title: 'Orange Marking Paint case of 6',
+        title: 'Orange Marking Paint',
         img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
         href: 'tournamentItems.html#courseSetup',
-        qty: 1
+        qty: 6
       },
 
       {
-        title: 'Orange Safety Cones 15 count',
+        title: 'Orange Safety Cones',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
         href: 'tournamentItems.html#Safety',
-        qty: 1
+        qty: 15
       },
       {
-        title: 'Stakes Kit 10 count',
+        title: 'Boundary Stakes',
         img: 'https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl',
         href: 'tournamentItems.html#Safety',
-        qty: 1
+        qty: 10
       },
       {
         title: 'PDGA T-Shirts Bulk',
