@@ -67,7 +67,7 @@
 
 .payment-sidebar hr {
   border: none;
-  height: 3px;
+  height: 2px;
   background-color: #353941;
   width: 50%;
   margin-left: 3%;
@@ -100,8 +100,7 @@
 }
 
 .bank-button:hover {
-  background-color: bisque;
-  border-color: whitesmoke;
+  border-color: black;
   transform: scale(1.05);
 }
 
@@ -111,18 +110,14 @@
   object-fit: contain;
 }
 
-.card-payment-logos img {
-  height: 70px;
-  width: auto;
-  padding-left: 30px;
-}
-
 #paypal {
   background-color: #ffd344;  
+  box-shadow: 0 2px 4px 2px grey;
 }
 
 #shop-pay {
   background-color: #5a31f4;
+  box-shadow: 0 2px 4px 2px grey;
 }
 
 #shop-pay img {
@@ -131,6 +126,7 @@
 
 #amazon-pay {
   background-color: #ff9900;
+  box-shadow: 0 2px 4px 2px grey;
 }
 
 #amazon-pay img {
@@ -139,4 +135,20 @@
 
 #apple-pay {
   background-color: #DEDEDE;
+  box-shadow: 0 2px 4px 2px grey;
+}
+
+/* Pay with card section */
+.card-payment-logos img {
+  height: 70px;
+  width: auto;
+  margin-left: 10%;
+  box-shadow: 0 4px 8px 2px rgb(78, 78, 78);
+}
+.card-payment-logos {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-payment-logos:hover{
+  transform: scale(1.05);
 }
