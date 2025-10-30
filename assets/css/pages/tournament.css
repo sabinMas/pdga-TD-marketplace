@@ -3,7 +3,7 @@
    File: pages/tournament.css
    NOTE: Review and adjust as needed. */
 
-   /* New styles to unify product cards and maintain bold/muted text */
+/* New styles to unify product cards and maintain bold/muted text */
 
 /* Grid layout for all product sections */
 .product-grid {
@@ -76,7 +76,7 @@
   font-size: 1rem;
   font-weight: 600;
   margin: 0.5rem 0;
-  color: var(--accent, #007FAF);
+  color: var(--accent, #007faf);
 }
 
 /* Product buttons container */
@@ -115,9 +115,9 @@
 /* Use the same grid rules as for Player Packs */
 .course-setup-products,
 .safety-products {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(01,1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(01, 1fr));
+  gap: 1rem;
 }
 
 /* === Product Card Hover Effects === */
@@ -179,7 +179,9 @@
   transition: color 0.3s ease;
 }
 /* smooth anchor jumps */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 /* offset targets so sticky header + subnav don't cover them */
 .tournament-page-layout h2[id],
@@ -201,7 +203,6 @@ html { scroll-behavior: smooth; }
   }
 }
 
-
 #logoutInline.btn.btn-box {
   color: var(--thirdColor) !important;
   border-color: var(--thirdColor);
@@ -212,7 +213,6 @@ html { scroll-behavior: smooth; }
   background: var(--thirdColor);
   color: #fff !important;
 }
-
 
 /* Tournament / Top strip */
 .tournament-page-layout {
@@ -273,14 +273,147 @@ html { scroll-behavior: smooth; }
   color: var(--mainColor);
 }
 
-.icon img{
+.icon img {
   width: var(--icon-size) !important;
   height: var(--icon-size) !important;
   max-width: 100%;
   max-height: 100%;
 }
 
-.header-actions{
+.header-actions {
   display: flex;
   gap: 12px;
 }
+
+/* --- Ensure image never swallows the card --- */
+.product-card {
+  display: block;
+} /* baseline */
+.flip-front,
+.flip-back {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Constrain the image region to a predictable box */
+.flip-front .product-image,
+.flip-back .product-image {
+  width: 100%;
+  aspect-ratio: 4 / 3; /* keeps consistent tile shape */
+  max-height: 230px; /* hard ceiling on tall screens */
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 0 0 0.75rem 0;
+}
+.flip-front .product-image img,
+.flip-back .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill without distorting */
+}
+
+/* Details area becomes a column so the CTA can stick to the bottom */
+.flip-front .product-details,
+.flip-back .product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 140px; /* space for title + price + button */
+}
+
+/* Always keep the action button visible */
+.flip-front .product-details .show-details,
+.flip-back .product-buttons {
+  margin-top: auto; /* pin to bottom of the details column */
+}
+
+/* If you have faces without .product-details wrappers, still protect the button */
+.flip-front .btn.show-details {
+  margin-top: auto;
+}
+
+/* === FLIP CARD: force front/back separation & visibility === */
+.product-card.flip-card {
+  perspective: 1000px;
+}
+
+.product-card.flip-card .flip-inner {
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  will-change: transform;
+  min-height: 440px; /* ensures a visible card height */
+}
+
+.product-card.flip-card.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+/* Take faces out of normal flow so they overlap */
+.product-card.flip-card .flip-front,
+.product-card.flip-card .flip-back {
+  position: absolute !important; /* override any earlier layout rules */
+  inset: 0 !important; /* top/right/bottom/left: 0 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 1rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: auto; /* scroll if content taller than face */
+}
+
+/* Make sure only one face is visible at a time */
+.product-card.flip-card .flip-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+.product-card.flip-card .flip-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* Keep images from swallowing the face and keep CTA visible */
+.product-card.flip-card .product-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  max-height: 230px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 0 0 0.75rem 0;
+}
+.product-card.flip-card .product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-card.flip-card .product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 140px;
+}
+.product-card.flip-card .show-details,
+.product-card.flip-card .product-buttons {
+  margin-top: auto;
+}
+/* --- Match 'Back' button to Add to List style --- */
+.btn.close-details {
+  background: var(--lightgrey, #e5e5e5);  /* same tone used on Add to List */
+  color: var(--text, #222);
+  border: 1px solid var(--border, #ccc);
+  font-weight: 600;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.btn.close-details:hover {
+  background: var(--thirdColor, #007faf); /* PDGA accent on hover */
+  color: #fff;
+  border-color: transparent;
+}
+
