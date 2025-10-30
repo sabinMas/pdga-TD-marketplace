@@ -1,59 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>List View</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src ="listLoader.js" defer></script>    
-    </head>
-    <body>
-        <!-- Inputs for shopping radius -->
-        <h2>List of your Items</h2>
-        <a href="tournamentItems.html">return to stopping</a>
-        <p class="showPark">Stores close to: [park name here]</p>
-        <label>Radius(miles) 
-            <select name="radius">Radius(miles)
-                <option value="100">100mi</option>
-                <option value="200">200mi</option>
-                <option value="300">300mi</option>
-            </select>
-        </label>
-        <br>
-        <br>
-        <!-- might move generate button to the bottom -->
-        <!-- required: local or international for every item -->
-        <!-- Generate: will create a list of stores that they can buy all local item from --> 
-        <button>Generate</button>
-        <span>--or--</span>
-        <button id="allOnline">All Online</button>
-        <button id="allLocal">All Local</button>
-        
-        <!-- List output -->
-        <div id="listOutput">
-            <!-- 
-            <div class="item-details">
-                <p>item [item] --SPACING-- quantity [quantity]<input type="number" value="0"></p>
-                <em>available at PDGA warehouse</em>
-                <br>
-                <br>
-                <div class="locOnlnBtnWrapper">
-                    <label>Local</label>
-                    <input type="radio" value="local">
-                    <label>Online</label>
-                    <input type="radio" value="online">
-                </div>
-                <span></span>
-            </div>
-            -->
-        </div>
-        <p>
-            note:
-            this is to checkout items we will have the user buy from PDGA themselves
-        </p>
-        <a href="checkoutpage.html" class="" id="numCheckOut">
-             <span id="cartCount">checkout</span>
-        </a>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>List View</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- In <head> (before listLoader.js) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+    <script src="listLoader.js" defer></script>
+  </head>
+  <body>
+    <!-- Inputs for shopping radius -->
+    <h2>List of your Items</h2>
+    <a href="tournamentItems.html">return to stopping</a>
+    <!-- In <body>, replace the radius/select + buttons block -->
+<p class="showPark">Stores close to: [park name here]</p>
+
+<label>ZIP Code
+  <input id="zip" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 98030" />
+</label>
+
+<label>Radius (miles)
+  <select id="radius" name="radius">
+    <option value="10">10mi</option>
+    <option value="25">25mi</option>
+    <option value="50" selected>50mi</option>
+    <option value="100">100mi</option>
+  </select>
+</label>
+
+<div style="margin: 10px 0;">
+  <button id="findStoresBtn">Find Local Stores</button>
+  <span>— or —</span>
+  <button id="allOnline">All Online</button>
+  <button id="allLocal">All Local</button>
+</div>
+
+<!-- New: Map and results -->
+<div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
+<ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
+
+<!-- Items you added to the list render here -->
+<section id="listOutput" class="item-list"></section>
+
+<a href="checkoutpage.html" id="numCheckOut">
+  <span id="cartCount">checkout</span>
+</a>
+
+  </body>
 </html>
