@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/checkout.css" />
+    <script defer src="javaScripts/checkout.js"></script>
 </head>
 <body>
     <!-- HEADER -->
@@ -21,7 +22,7 @@
     
     <main class="container-fluid checkout-layout"> 
       <div id="checkoutHeader">
-        <h1>Tournament Director Checkout</h1>
+        <h1>Checkout</h1>
         <hr>
       </div>
       
@@ -40,18 +41,18 @@
           <hr>
             <div class="four-payments">
               <div class="bank-logos">  
-                <div class="shop-logo">
-                  <img src="https://images.seeklogo.com/logo-png/45/2/shop-pay-logo-png_seeklogo-450730.png" alt="Shop pay logo">
-                </div>
-                <div class="paypal-logo">
+                <a href="https://shop.app/shop-pay/" id="shop-pay" class="bank-button">
+                  <img src="https://cdn.shopify.com/s/files/1/1940/8677/files/ShopPay_-_White.png?v=1707075873" alt="Shop pay logo">
+                </a>
+                <a href="https://www.paypal.com/us/home" id="paypal" class="bank-button">
                   <img src="https://freepngimg.com/thumb/paypal/2-2-paypal-logo-transparent-png-thumb.png" alt="Paypal logo">
-                </div>
-                <div class="amazon-logo">
+                </a>
+                <a href="https://pay.amazon.com/" id="amazon-pay" class="bank-button">
                   <img src="https://www.omt.de/uploads/2020/06/Amazon-Pay-.png" alt="amazon pay logo">
-                </div>
-                <div class="applepay-logo">
+                </a>
+                <a href="https://www.apple.com/apple-pay/" id="apple-pay" class="bank-button">
                   <img src="https://cdn-icons-png.flaticon.com/512/5977/5977576.png" alt="apple pay logo">
-                </div>
+                </a>
               </div>
             </div>
 
