@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/tournament.css" />
-    <script defer src="main.js"></script>
+    <script defer src="Main.js"></script>
   </head>
   <body>
     <!-- HEADER -->
@@ -92,76 +92,181 @@
         <h2 id="PlayerPacks">Player Packs</h2>
         <div class="product-grid">
           <!-- Tier A pack -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
-                alt="Premium Player Pack"
-              />
-            </div>
-            <div class="product-details">
-              <h3>Premium Player Pack</h3>
-              <p class="quantityInfo">Included In Pack</p>
-              <ul class="quantityInfo">
-                <li>2 Discs</li>
-                <li>Shirt</li>
-                <li>Water Bottle</li>
-                <li>Hat</li>
-                <li>Stickers</li>
-                <li>Mini Disc</li>
-                <li>Golf Towel</li>
-              </ul>
-              <p class="price">$35.00–$50.00</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <!-- FRONT -->
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                    alt="Premium Player Pack"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3>Premium Player Pack</h3>
+                  <p class="price">$35.00–$50.00</p>
+                  <button class="btn show-details">View Details</button>
+                </div>
+              </div>
+              <!-- BACK -->
+              <div class="flip-back">
+                <h3>Premium Player Pack — Options</h3>
+                <p class="quantityInfo">Included In Pack (toggle to remove):</p>
+                <ul class="quantityInfo">
+                  <li>
+                    <label><input type="checkbox" checked /> 2 Discs (Driver + Putter)</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Shirt</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Water Bottle</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Hat</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Stickers</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Mini Disc</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Golf Towel</label>
+                  </li>
+                </ul>
+                <div class="quantityInfo" style="display: grid; gap: 0.5rem">
+                  <label
+                    >Shirt Size:
+                    <select>
+                      <option>Mixed (S–XL)</option>
+                      <option>Men’s</option>
+                      <option>Women’s</option>
+                      <option>Youth</option>
+                    </select>
+                  </label>
+                  <label
+                    >Disc Plastic:
+                    <select>
+                      <option>Premium</option>
+                      <option>Baseline</option>
+                    </select>
+                  </label>
+                  <label
+                    >Pack Quantity:
+                    <input type="number" min="1" value="1" />
+                  </label>
+                </div>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Tier B pack -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
-                alt="Standard Player Pack"
-              />
-            </div>
-            <div class="product-details">
-              <h3>Intermidate (PlayerPack)</h3>
-              <p class="quantityInfo">Included In Pack</p>
-              <ul class="quantityInfo">
-                <li>Mid Range or Putter Disc</li>
-                <li>Shirt</li>
-                <li>Water Bottle</li>
-                <li>Hat</li>
-                <li>Sticker</li>
-              </ul>
-              <p class="price">$15.99–$30.00</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                    alt="Standard Player Pack"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3>Intermidate (PlayerPack)</h3>
+                  <p class="price">$15.99–$30.00</p>
+                  <button class="btn show-details">View Details</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Intermediate Pack — Options</h3>
+                <ul class="quantityInfo">
+                  <li>
+                    <label><input type="checkbox" checked /> 1 Disc (Mid / Putter)</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Shirt</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Water Bottle</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Hat</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Sticker</label>
+                  </li>
+                </ul>
+                <div class="quantityInfo" style="display: grid; gap: 0.5rem">
+                  <label
+                    >Disc Type:
+                    <select>
+                      <option>Midrange</option>
+                      <option>Putter</option>
+                    </select>
+                  </label>
+                  <label
+                    >Pack Quantity:
+                    <input type="number" min="1" value="1" />
+                  </label>
+                </div>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Tier C pack -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
-                alt="Starter Player Pack"
-              />
-            </div>
-            <div class="product-details">
-              <h3>Basic (PlayerPack)</h3>
-              <p class="quantityInfo">Included In Pack</p>
-              <ul class="quantityInfo">
-                <li>Mid Range or Putter Disc</li>
-                <li>Shirt</li>
-                <li>Water Bottle</li>
-              </ul>
-              <p class="price">$5.00–$13.99</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                    alt="Starter Player Pack"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3>Basic (PlayerPack)</h3>
+                  <p class="price">$5.00–$13.99</p>
+                  <button class="btn show-details">View Details</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Basic Pack — Options</h3>
+                <ul class="quantityInfo">
+                  <li>
+                    <label><input type="checkbox" checked /> Mid Range or Putter Disc</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Shirt</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Water Bottle</label>
+                  </li>
+                </ul>
+                <div class="quantityInfo" style="display: grid; gap: 0.5rem">
+                  <label
+                    >Disc Type:
+                    <select>
+                      <option>Midrange</option>
+                      <option>Putter</option>
+                    </select>
+                  </label>
+                  <label
+                    >Pack Quantity:
+                    <input type="number" min="1" value="1" />
+                  </label>
+                </div>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
@@ -173,109 +278,237 @@
         <h2 id="courseSetup">Course Setup Products</h2>
         <div class="product-grid">
           <!-- Marking spray paint -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950"
-                alt="White spray can"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Marking Paint Spray Cans</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$9.98</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950"
+                    alt="White spray can"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Marking Paint Spray Cans</h3>
+                  <p class="price">$9.98</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Marking Paint — Options</h3>
+                <label
+                  >Color:
+                  <select>
+                    <option>Orange</option>
+                    <option>White</option>
+                    <option>Yellow</option>
+                    <option>Blue</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Navigational arrows -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php"
-                alt="Navigational arrows signs"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">High Visibility Navigational Arrows</h3>
-              <p class="quantityInfo">no minimum quantity — bulk discounts at 36+</p>
-              <p class="price">$15 – $30</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php"
+                    alt="Navigational arrows signs"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">High Visibility Navigational Arrows</h3>
+                  <p class="price">$15 – $30</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Navigational Arrows — Options</h3>
+                <label
+                  >Color:
+                  <select>
+                    <option>Yellow</option>
+                    <option>Orange</option>
+                    <option>Green</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <p class="quantityInfo">Bulk discounts at 36+ units.</p>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Mando arrows -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php"
-                alt="Mando arrow sign"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">High Visibility Mando Arrows</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$30 – $75</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php"
+                    alt="Mando arrow sign"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">High Visibility Mando Arrows</h3>
+                  <p class="price">$30 – $75</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Mando Arrows — Options</h3>
+                <label
+                  >Direction:
+                  <select>
+                    <option>Left</option>
+                    <option>Right</option>
+                    <option>Double</option>
+                  </select>
+                </label>
+                <label
+                  >Color:
+                  <select>
+                    <option>Yellow</option>
+                    <option>Orange</option>
+                    <option>Red</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Artificial turf tee pad -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://discstore.com/cdn/shop/files/Teepad-3.jpg?v=1738258016&width=1400"
-                alt="Artificial disc golf tee pad"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Artificial Turf Tee Pad</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$250</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://discstore.com/cdn/shop/files/Teepad-3.jpg?v=1738258016&width=1400"
+                    alt="Artificial disc golf tee pad"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Artificial Turf Tee Pad</h3>
+                  <p class="price">$250</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Tee Pad — Options</h3>
+                <label
+                  >Size:
+                  <select>
+                    <option>4' x 8'</option>
+                    <option>5' x 10'</option>
+                    <option>6' x 12'</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Portable disc golf baskets -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-macro-disc-golf-basket-359898.jpg?v=1723190785&width=1380"
-                alt="Portable disc golf basket"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Disc Golf Portable Baskets</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$100 – $175</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-macro-disc-golf-basket-359898.jpg?v=1723190785&width=1380"
+                    alt="Portable disc golf basket"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Disc Golf Portable Baskets</h3>
+                  <p class="price">$100 – $175</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Portable Basket — Options</h3>
+                <label
+                  >Model:
+                  <select>
+                    <option>Lite</option>
+                    <option>Pro</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Permanent disc golf baskets -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-portal-disc-golf-basket-permanent-version-2-272889.jpg?v=1759445108&width=1380"
-                alt="Permanent disc golf basket"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Disc Golf Permanent Baskets</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$400 – $700</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://discgolfdealsusa.com/cdn/shop/files/mvp-black-hole-portal-disc-golf-basket-permanent-version-2-272889.jpg?v=1759445108&width=1380"
+                    alt="Permanent disc golf basket"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Disc Golf Permanent Baskets</h3>
+                  <p class="price">$400 – $700</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Permanent Basket — Options</h3>
+                <label
+                  >Coating:
+                  <select>
+                    <option>Galvanized</option>
+                    <option>Powder-Coated</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
@@ -287,91 +520,192 @@
         <h2 id="Safety">Safety Products</h2>
         <div class="product-grid">
           <!-- Safety vest -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism"
-                alt="High visibility safety vest"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">High Visibility Safety Vest</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$12.88</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism"
+                    alt="High visibility safety vest"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">High Visibility Safety Vest</h3>
+                  <p class="price">$12.88</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Safety Vest — Options</h3>
+                <label
+                  >Size:
+                  <select>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                    <option>XXL</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Orange safety cones -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism"
-                alt="Orange safety cone"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Orange Safety Cones</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$12.99 – $15.99</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism"
+                    alt="Orange safety cone"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Orange Safety Cones</h3>
+                  <p class="price">$12.99 – $15.99</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Safety Cones — Options</h3>
+                <label
+                  >Height:
+                  <select>
+                    <option>18"</option>
+                    <option>28"</option>
+                    <option>36"</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- First aid kit -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://firstaidsuppliesonline.com/wp-content/uploads/2023/10/68-BANSI-RR-1024x1024.png"
-                alt="First aid kit"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">First Aid Kit</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$150</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://firstaidsuppliesonline.com/wp-content/uploads/2023/10/68-BANSI-RR-1024x1024.png"
+                    alt="First aid kit"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">First Aid Kit</h3>
+                  <p class="price">$150</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>First Aid Kit — Options</h3>
+                <label
+                  >Capacity:
+                  <select>
+                    <option>25 Person</option>
+                    <option>50 Person</option>
+                    <option>100 Person</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Landscape stake -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl"
-                alt="Landscape stake"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Landscape Stake</h3>
-              <p class="quantityInfo">minimum quantity 12</p>
-              <p class="price">$12.78</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl"
+                    alt="Landscape stake"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Landscape Stake</h3>
+                  <p class="price">$12.78</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Landscape Stake — Options</h3>
+                <label
+                  >Length:
+                  <select>
+                    <option>12"</option>
+                    <option>18"</option>
+                    <option>24"</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity (min 12):
+                  <input type="number" min="12" value="12" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Safety whistle -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mobileimages.lowes.com/productimages/d7ff1e22-4686-48c5-8375-057327b23d1e/49882355.jpg?size=xl"
-                alt="Safety whistle"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Safety Whistle</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$3.99</p>
-              <div class="product-buttons">
-                <button class="btn addToList">+ add to list</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/d7ff1e22-4686-48c5-8375-057327b23d1e/49882355.jpg?size=xl"
+                    alt="Safety whistle"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Safety Whistle</h3>
+                  <p class="price">$3.99</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Safety Whistle — Options</h3>
+                <label
+                  >Color:
+                  <select>
+                    <option>Orange</option>
+                    <option>Black</option>
+                    <option>Yellow</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
@@ -385,145 +719,251 @@
         </div>
         <div class="product-grid">
           <!-- Custom DyeMax disc or marker -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946"
-                alt="Custom DyeMax disc or marker"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Custom DyeMax Disc or Marker</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$7.99 – $24.99</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946"
+                    alt="Custom DyeMax disc or marker"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Custom DyeMax Disc or Marker</h3>
+                  <p class="price">$7.99 – $24.99</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Artwork</h3>
+                <p class="quantityInfo">Supported: PNG, JPG, SVG</p>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Backstock PDGA discs bulk -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUmKUOpPEGAQTqbb1Z294tv3uuhLTuhDFL8Q&s"
-                alt="Backstock PDGA discs bulk"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Backstock PDGA Discs Bulk</h3>
-              <p class="quantityInfo">minimum quantity 25</p>
-              <p class="price">$6.00 – $14.00</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUmKUOpPEGAQTqbb1Z294tv3uuhLTuhDFL8Q&s"
+                    alt="Backstock PDGA discs bulk"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Backstock PDGA Discs Bulk</h3>
+                  <p class="price">$6.00 – $14.00</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Bulk List / Logo</h3>
+                <p class="quantityInfo">Upload CSV of molds or a logo for stamps.</p>
+                <input type="file" accept=".csv,.png,.jpg,.svg" />
+                <label
+                  >Quantity (min 25):
+                  <input type="number" min="25" value="25" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Sport-Tek tee -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent"
-                alt="Sport‑Tek tee"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Sport‑Tek Tee</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$7.53 – $12.90</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent"
+                    alt="Sport-Tek tee"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Sport-Tek Tee</h3>
+                  <p class="price">$7.53 – $12.90</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Shirt Artwork</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="12" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
-          <!-- PDGA event t‑shirts bulk -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp"
-                alt="PDGA event t‑shirts bulk"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">PDGA Event T‑Shirts Bulk</h3>
-              <p class="quantityInfo">minimum quantity 25</p>
-              <p class="price">$2.50 – $8.00</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <!-- PDGA event t-shirts bulk -->
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp"
+                    alt="PDGA event t-shirts bulk"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">PDGA Event T-Shirts Bulk</h3>
+                  <p class="price">$2.50 – $8.00</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Event Logo</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity (min 25):
+                  <input type="number" min="25" value="25" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Montego water bottle -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mms-images.out.customink.com/mms/images/catalog/cfaa4708e469a82caff0647cc72b69b5/styles/872600/supporting/2.jpg?ixq=60&ixw=700"
-                alt="21 oz Montego water bottle"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">21 oz Montego Water Bottle</h3>
-              <p class="quantityInfo">minimum quantity 36</p>
-              <p class="price">$4.50/ea for 100 items</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mms-images.out.customink.com/mms/images/catalog/cfaa4708e469a82caff0647cc72b69b5/styles/872600/supporting/2.jpg?ixq=60&ixw=700"
+                    alt="21 oz Montego water bottle"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">21 oz Montego Water Bottle</h3>
+                  <p class="price">$4.50/ea for 100 items</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Bottle Artwork</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity (min 36):
+                  <input type="number" min="36" value="36" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Custom hat -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://rendering.mcp.cimpress.com/v2/vp/preview?height=816&width=816&scene=https%3A%2F%2Fcdn.scenes.documents.cimpress.io%2Fv3%2Fassets%2F4dc716a5-1d96-4665-b302-6c8bdbd167b9%2Fcontent&overrideThreadId=mcp3544"
-                alt="Custom hat preview"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Custom Hat</h3>
-              <p class="quantityInfo">no minimum quantity</p>
-              <p class="price">$8.57 – $29.36</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://rendering.mcp.cimpress.com/v2/vp/preview?height=816&width=816&scene=https%3A%2F%2Fcdn.scenes.documents.cimpress.io%2Fv3%2Fassets%2F4dc716a5-1d96-4665-b302-6c8bdbd167b9%2Fcontent&overrideThreadId=mcp3544"
+                    alt="Custom hat preview"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Custom Hat</h3>
+                  <p class="price">$8.57 – $29.36</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Hat Artwork</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="12" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Custom towels (cotton) -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://mms-images.out.customink.com/mms/images/catalog/458c6b518aa3c0abc3e2491b23df7fea/colors/334203/views/alt/front_large.png?autoNegate=1&design=nmp0-00cp-p60w&digest=000000028&imembroider=1&ixbg=%23f5f5f5&ixfm=jpeg&ixq=60&ixw=900&placeMax=1&placeMaxPct=0.8&placeUseProduct=1&placeUseView=front"
-                alt="Custom towel cotton"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Custom Towels — Cotton</h3>
-              <p class="quantityInfo">minimum quantity 25</p>
-              <p class="price">$25.05/ea for 75 items</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mms-images.out.customink.com/mms/images/catalog/458c6b518aa3c0abc3e2491b23df7fea/colors/334203/views/alt/front_large.png?autoNegate=1&design=nmp0-00cp-p60w&digest=000000028&imembroider=1&ixbg=%23f5f5f5&ixfm=jpeg&ixq=60&ixw=900&placeMax=1&placeMaxPct=0.8&placeUseProduct=1&placeUseView=front"
+                    alt="Custom towel cotton"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Custom Towels — Cotton</h3>
+                  <p class="price">$25.05/ea for 75 items</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Towel Artwork</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity (min 25):
+                  <input type="number" min="25" value="25" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>
 
           <!-- Custom disc golf stickers -->
-          <article class="product-card">
-            <div class="product-image">
-              <img
-                src="https://dgcoursecollector.com/cdn/shop/files/custompdgaplayerstickerlow3.jpg?v=1723034157&width=1445"
-                alt="Custom disc golf stickers"
-              />
-            </div>
-            <div class="product-details">
-              <h3 class="product-name">Custom Disc Golf Stickers</h3>
-              <p class="quantityInfo">minimum quantity 10</p>
-              <p class="price">$9.99 for 10</p>
-              <div class="product-buttons">
-                <button class="btn">+ Customize</button>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://dgcoursecollector.com/cdn/shop/files/custompdgaplayerstickerlow3.jpg?v=1723034157&width=1445"
+                    alt="Custom disc golf stickers"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Custom Disc Golf Stickers</h3>
+                  <p class="price">$9.99 for 10</p>
+                  <button class="btn show-details">Customize</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Upload Sticker Artwork</h3>
+                <input type="file" accept=".png,.jpg,.svg" />
+                <label
+                  >Quantity (min 10):
+                  <input type="number" min="10" value="10" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add Custom Item</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
               </div>
             </div>
           </article>

@@ -1,87 +1,88 @@
-var addToListBtns = document.getElementsByClassName('addToList');
-var numCheckOut = 0;
+// ===== Cart bootstrap =====
+let list = {};
+try { list = JSON.parse(localStorage.getItem('localList') || '{}'); } catch {}
 const cartCount = document.getElementById('cartCount');
-const listBtn = document.getElementById('listBtn');
-if (listBtn) {
-    listBtn.addEventListener('click', function() {
+function updateCartCountFromList(){
+  if (!cartCount) return;
+  const total = Object.values(list).reduce((a,b)=>a + Number(b||0), 0);
+  cartCount.textContent = total;
+}
+updateCartCountFromList();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('q');
+  const searchForm  = document.querySelector('form[role="search"]'); // ✅ defined
+  const saved       = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+  const userInfo    = document.getElementById('userInfo');
+  const guestInfo   = document.getElementById('guestInfo');
+
+  // --- sign-in UI ---
+  if (saved && saved.username) {
+    userInfo && (userInfo.hidden = false);
+    const nameEl = document.getElementById('userName');
+    const tierEl = document.getElementById('userTier');
+    if (nameEl) nameEl.textContent = saved.name || saved.username;
+    if (tierEl) tierEl.textContent = saved.tier || '';
+    document.getElementById('logoutInline')?.addEventListener('click', () => {
+      localStorage.removeItem('pdga_user'); location.reload();
     });
-}
+  } else {
+    guestInfo && (guestInfo.hidden = false);
+  }
 
-var list = {}
+  // --- search ---
+  function filterProducts(){
+    const q = (searchInput?.value || '').toLowerCase();
+    document.querySelectorAll('.product-grid article.product-card').forEach(card=>{
+      const title = (card.querySelector('.flip-front h3, h3.product-name, .product-details h3, h3')?.textContent || '').toLowerCase();
+      card.style.display = title.includes(q) ? '' : 'none';
+    });
+  }
+  if (searchForm) searchForm.addEventListener('input', e=>e.preventDefault());
+  if (searchInput) searchInput.addEventListener('keyup', filterProducts);
 
-//for loop to add eventListeners to all 'add to list' buttons
-for (var btn of addToListBtns) {
-  //adds items to a list object, and counter for number of items in cart
-  btn.addEventListener('click', (event) => {
-
-    var currentProduct = event.target.closest('.product-details');
-    var name = currentProduct.children[0].innerHTML;
-    
-    var inList = false;
-    for(var item in list) {
-      if(name === item) {inList = true;}
-    }
-
-    if(!inList) {
-      list[name] = 1
-    } else {
-      list[name]++;
-    }
-    
-    localStorage.setItem('localList', JSON.stringify(list));
-    
-    console.log(list);
-    numCheckOut++;
-    cartCount.textContent = numCheckOut;
-    console.log(localStorage.getItem('localList'))
-
+  // --- add to list (works from front/back) ---
+  function getCardName(card){
+    return (card.querySelector('.flip-front .product-details h3, .flip-front h3, h3.product-name, .product-details h3, h3')?.textContent || 'Unnamed Item').trim();
+  }
+  document.querySelectorAll('.addToList').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const card = e.target.closest('article.product-card'); if (!card) return;
+      const name = getCardName(card);
+      list[name] = (Number(list[name]) || 0) + 1;
+      localStorage.setItem('localList', JSON.stringify(list));
+      updateCartCountFromList();
+    });
   });
-}
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('q');
-    const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-    const userInfo = document.getElementById('userInfo');
-    const guestInfo = document.getElementById('guestInfo');
+  // --- flip sizing and handlers ---
+  function sizeFlipCards(){
+    document.querySelectorAll('.flip-card .flip-inner').forEach(inner=>{
+      const f = inner.querySelector('.flip-front'); const b = inner.querySelector('.flip-back');
+      if (!f || !b) return;
+      inner.style.minHeight = '0px';
+      inner.style.minHeight = Math.max(f.scrollHeight, b.scrollHeight, 440) + 'px';
+    });
+  }
+  window.addEventListener('load', sizeFlipCards);
+  window.addEventListener('resize', sizeFlipCards);
 
-    // function to filter products based on user input
-    function filterProducts() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const products = document.querySelectorAll(' .product-grid article.product-card');
+  document.querySelectorAll('.flip-card').forEach(card=>{
+    card.querySelector('.show-details')?.addEventListener('click', e=>{
+      e.stopPropagation(); card.classList.add('flipped'); sizeFlipCards();
+    });
+    card.querySelector('.close-details')?.addEventListener('click', e=>{
+      e.stopPropagation(); card.classList.remove('flipped'); sizeFlipCards();
+    });
+  });
 
-        // looping through each product for user input match if corresponds
-        // too h3 value
-        products.forEach(product => {
-            const productText = product.querySelector('h3').textContent.toLowerCase();
-
-            if (productText.includes(searchTerm)) {
-                product.style.display = 'block'; // shows the product
-            } else {
-                product.style.display = 'none'; // hides the product
-            }
-        });
+  // re-measure after images load
+  document.querySelectorAll('.flip-card .product-image img').forEach(img=>{
+    if (!img.complete) {
+      img.addEventListener('load', sizeFlipCards, { once: true });
     }
+  });
 
-    if (searchForm) {
-        searchForm.addEventListener('input', (event) => {
-            event.preventDefault(); 
-        });
-    }
-
-    if (saved && saved.username) {
-      userInfo.hidden = false;
-      document.getElementById('userName').textContent = saved.name || saved.username;
-      document.getElementById('userTier').textContent = saved.tier || '';
-
-      document.getElementById('logoutInline').addEventListener('click', () => {
-        localStorage.removeItem('pdga_user');
-        location.reload();
-      });
-    } else {
-      guestInfo.hidden = false;
-    }
-
-    if (searchInput) {
-      searchInput.addEventListener('keyup', filterProducts)
-    }
+  // initial measure (covers already-cached images)
+  sizeFlipCards();
 });

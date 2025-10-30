@@ -198,7 +198,7 @@ function addToLocalList(name, qty = 1) {
         title: 'Boundary Stakes',
         img: 'https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl',
         href: 'tournamentItems.html#Safety',
-        qty: 10
+        qty: 12
       },
       {
         title: 'PDGA T-Shirts Bulk',
