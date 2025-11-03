@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadEvents() {
     try {
-      const res = await fetch('events.json');
+      const res = await fetch('/~interfa1/events.json');
       if (!res.ok) {
         throw new Error('Failed to load events');
       }
