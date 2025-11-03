@@ -1,19 +1,49 @@
 [
-    {
-        "event-name" : "Teron-Open",
-        "eventID" : "000001",
-        "tier" : "B",
-        "tournementDirector": {
-            "fname" : "Tyler",
-            "lname" : "Schrock"
-        },
-        "location": {
-            "country": "United States",
-            "state" : "WA",
-            "city" : "Kent",
-            "course" : "Lake Fenwick"
-        },
-        "start-date" : "09-27-2025",
-        "end-date" : "09-28-2025"
-    }
+  {
+    "eventName": "Discraft's Cascade Challenge",
+    "eventID": "79560",
+    "tier": "A",
+    "eventLocation": "Shelton, WA",
+    "eventDates": "Apr 26–28, 2026",
+    "eventUrl": "https://www.pdga.com/tour/event/79560",
+    "verifiedEmails": [
+      "mason@pdga.com",
+      "director@disccascade.com",
+      "assistant1@disccascade.com",
+      "assistant2@disccascade.com",
+      "assistant3@disccascade.com",
+      "tyler@pdga.com"
+    ]
+  },
+  {
+    "eventName": "The Spokane Open",
+    "eventID": "64547",
+    "tier": "B",
+    "eventLocation": "Spokane, WA",
+    "eventDates": "Oct 28–29, 2026",
+    "eventUrl": "https://www.pdga.com/tour/event/64547",
+    "verifiedEmails": [
+      "johncarlo@pdga.com",
+      "director@spokaneopen.com",
+      "assistant1@spokaneopen.com",
+      "assistant2@spokaneopen.com",
+      "assistant3@spokaneopen.com",
+      "tyler@pdga.com"
+    ]
+  },
+  {
+    "eventName": "Echo Valley Fall Challenge",
+    "eventID": "62748",
+    "tier": "C",
+    "eventLocation": "Springboro, OH",
+    "eventDates": "Oct 28, 2026",
+    "eventUrl": "https://www.pdga.com/tour/event/62748",
+    "verifiedEmails": [
+      "tyler@pdga.com",
+      "director@echovalley.com",
+      "assistant1@echovalley.com",
+      "assistant2@echovalley.com",
+      "assistant3@echovalley.com"
+    ]
+  }
 ]

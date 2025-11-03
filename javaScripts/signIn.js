@@ -1,36 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const EVENT_BY_USER = {
-    Mason: {
-      eventName: "Discraft's Cascade Challenge",
-      eventTier: 'A',
-      eventLocation: 'Shelton, WA',
-      eventDates: 'Apr 26–28, 2026',
-      eventUrl: 'https://www.pdga.com/tour/event/79560',
-      eventId: '79560',
-    },
-    JohnCarlo: {
-      eventName: 'The Spokane Open',
-      eventTier: 'B',
-      eventLocation: 'Spokane, WA',
-      eventDates: 'Oct 28-29, 2026',
-      eventUrl: 'https://www.pdga.com/tour/event/64547',
-      eventId: '64547',
-    },
-    Tyler: {
-      eventName: 'Echo Valley Fall Challenge',
-      eventTier: 'C',
-      eventLocation: 'Springboro, OH',
-      eventDates: 'Oct 28, 2026',
-      eventUrl: 'https://www.pdga.com/tour/event/62748',
-      eventId: '62748',
-    },
-  };
-  // --- Demo "database" we will implement a database via PHP/MYSQL later
-  const USERS = [
-    { username: 'Mason', password: '1111', tier: 'A', name: 'Mason' },
-    { username: 'JohnCarlo', password: '2222', tier: 'B', name: 'JohnCarlo' },
-    { username: 'Tyler', password: '3333', tier: 'C', name: 'Tyler' },
-  ];
+  // Load event data from a JSON file. Each event entry should include an eventID, tier,
+  // name, location, dates, URL and a list of verified emails. This data is used to
+  // display recommendations and event details after a user has verified their email.
+  let EVENTS = [];
+  // When a user verifies via token, we'll store their email here for use across functions.
+  let verifiedEmail = null;
+
+  async function loadEvents() {
+    try {
+      const res = await fetch('events.json');
+      if (!res.ok) {
+        throw new Error('Failed to load events');
+      }
+      EVENTS = await res.json();
+    } catch (err) {
+      console.error('Error loading events:', err);
+      EVENTS = [];
+    }
+  }
+
+  // Simple helpers for setting and getting cookies. Cookies are used here to persist a
+  // lightweight "session" so users can return later without re‑entering their event ID and email.
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie =
+      name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+  }
+
+  function getCookie(name) {
+    const prefix = name + '=';
+    const cookies = document.cookie.split('; ');
+    for (const c of cookies) {
+      if (c.startsWith(prefix)) {
+        return decodeURIComponent(c.slice(prefix.length));
+      }
+    }
+    return null;
+  }
 
 function addToLocalList(name, qty = 1) {
   try {
@@ -50,7 +56,6 @@ function addToLocalList(name, qty = 1) {
     return false;
   }
 }
-
 
 
 
@@ -220,11 +225,14 @@ function addToLocalList(name, qty = 1) {
   const authSection = document.getElementById('authSection');
   const recSection = document.getElementById('recSection');
   const errorBox = document.getElementById('error');
+  const msgBox = document.getElementById('message');
   const displayName = document.getElementById('displayName');
   const tierLabel = document.getElementById('tierLabel');
   const tierCopy = document.getElementById('tierCopy');
   const recGrid = document.getElementById('recGrid');
   const logoutBtn = document.getElementById('logoutBtn');
+  const eventSelectSection = document.getElementById('eventSelectSection');
+  const eventGrid = document.getElementById('eventGrid');
 
   function renderRecs(tier) {
   if (!recGrid) return;
@@ -283,84 +291,263 @@ if (recGrid) {
 
 
 
-  function showRecommendations(user) {
-    // Merge in event info by username (if any)
-    const enriched = {
-      ...user,
-      ...(EVENT_BY_USER[user.username] || {}),
-    };
+  /**
+   * Display recommendations for a validated event session.
+   *
+   * @param {Object} session Object containing eventId, eventName, tier, location, dates and email.
+   */
+  function showRecommendationsForEvent(session) {
+    if (!session) return;
 
-    // UI
-    displayName.textContent = enriched.name;
-    tierLabel.textContent = enriched.tier;
-    tierCopy.textContent = TIER_COPY[enriched.tier] || '';
-    renderRecs(enriched.tier);
+    // Update UI with the event details. Display the event name in the header.
+    displayName.textContent = session.eventName || '';
+    tierLabel.textContent = session.tier || '';
+    tierCopy.textContent = TIER_COPY[session.tier] || '';
+    renderRecs(session.tier);
 
-    // Persist simple "session" (now includes event fields)
-    localStorage.setItem('pdga_user', JSON.stringify(enriched));
+    // Persist the session in a cookie and localStorage. The cookie is used for short‑term
+    // persistence across tabs and browser restarts, and expires after one day.
+    try {
+      setCookie('pdga_event', JSON.stringify(session), 1);
+      localStorage.setItem('pdga_event', JSON.stringify(session));
+    } catch (_) {}
 
     // Toggle sections
     authSection.style.display = 'none';
+    if (eventSelectSection) eventSelectSection.style.display = 'none';
     recSection.style.display = 'block';
 
-    // Update header buttons for logged-in state
-    updateHeaderForLogin(enriched);
+    // Update header buttons for logged‑in state
+    updateHeaderForLogin(session);
   }
 
-  function handleLogin(e) {
+  /**
+   * Handle the email submission. This sends a verification email to the user.
+   * On success, a message is displayed instructing the user to check their inbox.
+   */
+  async function handleEmailSubmit(e) {
     e.preventDefault();
-    const username = (document.getElementById('username').value || '').trim();
-    const password = (document.getElementById('password').value || '').trim();
+    const emailInputEl = document.getElementById('email');
+    const emailRaw = (emailInputEl?.value || '').trim().toLowerCase();
+    if (!emailRaw) return;
 
-    const user = USERS.find(
-      (u) => u.username.toLowerCase() === username.toLowerCase() && u.password === password
-    );
-    if (!user) {
-      errorBox.style.display = 'block';
-      errorBox.textContent = 'Invalid username or password for the demo accounts above.';
-      return;
+    // Hide previous messages
+    if (errorBox) errorBox.style.display = 'none';
+    if (msgBox) msgBox.style.display = 'none';
+
+    try {
+      // Send the email to the backend to trigger a verification email.
+      const res = await fetch('phpFiles/sendVerification.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: emailRaw }),
+      });
+      if (!res.ok) {
+        throw new Error('Failed to send verification email');
+      }
+      const data = await res.json();
+      if (data && data.success) {
+        // Show success message
+        if (msgBox) {
+          msgBox.style.display = 'block';
+          msgBox.textContent =
+            'A verification link has been sent to your email. Please check your inbox.';
+        }
+      } else {
+        throw new Error(data?.error || 'Failed to send verification email');
+      }
+    } catch (err) {
+      if (errorBox) {
+        errorBox.style.display = 'block';
+        errorBox.textContent = err.message || 'Failed to send verification email.';
+      }
     }
-    errorBox.style.display = 'none';
-    showRecommendations(user);
   }
+
+  /**
+   * After a user clicks on a verification link, the page will have a "token"
+   * parameter in its URL. This function checks for that token and validates it with
+   * the backend. If valid, it either shows event selection (when multiple events
+   * are associated with the user's email) or directly shows recommendations.
+   */
+  async function checkToken() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    if (!token) return;
+    // Hide the auth section while verifying token
+    if (authSection) authSection.style.display = 'none';
+    if (errorBox) errorBox.style.display = 'none';
+    if (msgBox) msgBox.style.display = 'none';
+    try {
+      const res = await fetch('phpFiles/verify.php?token=' + encodeURIComponent(token));
+      if (!res.ok) {
+        throw new Error('Invalid or expired verification link.');
+      }
+      const data = await res.json();
+      if (!data || !data.success) {
+        throw new Error(data?.error || 'Invalid or expired verification link.');
+      }
+      // Save verified email
+      verifiedEmail = data.email || null;
+      const eventIDs = data.eventIDs || [];
+      if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
+        throw new Error('No events associated with your email.');
+      }
+      // Ensure events are loaded before proceeding
+      if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
+        await loadEvents();
+      }
+      // Filter events by the IDs returned by the backend
+      const matches = EVENTS.filter((ev) =>
+        eventIDs.some((id) => String(ev.eventID) === String(id))
+      );
+      if (matches.length === 0) {
+        throw new Error('No matching events found.');
+      }
+      if (matches.length > 1) {
+        // Show event selection UI
+        showEventSelection(matches);
+      } else {
+        // Single event; show recommendations immediately
+        const ev = matches[0];
+        const session = {
+          eventId: ev.eventID,
+          eventName: ev.eventName,
+          tier: ev.tier,
+          eventLocation: ev.eventLocation,
+          eventDates: ev.eventDates,
+          eventUrl: ev.eventUrl,
+          email: verifiedEmail,
+        };
+        showRecommendationsForEvent(session);
+      }
+    } catch (err) {
+      // Show error and display the auth section again
+      if (errorBox) {
+        errorBox.style.display = 'block';
+        errorBox.textContent = err.message || 'Invalid or expired verification link.';
+      }
+      if (authSection) authSection.style.display = 'block';
+    }
+  }
+
+  /**
+   * Display multiple events for the user to select from. Each event is rendered as a card with a button.
+   * When a user selects an event, its details are used to show recommendations.
+   *
+   * @param {Array<Object>} events Array of event objects associated with the user.
+   */
+  function showEventSelection(events) {
+    if (!eventSelectSection || !eventGrid) return;
+    // Hide other sections
+    if (authSection) authSection.style.display = 'none';
+    if (recSection) recSection.style.display = 'none';
+    // Clear grid
+    eventGrid.innerHTML = '';
+    events.forEach((ev) => {
+      const card = document.createElement('article');
+      card.className = 'rec-card';
+      card.innerHTML =
+        '<div class="body">' +
+        '<h3 style="margin:0;">' + ev.eventName + '</h3>' +
+        '<p class="muted small">' + ev.eventLocation + ' — ' + ev.eventDates + '</p>' +
+        '<p class="muted small">Tier ' + ev.tier + '</p>' +
+        '<button class="btn" data-select-event="' + ev.eventID + '">Select</button>' +
+        '</div>';
+      eventGrid.appendChild(card);
+    });
+    // Show the selection section
+    eventSelectSection.style.display = 'block';
+  }
+
+  // Handle event selection button clicks
+  if (eventGrid) {
+    eventGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-select-event]');
+      if (!btn) return;
+      const selectedId = btn.getAttribute('data-select-event');
+      if (!selectedId) return;
+      // Find the event from the loaded EVENTS list
+      const ev = EVENTS.find((event) => String(event.eventID) === String(selectedId));
+      if (!ev) return;
+      const session = {
+        eventId: ev.eventID,
+        eventName: ev.eventName,
+        tier: ev.tier,
+        eventLocation: ev.eventLocation,
+        eventDates: ev.eventDates,
+        eventUrl: ev.eventUrl,
+        email: verifiedEmail,
+      };
+      showRecommendationsForEvent(session);
+    });
+  }
+
 
   function initFromStorage() {
     try {
-      const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-      if (saved && saved.username && saved.tier) {
-        showRecommendations(saved);
+      // Attempt to restore the session from a cookie first, then fallback to localStorage.
+      const cookieVal = getCookie('pdga_event');
+      let saved = null;
+      if (cookieVal) {
+        saved = JSON.parse(cookieVal);
+      } else {
+        saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
       }
-    } catch (_) {}
+      if (saved && saved.eventId && saved.tier) {
+        showRecommendationsForEvent(saved);
+      }
+    } catch (_) {
+      // ignore parse errors
+    }
   }
 
-  loginForm.addEventListener('submit', handleLogin);
+  // Bind the email submission handler instead of the legacy login handler
+  loginForm.addEventListener('submit', handleEmailSubmit);
   logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('pdga_user');
+    // Clear the stored event session from both cookie and localStorage
+    setCookie('pdga_event', '', -1);
+    localStorage.removeItem('pdga_event');
     recSection.style.display = 'none';
     authSection.style.display = 'block';
     loginForm.reset();
-    document.getElementById('username').focus();
+    // Set focus on the email field for convenience
+    const emailField = document.getElementById('email');
+    if (emailField) {
+      emailField.focus();
+    }
   });
 
-  initFromStorage();
+  // Load the events file then restore any existing session and check for a verification token.
+  loadEvents().then(() => {
+    // First, attempt to restore an existing session from storage
+    initFromStorage();
+    // Then, check if a verification token is present in the URL and process it
+    checkToken();
+  });
 
   const signInLink = document.getElementById('signInLink');
   const authActions = document.getElementById('authActions');
 
-  function updateHeaderForLogin(user) {
+  function updateHeaderForLogin(session) {
     if (!authActions) return;
-    if (user) {
+    if (session) {
       authActions.innerHTML = `
       <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
       <button id="logoutHeaderBtn" class="btn btn-box" type="button">Log out</button>
     `;
       document.getElementById('logoutHeaderBtn').addEventListener('click', () => {
-        localStorage.removeItem('pdga_user');
+        // Remove the stored session and force a reload to reset UI state
+        setCookie('pdga_event', '', -1);
+        localStorage.removeItem('pdga_event');
         location.reload();
       });
     }
   }
 
-  const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-  if (savedUser) updateHeaderForLogin(savedUser);
+  // If a session is already stored in localStorage (e.g. page refresh), update the header accordingly.
+  const savedSession = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+  if (savedSession) updateHeaderForLogin(savedSession);
 });
