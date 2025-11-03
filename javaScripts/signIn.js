@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadEvents() {
     try {
-      const res = await fetch('/~interfa1/events.json');
+      const res = await fetch('./events.json');
       if (!res.ok) {
         throw new Error('Failed to load events');
       }
@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // lightweight "session" so users can return later without re‑entering their event ID and email.
   function setCookie(name, value, days) {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie =
-      name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
   }
 
   function getCookie(name) {
@@ -38,27 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-function addToLocalList(name, qty = 1) {
-  try {
-    const list = JSON.parse(localStorage.getItem('localList') || '{}');
-    list[name] = (Number(list[name]) || 0) + (Number(qty) || 1);
-    localStorage.setItem('localList', JSON.stringify(list));
+  function addToLocalList(name, qty = 1) {
+    try {
+      const list = JSON.parse(localStorage.getItem('localList') || '{}');
+      list[name] = (Number(list[name]) || 0) + (Number(qty) || 1);
+      localStorage.setItem('localList', JSON.stringify(list));
 
-    // Optional: update a cart badge if your header has one
-    const cartCountEl = document.getElementById('cartCount');
-    if (cartCountEl) {
-      const total = Object.values(list).reduce((a, b) => a + Number(b || 0), 0);
-      cartCountEl.textContent = total;
+      // Optional: update a cart badge if your header has one
+      const cartCountEl = document.getElementById('cartCount');
+      if (cartCountEl) {
+        const total = Object.values(list).reduce((a, b) => a + Number(b || 0), 0);
+        cartCountEl.textContent = total;
+      }
+      return true;
+    } catch (e) {
+      console.error('Failed to add to cart:', e);
+      return false;
     }
-    return true;
-  } catch (e) {
-    console.error('Failed to add to cart:', e);
-    return false;
   }
-}
-
-
-
 
   // Simple recommended items per tier (replace with real picks later)
   const RECS = {
@@ -68,46 +64,45 @@ function addToLocalList(name, qty = 1) {
         img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
         href: 'tournamentItems.html#PlayerPacks',
         customize: true,
-        customizeHref:''
+        customizeHref: '',
       },
       {
         title: 'Mando Arrows',
         img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
         href: 'tournamentItems.html#courseSetup',
-        qty: 10
+        qty: 10,
       },
       {
         title: 'Orange Marking Paint',
         img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
         href: 'tournamentItems.html#courseSetup',
-        qty: 12
+        qty: 12,
       },
 
       {
         title: 'Navigational Arrows',
         img: 'https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php',
         href: 'tournamentItems.html#Extras',
-        qty: 18
+        qty: 18,
       },
       {
         title: 'High Visibility Safety Vest',
         img: 'https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism',
         href: 'tournamentItems.html#PlayerPacks',
-        qty: 10
+        qty: 10,
       },
       {
         title: 'Orange Safety Cones',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
         href: 'tournamentItems.html#courseSetup',
-        qty: 36
+        qty: 36,
       },
       {
         title: 'Custom Event Shirts',
         img: 'https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent',
         href: 'tournamentItems.html#courseSetup',
         customize: true,
-        customizeHref:''
-    
+        customizeHref: '',
       },
 
       {
@@ -115,7 +110,7 @@ function addToLocalList(name, qty = 1) {
         img: 'https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946',
         href: 'tournamentItems.html#Extras',
         customize: true,
-        customizeHref: ''
+        customizeHref: '',
       },
     ],
 
@@ -126,31 +121,31 @@ function addToLocalList(name, qty = 1) {
         img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
         href: 'tournamentItems.html#PlayerPacks',
         customize: true,
-        customizeHref: ''
+        customizeHref: '',
       },
       {
         title: 'Mando Arrows',
         img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
         href: 'tournamentItems.html#Safety',
-        qty: 10
+        qty: 10,
       },
       {
         title: 'Orange Marking Paint',
         img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
         href: 'tournamentItems.html#courseSetup',
-        qty: 12
+        qty: 12,
       },
       {
         title: 'High Visibility Safety Vest 5 count',
         img: 'https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism',
         href: 'tournamentItems.html#PlayerPacks',
-        qty: 5
+        qty: 5,
       },
       {
         title: 'Orange Safety Cones 18',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
         href: 'tournamentItems.html#courseSetup',
-        qty: 18
+        qty: 18,
       },
 
       {
@@ -158,17 +153,15 @@ function addToLocalList(name, qty = 1) {
         img: 'images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp',
         href: 'tournamentItems.html#Extras',
         customize: true,
-        customizeHref: ''
+        customizeHref: '',
       },
-    {
+      {
         title: 'Custom Disc Golf Stickers',
         img: 'https://dgcoursecollector.com/cdn/shop/files/custompdgaplayerstickerlow3.jpg?v=1723034157&width=1445',
         href: 'tournamentItems.html#Extras',
         customize: true,
-        customizeHref: ''
+        customizeHref: '',
       },
-
-
     ],
 
     // C tier recommeddations
@@ -178,39 +171,39 @@ function addToLocalList(name, qty = 1) {
         img: 'https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg',
         href: 'tournamentItems.html#PlayerPacks',
         customize: true,
-        customizeHref:''
+        customizeHref: '',
       },
       {
         title: 'Mando Arrows',
         img: 'https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php',
         href: 'tournamentItems.html#Safety',
-        qty: 6
+        qty: 6,
       },
       {
         title: 'Orange Marking Paint',
         img: 'https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950',
         href: 'tournamentItems.html#courseSetup',
-        qty: 6
+        qty: 6,
       },
 
       {
         title: 'Orange Safety Cones',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
         href: 'tournamentItems.html#Safety',
-        qty: 15
+        qty: 15,
       },
       {
         title: 'Boundary Stakes',
         img: 'https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl',
         href: 'tournamentItems.html#Safety',
-        qty: 12
+        qty: 12,
       },
       {
         title: 'PDGA T-Shirts Bulk',
         img: 'images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp',
         href: 'tournamentItems.html#Extras',
         customize: true,
-        customizeHref: ''
+        customizeHref: '',
       },
     ],
   };
@@ -235,21 +228,21 @@ function addToLocalList(name, qty = 1) {
   const eventGrid = document.getElementById('eventGrid');
 
   function renderRecs(tier) {
-  if (!recGrid) return;
-  recGrid.innerHTML = '';
-  (RECS[tier] || []).forEach((item) => {
-    const hasFixedQty = typeof item.qty === 'number';
-    const qtyUI = hasFixedQty
-      ? `<p class="muted small">Suggested qty: ${item.qty}</p>`
-      : `<label class="muted small">Qty&nbsp;<input type="number" min="1" step="1" value="1" class="qty-input"></label>`;
+    if (!recGrid) return;
+    recGrid.innerHTML = '';
+    (RECS[tier] || []).forEach((item) => {
+      const hasFixedQty = typeof item.qty === 'number';
+      const qtyUI = hasFixedQty
+        ? `<p class="muted small">Suggested qty: ${item.qty}</p>`
+        : `<label class="muted small">Qty&nbsp;<input type="number" min="1" step="1" value="1" class="qty-input"></label>`;
 
-    const addBtn = hasFixedQty
-      ? `<button class="btn" data-add data-title="${item.title}" data-qty="${item.qty}">Add to cart</button>`
-      : `<button class="btn" data-add data-title="${item.title}" data-dynamic="1">Add to cart</button>`;
+      const addBtn = hasFixedQty
+        ? `<button class="btn" data-add data-title="${item.title}" data-qty="${item.qty}">Add to cart</button>`
+        : `<button class="btn" data-add data-title="${item.title}" data-dynamic="1">Add to cart</button>`;
 
-    const card = document.createElement('article');
-    card.className = 'rec-card';
-    card.innerHTML = `
+      const card = document.createElement('article');
+      card.className = 'rec-card';
+      card.innerHTML = `
       <img src="${item.img}" alt="">
       <div class="body">
         <h3 style="margin:0;">${item.title}</h3>
@@ -260,36 +253,34 @@ function addToLocalList(name, qty = 1) {
         </div>
       </div>
     `;
-    recGrid.appendChild(card);
-  });
-}
-if (recGrid) {
-  recGrid.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-add]');
-    if (!btn) return;
+      recGrid.appendChild(card);
+    });
+  }
+  if (recGrid) {
+    recGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-add]');
+      if (!btn) return;
 
-    const title = btn.getAttribute('data-title');
-    if (!title) return;
+      const title = btn.getAttribute('data-title');
+      if (!title) return;
 
-    let qty;
-    if (btn.hasAttribute('data-dynamic')) {
-      // Find the qty input in the same card
-      const card = btn.closest('.rec-card');
-      const input = card?.querySelector('.qty-input');
-      qty = Math.max(1, parseInt(input?.value, 10) || 1);
-    } else {
-      qty = Number(btn.getAttribute('data-qty') || 1);
-    }
+      let qty;
+      if (btn.hasAttribute('data-dynamic')) {
+        // Find the qty input in the same card
+        const card = btn.closest('.rec-card');
+        const input = card?.querySelector('.qty-input');
+        qty = Math.max(1, parseInt(input?.value, 10) || 1);
+      } else {
+        qty = Number(btn.getAttribute('data-qty') || 1);
+      }
 
-    const ok = addToLocalList(title, qty);
-    if (ok) {
-      btn.textContent = 'Added!';
-      setTimeout(() => (btn.textContent = 'Add to cart'), 900);
-    }
-  });
-}
-
-
+      const ok = addToLocalList(title, qty);
+      if (ok) {
+        btn.textContent = 'Added!';
+        setTimeout(() => (btn.textContent = 'Add to cart'), 900);
+      }
+    });
+  }
 
   /**
    * Display recommendations for a validated event session.
@@ -451,10 +442,20 @@ if (recGrid) {
       card.className = 'rec-card';
       card.innerHTML =
         '<div class="body">' +
-        '<h3 style="margin:0;">' + ev.eventName + '</h3>' +
-        '<p class="muted small">' + ev.eventLocation + ' — ' + ev.eventDates + '</p>' +
-        '<p class="muted small">Tier ' + ev.tier + '</p>' +
-        '<button class="btn" data-select-event="' + ev.eventID + '">Select</button>' +
+        '<h3 style="margin:0;">' +
+        ev.eventName +
+        '</h3>' +
+        '<p class="muted small">' +
+        ev.eventLocation +
+        ' — ' +
+        ev.eventDates +
+        '</p>' +
+        '<p class="muted small">Tier ' +
+        ev.tier +
+        '</p>' +
+        '<button class="btn" data-select-event="' +
+        ev.eventID +
+        '">Select</button>' +
         '</div>';
       eventGrid.appendChild(card);
     });
@@ -484,7 +485,6 @@ if (recGrid) {
       showRecommendationsForEvent(session);
     });
   }
-
 
   function initFromStorage() {
     try {
