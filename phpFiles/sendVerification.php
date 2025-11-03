@@ -27,7 +27,7 @@ if (!$email || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Load events and find all event IDs associated with this email
-$eventsFile = __DIR__ . '/events.json';
+$eventsFile = __DIR__ . '/../events.json';
 if (!file_exists($eventsFile)) {
     echo json_encode(['success' => false, 'error' => 'Events file missing.']);
     exit;
@@ -75,7 +75,6 @@ $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https'
 $host = $_SERVER['HTTP_HOST'];
 $path = dirname($_SERVER['REQUEST_URI']);
 $link = rtrim($protocol . '://' . $host . $path, '/') . '/signIn.html?token=' . urlencode($token);
-
 // Send an email containing the verification link
 $subject = 'PDGA Marketplace: Verify your email';
 $message = "Click the link below to verify your email and access your event recommendations:\n\n" . $link . "\n\nIf you did not request this, please ignore this email.";
