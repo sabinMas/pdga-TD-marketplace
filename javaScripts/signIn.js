@@ -8,14 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadEvents() {
     try {
+      // use a relative path instead of a leading slash – this works under /~username/
       const res = await fetch('./events.json');
-      if (!res.ok) {
-        throw new Error('Failed to load events');
-      }
+      if (!res.ok) throw new Error('Failed to load events');
       EVENTS = await res.json();
     } catch (err) {
       console.error('Error loading events:', err);
-      EVENTS = [];
+      document.getElementById('message').textContent = 'Events file missing.';
     }
   }
 
