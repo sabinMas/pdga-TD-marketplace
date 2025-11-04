@@ -74,6 +74,7 @@
           </div>
         </aside>
       </div>
+
       <div class="recommend-header">
         <h2>Recommended Supplies</h2>
         <hr>
@@ -83,16 +84,53 @@
         <button class="left-arrow" onclick="scrollLeftBtn()">&#10094;</button>
 
         <div class="reccomended-items" id="items" >
-          <div class="item">Item 1</div>
-          <div class="item">Item 2</div>
-          <div class="item">Item 3</div>
-          <div class="item">Item 4</div>
-          <div class="item">Item 5</div>  <!--place holders for now-->
-          <div class="item">Item 1</div>
-          <div class="item">Item 2</div>
-          <div class="item">Item 3</div>
-          <div class="item">Item 4</div>
-          <div class="item">Item 5</div>
+          <div class="item" data-category="course-setup">  <!--change category depending on item-->
+            <img src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950" alt="white spray can">
+            <div class="item-info">
+              <h3 class="item-name">Marking Paint Spray Cans</h3>
+              <p class="item-price">$9.98</p>
+              <button class="add-to-cart">+</button>
+            </div>
+          </div> <!--item 1-->
+
+          <div class="item" data-category="safety">  <!--change category depending on item-->
+            <img src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism" alt="High visibility safety vest"/>
+            <div class="item-info">
+              <h3 class="item-name">High Visibility Vest</h3>
+              <p class="item-price">$12.88</p>
+              <button class="add-to-cart">+</button>
+            </div>
+          </div> <!--item 2-->
+
+          <div class="item" data-category="extras">  <!--change category depending on item-->
+            <img src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946" alt="Custom DyeMax disc or marker"/>
+            <div class="item-info">
+              <h3 class="item-name">Custom DyeMax Disc or Marker</h3>
+              <p class="item-price">$7.99 – $24.99</p>
+              <button class="add-to-cart">+</button>
+            </div>
+          </div> <!--item 3-->
+          
+          <div class="item" data-category="course-setup">  <!--change category depending on item-->
+            <img
+              src="https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php"
+              alt="Mando arrow sign"
+                  />
+            <div class="item-info">
+              <h3 class="item-name">High Visibility Mando Arrows</h3>
+              <p class="item-price">$30 – $75</p>
+              <button class="add-to-cart">+</button>
+            </div>
+          </div> <!--item 4-->
+
+          <div class="item" data-category="course-setup">  <!--change category depending on item-->
+            <img src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent" alt="Sport-Tek tee" />
+            <div class="item-info">
+              <h3 class="item-name">Sprot-Tek Tee</h3>
+              <p class="item-price">$7.53 – $12.90</p>
+              <button class="add-to-cart">+</button>
+            </div>
+          </div> <!--item 5--> 
         </div>
 
         <button class="right-arrow" onclick="scrollRightBtn()">&#10095;</button>
