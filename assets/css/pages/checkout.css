@@ -188,3 +188,72 @@
 #buy-button:active{
   transform: translateY(2px);
 }
+
+/* reccomended items on the bottom of the checkout page */
+.reccomendation-container{
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: center;
+  padding: 20px 0 20px;
+}
+
+.recommend-header {
+  padding-left: 10%;
+  padding-right: 12%;
+}
+
+.recommend-header hr {
+  border: none;
+  height: 6px;
+  background-color: #353941;
+}
+
+.reccomended-items {
+  display: flex;
+  gap: 10px;
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  width: 65%;
+  direction: ltr;
+}
+
+.reccomended-items::-webkit-scrollbar{
+  display: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 250px;
+  height: 250px;
+  background-color: #DEDEDE; /* update this */
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.left-arrow, .right-arrow {
+  background-color: #DEDEDE;  /* update this */
+  border: gray 1px solid;
+  cursor: pointer;
+  border-radius: 15%;
+  padding: 10px;
+  font-size: 20px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.left-arrow:hover, .right-arrow:hover {
+  background-color: #003F7D;    /* update this */
+}
+
+.left-arrow {
+  margin-right: 15px;
+}
+
+.right-arrow {
+  margin-left: 15px;
+}
