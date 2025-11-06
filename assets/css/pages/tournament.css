@@ -417,8 +417,25 @@ html {
   border-color: transparent;
 }
 
+/* --- Banner Fuctionality/Design --- */
 .seasonal-section .product-title {
+  font-family: 3.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
+  background: linear-gradient(to right, #016f52, #003F7D, #005baa);
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 113px;
+  z-index: 100;
+}
+
+.seasonal-section .product-title h1 {
+  font-size: 1.8rem;
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  letter-spacing: 1px;
 }
