@@ -327,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send the email to the backend to trigger a verification email.
-      const res = await fetch('phpFiles/sendVerification.php', {
+      const res = await fetch('./phpFiles/sendVerification.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (errorBox) errorBox.style.display = 'none';
     if (msgBox) msgBox.style.display = 'none';
     try {
-      const res = await fetch('phpFiles/verify.php?token=' + encodeURIComponent(token));
+      const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
         throw new Error('Invalid or expired verification link.');
       }
