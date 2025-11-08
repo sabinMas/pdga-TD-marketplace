@@ -7,6 +7,7 @@
 /* Checkout page css  */
 #checkoutHeader h1{
   padding-left: 6%;
+  color: #353941;
 }
 
 #checkoutHeader hr {
@@ -19,15 +20,16 @@
 .wrap-content {
   background-color: #EEEEEE;
   border-radius: 20px;
-  display: grid;
+  display: flex;
+  align-items: flex-start;
   grid-template-columns: 1300px 400px;
-  height: 100%;
   padding-bottom: 50px;
 }
 
 /* cart will contain items pushed from list */
 .cart{
-  padding-left: 16%;
+  flex: 1;
+  padding-left: 10%;
 }
 
 .cart hr {
@@ -42,19 +44,79 @@
   padding-left: 2%;
   font-size: 30px;
   padding-top: 1%;
+  color: #353941;
 }
 
 .cart h4 {
   padding-left: 4%;
 }
 
+/*Cart in items styling */
+.items-in-cart{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-right:5%;
+  margin-top: 15px;
+}
+
+.cart-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  border: solid 1px black;
+  border-radius: 2px;
+  width: 100%;
+  padding: 12px 20px;
+  box-shadow: 0 2px 4px gray;
+}
+
+/*images of the item in cart */
+.item-image{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 20px;
+}
+
+/*name of item next to image */
+.cart-item-info {
+  flex-grow: 1;
+}
+
+.cart-item-name{
+  font-weight: bold;
+  font-size: 18px;
+  color: #353941;
+}
+
+.cart-item-details {
+  font-size: 14px;
+  color: #353941;
+  margin-top: 4px;
+}
+
+.cart-item-quantity, .cart-item-price {
+  font-size: 17px;
+  color: #353941;
+  font-weight: bold;
+  text-align: right;
+  min-width: 85px;
+}
+
 /* Sidebar with payment option and total amount */
 .payment-sidebar {
   background-color: whitesmoke;
   border: solid 1px #353941;
-  border-radius: 15px;
-  margin-top: 30px;
+  border-radius: 2px;
+  margin: 90px 100px 0 0;
   box-shadow: 0 5px 15px 2px rgb(165, 165, 165);
+  color: #353941;
+  position: sticky;
+  width: 400px;
+  align-self: flex-start;
 }
 
 .payment-sidebar h2{
