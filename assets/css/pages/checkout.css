@@ -252,8 +252,8 @@
   transform: translateY(2px);
 }
 
-/* reccomended items on the bottom of the checkout page */
-.reccomended-items {
+/* recommended items on the bottom of the checkout page */
+.recommended-items {
   display: flex;
   gap: 10px;
   scroll-behavior: smooth;
@@ -262,7 +262,7 @@
   direction: ltr;
 }
 
-.reccomended-items::-webkit-scrollbar{
+.recommended-items::-webkit-scrollbar{
   display: none;
 }
 
@@ -347,12 +347,9 @@
   margin-left: 15px;
 }
 
-/* === CART + RECOMMENDED ITEM IMAGE FIX === */
-
-/* Limit image size inside the cart */
-.cart img,
-.cart-item-image,
-.items-in-cart img {
+/* === CART IMAGE FIX (matches <img class="item-image">) === */
+.cart .item-image,
+.items-in-cart .item-image {
   max-width: 100px;
   max-height: 100px;
   width: auto;
@@ -360,30 +357,29 @@
   object-fit: contain;
   border-radius: 8px;
   display: block;
-  margin: 0 auto;
+  margin: 0 20px 0 0;  /* keeps spacing before item text */
 }
 
-/* Recommended Supplies section (bottom rail or grid) */
-.recommendation-container img,
-.recommend img,
-.recommended-supplies img,
-.recommendation-section img {
-  max-width: 80px;
-  max-height: 80px;
+/* === RECOMMENDED IMAGE FIX (matches your typos intentionally) === */
+/* container:  <div class="reccomendation-container"> ... */
+/* rail:       <div class="reccomended-items" id="items"> ... */
+.reccomendation-container .reccomended-items .item img {
+  max-width: 70px;
+  max-height: 70px;
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
   display: block;
-  margin: 0 auto;
+  margin: 8px auto;
 }
 
-/* Ensure layout boxes stay neat */
-.items-in-cart,
-.recommendation-container .item {
+/* keep the tiles tidy */
+.reccomended-items .item {
+  min-width: 180px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  text-align: center;
+  padding: 10px;
 }
+
