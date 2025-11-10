@@ -71,15 +71,16 @@
       </div>
       <h3 id="eventInfo">Event Info</h3>
       <div id="userInfo" class="event-user" hidden>
-        <h4 style="margin: 0">Signed in as <span id="userName"></span></h4>
-
-        <div class="muted" style="margin-top: 0.25rem">
-          <b id="evtName"></b>
-          <span id="evtTier" class="pill" style="margin-left: 6px"></span>
-          <div id="evtMeta" style="margin-top: 0.25rem"></div>
-          <div id="evtId" class="muted" style="margin-top: 0.25rem"></div>
-        </div>
-
+        <!-- When a user is authenticated, show the event they're ordering for. -->
+        <h4 style="margin: 0">
+          Ordering for <span id="evtName"></span
+          ><span id="evtTier" class="pill" style="margin-left: 6px"></span>
+        </h4>
+        <!-- Location and date information -->
+        <div id="evtMeta" class="muted" style="margin-top: 0.25rem"></div>
+        <!-- Event ID -->
+        <div id="evtId" class="muted" style="margin-top: 0.25rem"></div>
+        <!-- Logout button -->
         <button id="logoutInline" class="btn btn-box" type="button" style="margin-top: 0.5rem">
           Log out
         </button>
@@ -1757,52 +1758,61 @@
       </div>
     </footer>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-  const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-  const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
-  const saved = savedUser || savedEvent;
+     document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve any stored session. Prefer the newer `pdga_event` key and fall back to the older `pdga_user`.
+        const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+        const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+        const saved = savedEvent || savedUser;
+        const userInfo = document.getElementById('userInfo');
+        const guestInfo = document.getElementById('guestInfo');
 
-  const userInfo = document.getElementById('userInfo');
-  const guestInfo = document.getElementById('guestInfo');
+        if (saved && (saved.eventName || saved.email || saved.username)) {
+          // Show the ordering info and ensure the guest card is hidden.
+          userInfo.hidden = false;
+          guestInfo.hidden = true;
 
-  if (saved && (saved.username || saved.email)) {
-    userInfo.hidden = false;
+          const evtNameEl = document.getElementById('evtName');
+          const evtTierEl = document.getElementById('evtTier');
+          const evtMetaEl = document.getElementById('evtMeta');
+          const evtIdEl = document.getElementById('evtId');
 
-    document.getElementById('userName').textContent = saved.name || saved.username;
+          // Determine the tier from either `tier` (new session) or `eventTier` (legacy).
+          const tier = saved.tier || saved.eventTier || '';
 
-    const evtName = document.getElementById('evtName');
-    const evtTier = document.getElementById('evtTier');
-    const evtMeta = document.getElementById('evtMeta');
-    const evtId = document.getElementById('evtId');
+          if (saved.eventName) {
+            evtNameEl.innerHTML = saved.eventUrl
+              ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
+              : saved.eventName;
+            evtTierEl.textContent = tier ? `${tier}-Tier Event` : '';
+            const location = saved.eventLocation || saved.location || '';
+            const dates = saved.eventDates || saved.dates || '';
+            evtMetaEl.textContent = location && dates ? `${location} • ${dates}` : `${location}${dates}`;
+          } else {
+            evtNameEl.textContent = 'No event linked yet';
+            evtTierEl.textContent = '';
+            evtMetaEl.textContent = '';
+          }
+          // Display the event ID if available under either `eventId` (new) or `eventID` (legacy).
+          if (saved.eventId || saved.eventID) {
+            const eventId = saved.eventId || saved.eventID;
+            evtIdEl.textContent = `Event ID: ${eventId}`;
+          } else {
+            evtIdEl.textContent = '';
+          }
 
-    if (saved.eventName) {
-      evtName.innerHTML = saved.eventUrl
-        ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
-        : saved.eventName;
-      evtTier.textContent = `${saved.eventTier}-Tier Event`;
-      evtMeta.textContent = `${saved.eventLocation} • ${saved.eventDates}`;
-    } else {
-      evtName.textContent = 'No event linked yet';
-      evtTier.textContent = '';
-      evtMeta.textContent = '';
-    }
-
-    if (saved.eventId) {
-      evtId.textContent = `Event ID: ${saved.eventId}`;
-    } else {
-      evtId.textContent = '';
-    }
-
-    document.getElementById('logoutInline').addEventListener('click', () => {
-      localStorage.removeItem('pdga_user');
-      localStorage.removeItem('pdga_event');
-      location.reload();
-    });
-  } else {
-    guestInfo.hidden = false;
-  }
-});
-
+          // Logout: clear both session keys and remove the cookie used by signIn.js, then reload.
+          document.getElementById('logoutInline').addEventListener('click', () => {
+            localStorage.removeItem('pdga_user');
+            localStorage.removeItem('pdga_event');
+            document.cookie = 'pdga_event=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            location.reload();
+          });
+        } else {
+          // No saved session; show guest info and hide the ordering card.
+          guestInfo.hidden = false;
+          userInfo.hidden = true;
+        }
+      });
     </script>
   </body>
 </html>
