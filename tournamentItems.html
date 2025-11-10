@@ -1758,66 +1758,77 @@
       </div>
     </footer>
     <script>
-     document.addEventListener('DOMContentLoaded', () => {
-        // Retrieve any stored session. Prefer the newer `pdga_event` key and fall back to the older `pdga_user`.
-        const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-        const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
-        const saved = savedEvent || savedUser;
-        const userInfo = document.getElementById('userInfo');
-        const guestInfo = document.getElementById('guestInfo');
-       
-         if (savedUser && savedUser.username) {
-        document.body.classList.add('logged-in');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+          // Retrieve any stored session. Prefer newer pdga_event, fall back to pdga_user.
+          const savedUser  = JSON.parse(localStorage.getItem('pdga_user')  || 'null');
+          const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+          const saved      = savedEvent || savedUser;
 
+          // Cards
+          const userInfo  = document.getElementById('userInfo');
+          const guestInfo = document.getElementById('guestInfo');
 
-        if (saved && (saved.eventName || saved.email || saved.username)) {
-          // Show the ordering info and ensure the guest card is hidden.
-          userInfo.hidden = false;
-          guestInfo.hidden = true;
-
+          // Event detail targets
           const evtNameEl = document.getElementById('evtName');
           const evtTierEl = document.getElementById('evtTier');
           const evtMetaEl = document.getElementById('evtMeta');
-          const evtIdEl = document.getElementById('evtId');
+          const evtIdEl   = document.getElementById('evtId');
 
-          // Determine the tier from either `tier` (new session) or `eventTier` (legacy).
-          const tier = saved.tier || saved.eventTier || '';
+          // Add a CSS hook so we can hide #guestInfo via CSS if desired
+          document.body.classList.toggle(
+            'logged-in',
+            !!(saved && (saved.username || saved.email || saved.eventName))
+          );
 
-          if (saved.eventName) {
-            evtNameEl.innerHTML = saved.eventUrl
-              ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
-              : saved.eventName;
-            evtTierEl.textContent = tier ? `${tier}-Tier Event` : '';
-            const location = saved.eventLocation || saved.location || '';
-            const dates = saved.eventDates || saved.dates || '';
-            evtMetaEl.textContent = location && dates ? `${location} • ${dates}` : `${location}${dates}`;
+          if (saved && (saved.eventName || saved.email || saved.username)) {
+            // Show ordering card; hide guest card
+            userInfo.hidden  = false; userInfo.style.display  = '';
+            guestInfo.hidden = true;  guestInfo.style.display = 'none';
+
+            // Determine tier from either `tier` (new) or `eventTier` (legacy)
+            const tier = saved.tier || saved.eventTier || '';
+
+            if (saved.eventName) {
+              evtNameEl.innerHTML = saved.eventUrl
+                ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
+                : saved.eventName;
+
+              evtTierEl.textContent = tier ? `${tier}-Tier Event` : '';
+
+              const location = saved.eventLocation || saved.location || '';
+              const dates    = saved.eventDates    || saved.dates    || '';
+              evtMetaEl.textContent = (location && dates) ? `${location} • ${dates}` : `${location}${dates}`;
+            } else {
+              // No event linked, keep the card but clear details
+              evtNameEl.textContent = 'No event linked yet';
+              evtTierEl.textContent = '';
+              evtMetaEl.textContent = '';
+            }
+
+            // Event ID (supports eventId or legacy eventID)
+            if (saved.eventId || saved.eventID) {
+              const eventId = saved.eventId || saved.eventID;
+              evtIdEl.textContent = `Event ID: ${eventId}`;
+            } else {
+              evtIdEl.textContent = '';
+            }
+
+            // Logout: clear both keys + cookie, reload
+            const logoutBtn = document.getElementById('logoutInline');
+            if (logoutBtn) {
+              logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('pdga_user');
+                localStorage.removeItem('pdga_event');
+                document.cookie = 'pdga_event=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                location.reload();
+              });
+            }
           } else {
-            evtNameEl.textContent = 'No event linked yet';
-            evtTierEl.textContent = '';
-            evtMetaEl.textContent = '';
+            // Not signed in: show guest, hide ordering card
+            guestInfo.hidden = false; guestInfo.style.display = '';
+            userInfo.hidden  = true;  userInfo.style.display  = 'none';
           }
-          // Display the event ID if available under either `eventId` (new) or `eventID` (legacy).
-          if (saved.eventId || saved.eventID) {
-            const eventId = saved.eventId || saved.eventID;
-            evtIdEl.textContent = `Event ID: ${eventId}`;
-          } else {
-            evtIdEl.textContent = '';
-          }
-
-          // Logout: clear both session keys and remove the cookie used by signIn.js, then reload.
-          document.getElementById('logoutInline').addEventListener('click', () => {
-            localStorage.removeItem('pdga_user');
-            localStorage.removeItem('pdga_event');
-            document.cookie = 'pdga_event=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            location.reload();
-          });
-        } else {
-          // No saved session; show guest info and hide the ordering card.
-          guestInfo.hidden = false;
-          userInfo.hidden = true;
-        }
-      });
-    </script>
+        });
+</script>
   </body>
 </html>
