@@ -270,35 +270,38 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-width: 300px;
-  height: 250px;
-  background-color: #DEDEDE; /* update this */
+  min-width: 180px;        /* smaller tile */
+  height: auto;            /* let height adjust */
+  background-color: #dedede;
   border-radius: 10px;
   flex-shrink: 0;
   padding: 10px;
 }
 
-.item:hover{
-  border: solid 1px #003F7D;
+.item:hover {
+  border: 1px solid #003f7d;
 }
 
 .item img {
-  /* Display recommended item images at natural aspect ratio within a max size */
-  max-width: 100px;
-  max-height: 120px;
+  /* keep images small but responsive */
+  max-width: 70px;
+  max-height: 70px;
   height: auto;
   width: auto;
   object-fit: contain;
+  margin-bottom: 8px;
 }
 
-.item-info{
+.item-info {
   text-align: center;
 }
 
 .item-price {
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
 }
+
 
 /* button to add recommended items to cart */
 .add-to-cart {
