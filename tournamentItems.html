@@ -1758,49 +1758,51 @@
     </footer>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-        const userInfo = document.getElementById('userInfo');
-        const guestInfo = document.getElementById('guestInfo');
+  const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+  const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+  const saved = savedUser || savedEvent;
 
-        if (saved && saved.username) {
-          userInfo.hidden = false;
+  const userInfo = document.getElementById('userInfo');
+  const guestInfo = document.getElementById('guestInfo');
 
-          // show basic user
-          document.getElementById('userName').textContent = saved.name || saved.username;
-          //document.getElementById('userTier').textContent = saved.tier || '';
+  if (saved && saved.username) {
+    userInfo.hidden = false;
 
-          // show event info
-          const evtName = document.getElementById('evtName');
-          const evtTier = document.getElementById('evtTier');
-          const evtMeta = document.getElementById('evtMeta');
-          const evtId = document.getElementById('evtId');
+    document.getElementById('userName').textContent = saved.name || saved.username;
 
-          if (saved.eventName) {
-            evtName.innerHTML = saved.eventUrl
-              ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
-              : saved.eventName;
-            evtTier.textContent = `${saved.eventTier}-Tier Event`;
-            evtMeta.textContent = `${saved.eventLocation} • ${saved.eventDates}`;
-          } else {
-            evtName.textContent = 'No event linked yet';
-            evtTier.textContent = '';
-            evtMeta.textContent = '';
-          }
-          if (saved.eventId) {
-            evtId.textContent = `Event ID: ${saved.eventId}`;
-          } else {
-            evtId.textContent = '';
-          }
+    const evtName = document.getElementById('evtName');
+    const evtTier = document.getElementById('evtTier');
+    const evtMeta = document.getElementById('evtMeta');
+    const evtId = document.getElementById('evtId');
 
-          // logout button
-          document.getElementById('logoutInline').addEventListener('click', () => {
-            localStorage.removeItem('pdga_user');
-            location.reload();
-          });
-        } else {
-          guestInfo.hidden = false;
-        }
-      });
+    if (saved.eventName) {
+      evtName.innerHTML = saved.eventUrl
+        ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
+        : saved.eventName;
+      evtTier.textContent = `${saved.eventTier}-Tier Event`;
+      evtMeta.textContent = `${saved.eventLocation} • ${saved.eventDates}`;
+    } else {
+      evtName.textContent = 'No event linked yet';
+      evtTier.textContent = '';
+      evtMeta.textContent = '';
+    }
+
+    if (saved.eventId) {
+      evtId.textContent = `Event ID: ${saved.eventId}`;
+    } else {
+      evtId.textContent = '';
+    }
+
+    document.getElementById('logoutInline').addEventListener('click', () => {
+      localStorage.removeItem('pdga_user');
+      localStorage.removeItem('pdga_event');
+      location.reload();
+    });
+  } else {
+    guestInfo.hidden = false;
+  }
+});
+
     </script>
   </body>
 </html>
