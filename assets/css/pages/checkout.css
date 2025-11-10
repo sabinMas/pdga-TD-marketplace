@@ -74,9 +74,10 @@
 
 /*images of the item in cart */
 .item-image{
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  /* Restrict cart item images to a consistent width while maintaining aspect ratio. */
+  max-width: 80px;
+  height: auto;
+  object-fit: contain;
   border-radius: 5px;
   margin-right: 20px;
 }
@@ -252,27 +253,6 @@
 }
 
 /* reccomended items on the bottom of the checkout page */
-.reccomendation-container{
-  display: flex;
-  position: relative;
-  width: 100%;
-  align-items: center;
-  margin: 0 auto;
-  justify-content: center;
-  padding: 20px 0 35px;
-}
-
-.recommend-header {
-  padding-left: 10%;
-  padding-right: 12%;
-}
-
-.recommend-header hr {
-  border: none;
-  height: 6px;
-  background-color: #353941;
-}
-
 .reccomended-items {
   display: flex;
   gap: 10px;
@@ -303,9 +283,12 @@
 }
 
 .item img {
-  width: 100px;
-  object-fit: cover;
-  height: 120px;
+  /* Display recommended item images at natural aspect ratio within a max size */
+  max-width: 100px;
+  max-height: 120px;
+  height: auto;
+  width: auto;
+  object-fit: contain;
 }
 
 .item-info{
@@ -337,7 +320,7 @@
   transform: translateY(2px) scale(0.98);
 }
 
-/* left & right naiv arrows */
+/* left & right nav arrows */
 .left-arrow, .right-arrow {
   background-color: #DEDEDE;
   border: gray 1px solid;
