@@ -439,3 +439,7 @@ html {
   color: white;
   letter-spacing: 1px;
 }
+
+body.logged-in #guestInfo {
+  display: none !important;
+}

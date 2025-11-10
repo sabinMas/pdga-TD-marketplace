@@ -1765,6 +1765,11 @@
         const saved = savedEvent || savedUser;
         const userInfo = document.getElementById('userInfo');
         const guestInfo = document.getElementById('guestInfo');
+       
+         if (savedUser && savedUser.username) {
+        document.body.classList.add('logged-in');
+        }
+
 
         if (saved && (saved.eventName || saved.email || saved.username)) {
           // Show the ordering info and ensure the guest card is hidden.
