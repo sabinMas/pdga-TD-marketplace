@@ -346,3 +346,44 @@
 .right-arrow {
   margin-left: 15px;
 }
+
+/* === CART + RECOMMENDED ITEM IMAGE FIX === */
+
+/* Limit image size inside the cart */
+.cart img,
+.cart-item-image,
+.items-in-cart img {
+  max-width: 100px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Recommended Supplies section (bottom rail or grid) */
+.recommendation-container img,
+.recommend img,
+.recommended-supplies img,
+.recommendation-section img {
+  max-width: 80px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Ensure layout boxes stay neat */
+.items-in-cart,
+.recommendation-container .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
