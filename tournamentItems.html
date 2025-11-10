@@ -1765,7 +1765,7 @@
   const userInfo = document.getElementById('userInfo');
   const guestInfo = document.getElementById('guestInfo');
 
-  if (saved && saved.username) {
+  if (saved && (saved.username || saved.email)) {
     userInfo.hidden = false;
 
     document.getElementById('userName').textContent = saved.name || saved.username;
