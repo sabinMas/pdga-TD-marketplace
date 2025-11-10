@@ -363,7 +363,7 @@
 /* === RECOMMENDED IMAGE FIX (matches your typos intentionally) === */
 /* container:  <div class="reccomendation-container"> ... */
 /* rail:       <div class="reccomended-items" id="items"> ... */
-.reccomendation-container .reccomended-items .item img {
+.recommendation-container .recommended-items .item img {
   max-width: 70px;
   max-height: 70px;
   width: auto;
@@ -374,7 +374,7 @@
 }
 
 /* keep the tiles tidy */
-.reccomended-items .item {
+.recommended-items .item {
   min-width: 180px;
   height: auto;
   display: flex;
