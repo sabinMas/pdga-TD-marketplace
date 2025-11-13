@@ -9,9 +9,18 @@ section {
   padding: 56px 0;
 }
 /* === Home Page Icon Tweaks === */
+.card {
+  transition: transform 0.25s, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translate(-6px);
+  box-shadow: 0 12px 24px rgba(0, 91, 170, 0.15);
+}
 .cards .card-icon {
   width: 36px;
   height: 36px;
+  transform: translate(-6px);
 }
 
 .cards .card-icon img,
