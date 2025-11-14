@@ -2,3 +2,11 @@
     padding: 24px;
     margin: 32px 0;
 }
+
+.list-section h2 {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 12px;
+    margin: 0 -24px 24px -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
