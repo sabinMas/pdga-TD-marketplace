@@ -1,7 +1,40 @@
 // --- Buttons (safe-guard if not found) ---
 const allOnlineBtn = document.getElementById('allOnline');
 const allLocalBtn  = document.getElementById('allLocal');
+checkoutList = {};
+document.getElementById('pre-checkout').addEventListener('click', onlineCheckout);
 
+function onlineCheckout() {
+  var compList = document.getElementsByClassName("item-details");
+  //iterate over each 'item-detail' wrapper
+  for (const c of compList) {
+    
+  }
+
+  /*
+  On pre-checkout button press,
+  Grab all items in list.html
+
+      make sure that every item is checked either, local or online
+      if 
+        any buttons are not clicked, do a pop-up "all items need to be selected"
+
+      else
+
+        iterate over all of the tags with 'item-details'
+      
+        check if the current 'item-details', grandchild is check local or online
+        if online,
+          add info into checkoutList
+          add all of the online items to local storage under online items
+
+      after we are finished iterating all 'item-details'
+      add the checkoutList to local storage
+
+      iterate over online items in local storage and create elements for checkout.html
+    
+  */
+}
 function locOnlnUpdate(option) {
   const wrappers = document.getElementsByClassName('locOnlnBtnWrapper');
   for (const w of wrappers) {
