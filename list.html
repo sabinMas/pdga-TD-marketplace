@@ -5,49 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>List View</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="assets/css/root.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/utilities.css" />
+    <link rel="stylesheet" href="assets/css/pages/list.css" />
     <!-- In <head> (before listLoader.js) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script src="javaScripts/listLoader.js" defer></script>
   </head>
-  <body>
+    <body>
     <!-- Inputs for shopping radius -->
-    <h2>List of your Items</h2>
-    <a href="tournamentItems.html">return to stopping</a>
+      <section class="site-header">
+        <a href="Index.html">PDGA Martketplace</a>
+        <a href="tournamentItems.html" class="btn">return to stopping</a>
+      </section>
     <!-- In <body>, replace the radius/select + buttons block -->
-<p class="showPark">Stores close to: [park name here]</p>
+      <section class="card">
+        <p class="showPark">Stores close to: [park name here]</p>
+        <div class="finder-buttons">
+          <label>ZIP Code
+          <input id="zip" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 98030" />
+      </label>
 
-<label>ZIP Code
-  <input id="zip" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 98030" />
-</label>
+      <label>Radius (miles)
+        <select id="radius" name="radius">
+        <option value="10">10mi</option>
+        <option value="25">25mi</option>
+        <option value="50" selected>50mi</option>
+        <option value="100">100mi</option>
+      </select>
+      </label>
 
-<label>Radius (miles)
-  <select id="radius" name="radius">
-    <option value="10">10mi</option>
-    <option value="25">25mi</option>
-    <option value="50" selected>50mi</option>
-    <option value="100">100mi</option>
-  </select>
-</label>
-
-<div style="margin: 10px 0;">
-  <button id="findStoresBtn">Find Local Stores</button>
-  <span>— or —</span>
-  <button id="allOnline">All Online</button>
-  <button id="allLocal">All Local</button>
-</div>
+        <div style="margin: 10px 0;">
+          <button class="btn">Find Local Stores</button>
+          <span>— or —</span>
+          <button class="btn">All Online</button>
+          <button class="btn">All Local</button>
+        </div>
 
 <!-- New: Map and results -->
-<div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
-<ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
+  <div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
+  <ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
+</section>
 
-<!-- Items you added to the list render here -->
-<section id="listOutput" class="item-list"></section>
+<section class="list-section">
+  <h2>List Of Your Items</h2>
+  <!-- Items you added to the list render here -->
+  <section id="listOutput" class="product-list">
+</section>
 
+<p>press pre-chekout, beofre checkout
+<button id="pre-checkout">pre-checkout</button>
 <a href="checkoutpage.html" id="numCheckOut">
-  <span id="cartCount">checkout</span>
-</a>
-
-  </body>
+  <button class="btn">checkout</button>
+  </a>
+</p>
+</main>
+</body>
 </html>
