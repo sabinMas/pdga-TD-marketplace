@@ -1,20 +1,25 @@
 // ===== Cart bootstrap =====
+try {
+  sessionStorage.removeItem('localList');
+} catch {}
 let list = {};
-try { list = JSON.parse(localStorage.getItem('localList') || '{}'); } catch {}
+try {
+  list = JSON.parse(sessionStorage.getItem('localList') || '{}');
+} catch {}
 const cartCount = document.getElementById('cartCount');
-function updateCartCountFromList(){
+function updateCartCountFromList() {
   if (!cartCount) return;
-  const total = Object.values(list).reduce((a,b)=>a + Number(b||0), 0);
+  const total = Object.values(list).reduce((a, b) => a + Number(b || 0), 0);
   cartCount.textContent = total;
 }
 updateCartCountFromList();
 
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('q');
-  const searchForm  = document.querySelector('form[role="search"]'); // ✅ defined
-  const saved       = JSON.parse(localStorage.getItem('pdga_user') || 'null');
-  const userInfo    = document.getElementById('userInfo');
-  const guestInfo   = document.getElementById('guestInfo');
+  const searchForm = document.querySelector('form[role="search"]');
+  const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+  const userInfo = document.getElementById('userInfo');
+  const guestInfo = document.getElementById('guestInfo');
 
   // --- sign-in UI ---
   if (saved && saved.username) {
@@ -31,33 +36,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- search ---
-  function filterProducts(){
+  function filterProducts() {
     const q = (searchInput?.value || '').toLowerCase();
-    document.querySelectorAll('.product-grid article.product-card').forEach(card=>{
+    document.querySelectorAll('.product-grid article.product-card').forEach(card => {
       const title = (card.querySelector('.flip-front h3, h3.product-name, .product-details h3, h3')?.textContent || '').toLowerCase();
       card.style.display = title.includes(q) ? '' : 'none';
     });
   }
-  if (searchForm) searchForm.addEventListener('input', e=>e.preventDefault());
+  if (searchForm) searchForm.addEventListener('input', e => e.preventDefault());
   if (searchInput) searchInput.addEventListener('keyup', filterProducts);
 
   // --- add to list (works from front/back) ---
-  function getCardName(card){
+  function getCardName(card) {
     return (card.querySelector('.flip-front .product-details h3, .flip-front h3, h3.product-name, .product-details h3, h3')?.textContent || 'Unnamed Item').trim();
   }
-  document.querySelectorAll('.addToList').forEach(btn=>{
-    btn.addEventListener('click', e=>{
+  document.querySelectorAll('.addToList').forEach(btn => {
+    btn.addEventListener('click', e => {
       const card = e.target.closest('article.product-card'); if (!card) return;
       const name = getCardName(card);
       list[name] = (Number(list[name]) || 0) + 1;
-      localStorage.setItem('localList', JSON.stringify(list));
+      // Save updated list in sessionStorage so it persists only within the current session.
+      try {
+        sessionStorage.setItem('localList', JSON.stringify(list));
+      } catch {}
       updateCartCountFromList();
     });
   });
 
   // --- flip sizing and handlers ---
-  function sizeFlipCards(){
-    document.querySelectorAll('.flip-card .flip-inner').forEach(inner=>{
+  function sizeFlipCards() {
+    document.querySelectorAll('.flip-card .flip-inner').forEach(inner => {
       const f = inner.querySelector('.flip-front'); const b = inner.querySelector('.flip-back');
       if (!f || !b) return;
       inner.style.minHeight = '0px';
@@ -67,17 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('load', sizeFlipCards);
   window.addEventListener('resize', sizeFlipCards);
 
-  document.querySelectorAll('.flip-card').forEach(card=>{
-    card.querySelector('.show-details')?.addEventListener('click', e=>{
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.querySelector('.show-details')?.addEventListener('click', e => {
       e.stopPropagation(); card.classList.add('flipped'); sizeFlipCards();
     });
-    card.querySelector('.close-details')?.addEventListener('click', e=>{
+    card.querySelector('.close-details')?.addEventListener('click', e => {
       e.stopPropagation(); card.classList.remove('flipped'); sizeFlipCards();
     });
   });
 
   // re-measure after images load
-  document.querySelectorAll('.flip-card .product-image img').forEach(img=>{
+  document.querySelectorAll('.flip-card .product-image img').forEach(img => {
     if (!img.complete) {
       img.addEventListener('load', sizeFlipCards, { once: true });
     }
@@ -85,4 +93,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // initial measure (covers already-cached images)
   sizeFlipCards();
+
+  function parsePriceRange(text) {
+    const nums = (text || '').replace(/[^\d\.–-]/g, '').split(/[–-]/).filter(Boolean).map(Number);
+    if (nums.length === 0) return { min: 0, max: 0 };
+    if (nums.length === 1) return { min: nums[0], max: nums[0] };
+    return { min: Math.min(nums[0], nums[1]), max: Math.max(nums[0], nums[1]) };
+  }
+
+
+  document.querySelectorAll('.flip-back label').forEach(label => {
+    const text = label.textContent || '';
+    if (/color:/i.test(text) && label.querySelector('select')) {
+      const select = label.querySelector('select');
+      const options = Array.from(select.options).map(opt => opt.textContent.trim());
+      const wrapper = document.createElement('div');
+      wrapper.className = 'color-options';
+      options.forEach(optText => {
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.value = optText;
+        cb.checked = false;
+        const cbLabel = document.createElement('label');
+        cbLabel.style.display = 'block';
+        cbLabel.append(cb, ' ', optText);
+        wrapper.appendChild(cbLabel);
+      });
+      // Insert the checkboxes before the existing label and remove the select
+      label.parentNode.insertBefore(wrapper, label);
+      label.remove();
+    }
+  });
+
+
+  function updateCardPrice(card) {
+    if (!card) return;
+    const priceEl = card.querySelector('.flip-front .price');
+    if (!priceEl) return;
+    const priceText = priceEl.textContent || '';
+    const { min: minPrice, max: maxPrice } = parsePriceRange(priceText);
+    const checkboxes = card.querySelectorAll('.flip-back input[type="checkbox"]');
+    let totalOptions = checkboxes.length;
+    let selectedCount = 0;
+    checkboxes.forEach(cb => {
+      if (cb.checked) selectedCount++;
+    });
+    // When there are no checkbox options, treat the entire product as one option
+    if (totalOptions === 0) {
+      totalOptions = 1;
+      selectedCount = 1;
+    }
+    let perUnitPrice;
+    if (maxPrice > minPrice) {
+      const fraction = selectedCount / totalOptions;
+      perUnitPrice = minPrice + (maxPrice - minPrice) * fraction;
+    } else {
+      // Single price: scale by number of selected options to allow multiple colours.
+      perUnitPrice = minPrice * selectedCount;
+    }
+    // Multiply by quantity input value if present
+    const qtyInput = card.querySelector('.flip-back input[type="number"]');
+    let qty = 1;
+    if (qtyInput) {
+      qty = Number(qtyInput.value) || 1;
+    }
+    const totalPrice = perUnitPrice * qty;
+    // Find or create a display element in the flip-back to show the price
+    let display = card.querySelector('.flip-back .current-price');
+    if (!display) {
+      display = document.createElement('p');
+      display.className = 'current-price';
+      display.style.fontWeight = 'bold';
+      const backPanel = card.querySelector('.flip-back');
+      const heading = backPanel.querySelector('h3');
+      if (heading) {
+        heading.insertAdjacentElement('afterend', display);
+      } else {
+        backPanel.insertBefore(display, backPanel.firstChild);
+      }
+    }
+    display.textContent = `Estimated Price: $${totalPrice.toFixed(2)}`;
+  }
+
+  // Attach change listeners to checkboxes and quantity inputs for each product card
+  document.querySelectorAll('article.product-card').forEach(card => {
+    // Initial price calculation
+    updateCardPrice(card);
+    // Listen for changes on checkboxes
+    card.querySelectorAll('.flip-back input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => updateCardPrice(card));
+    });
+    // Listen for changes on number inputs
+    card.querySelectorAll('.flip-back input[type="number"]').forEach(inp => {
+      inp.addEventListener('input', () => updateCardPrice(card));
+    });
+    // Listen for changes on select elements (non-colour selects)
+    card.querySelectorAll('.flip-back select').forEach(sel => {
+      sel.addEventListener('change', () => updateCardPrice(card));
+    });
+  });
 });
