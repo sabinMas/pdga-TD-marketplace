@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const listOutput = document.getElementById('listOutput');
   if (!listOutput) return; // nothing to do
 
-  // Rebuild saved list
-  const saved = localStorage.getItem('localList');
+  // Rebuild saved list from sessionStorage instead of localStorage
+  const saved = sessionStorage.getItem('localList');
   const items = saved ? JSON.parse(saved) : null;
 
   if (!items || typeof items !== 'object' || !Object.keys(items).length) {
@@ -162,97 +162,97 @@ document.addEventListener('DOMContentLoaded', () => {
   const Δλ = (lon2 - lon1) * Math.PI/180;
   const a = Math.sin(Δφ/2)**2 + Math.cos(φ1)*Math.cos(φ2)*Math.sin(Δλ/2)**2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
+ }
+ 
+ // we'll pass lat/lon of the ZIP to both render functions
+ function renderStoresOnMap(elements, origin) {
+   if (!elements.length) return;
+   const bounds = [];
+   elements.forEach(el => {
+     const c = el.type === 'node' ? { lat: el.lat, lon: el.lon } : (el.center || el);
+     if (!c?.lat || !c?.lon) return;
+     const tags = el.tags || {};
+     const name = tags.name || (tags.brand || 'Unnamed store');
+     const addr = formatAddress(tags);
+     const link = mapsLink(c.lat, c.lon, name);
+     const dist = origin ? (haversine(origin.lat, origin.lon, c.lat, c.lon) / 1609.34).toFixed(1) : null;
 
-// we'll pass lat/lon of the ZIP to both render functions
-function renderStoresOnMap(elements, origin) {
-  if (!elements.length) return;
-  const bounds = [];
-  elements.forEach(el => {
-    const c = el.type === 'node' ? { lat: el.lat, lon: el.lon } : (el.center || el);
-    if (!c?.lat || !c?.lon) return;
-    const tags = el.tags || {};
-    const name = tags.name || (tags.brand || 'Unnamed store');
-    const addr = formatAddress(tags);
-    const link = mapsLink(c.lat, c.lon, name);
-    const dist = origin ? (haversine(origin.lat, origin.lon, c.lat, c.lon) / 1609.34).toFixed(1) : null;
+     const marker = L.marker([c.lat, c.lon]).bindPopup(`
+       <div style="min-width:220px">
+         <b>${name}</b><br/>
+         <small>${addr || 'Address unavailable'}</small><br/>
+         ${dist ? `<small>${dist} mi away</small><br/>` : ''}
+         <a href="${link}" target="_blank" rel="noopener">Open in Google Maps</a>
+         ${tags.phone ? `<br/><a href="tel:${tags.phone}">${tags.phone}</a>` : ''}
+         ${tags.website ? `<br/><a href="${tags.website}" target="_blank" rel="noopener">Website</a>` : ''}
+       </div>
+     `);
+     marker.addTo(markersLayer);
+     bounds.push([c.lat, c.lon]);
+   });
+   if (bounds.length) map.fitBounds(bounds, { padding: [20,20] });
+ }
+ 
+ function renderStoresList(elements, origin) {
+   const ul = document.getElementById('storeResults');
+   if (!ul) return;
+   ul.innerHTML = '';
 
-    const marker = L.marker([c.lat, c.lon]).bindPopup(`
-      <div style="min-width:220px">
-        <b>${name}</b><br/>
-        <small>${addr || 'Address unavailable'}</small><br/>
-        ${dist ? `<small>${dist} mi away</small><br/>` : ''}
-        <a href="${link}" target="_blank" rel="noopener">Open in Google Maps</a>
-        ${tags.phone ? `<br/><a href="tel:${tags.phone}">${tags.phone}</a>` : ''}
-        ${tags.website ? `<br/><a href="${tags.website}" target="_blank" rel="noopener">Website</a>` : ''}
-      </div>
-    `);
-    marker.addTo(markersLayer);
-    bounds.push([c.lat, c.lon]);
-  });
-  if (bounds.length) map.fitBounds(bounds, { padding: [20,20] });
-}
+   if (!elements.length) {
+     ul.innerHTML = '<li>No stores found in this radius.</li>';
+     return;
+   }
 
-function renderStoresList(elements, origin) {
-  const ul = document.getElementById('storeResults');
-  if (!ul) return;
-  ul.innerHTML = '';
+   // Compute distances, sort by distance, limit to 10
+   const withDist = elements.map(el => {
+     const c = el.type === 'node' ? { lat: el.lat, lon: el.lon } : (el.center || el);
+     const dist = origin ? haversine(origin.lat, origin.lon, c.lat, c.lon) : Infinity;
+     return { ...el, _coord: c, _dist: dist };
+   }).sort((a,b) => a._dist - b._dist)
+     .slice(0, 10); // 👈 limit to 10 results
 
-  if (!elements.length) {
-    ul.innerHTML = '<li>No stores found in this radius.</li>';
-    return;
-  }
+   withDist.forEach(el => {
+     const c = el._coord;
+     const tags = el.tags || {};
+     const name = tags.name || (tags.brand || 'Unnamed store');
+     const addr = formatAddress(tags);
+     const g = mapsLink(c.lat, c.lon, name);
+     const miles = (el._dist / 1609.34).toFixed(1);
 
-  // Compute distances, sort by distance, limit to 10
-  const withDist = elements.map(el => {
-    const c = el.type === 'node' ? { lat: el.lat, lon: el.lon } : (el.center || el);
-    const dist = origin ? haversine(origin.lat, origin.lon, c.lat, c.lon) : Infinity;
-    return { ...el, _coord: c, _dist: dist };
-  }).sort((a,b) => a._dist - b._dist)
-    .slice(0, 10); // 👈 limit to 10 results
-
-  withDist.forEach(el => {
-    const c = el._coord;
-    const tags = el.tags || {};
-    const name = tags.name || (tags.brand || 'Unnamed store');
-    const addr = formatAddress(tags);
-    const g = mapsLink(c.lat, c.lon, name);
-    const miles = (el._dist / 1609.34).toFixed(1);
-
-    const li = document.createElement('li');
-    li.style.padding = '8px 0';
-    li.innerHTML = `
-      <b>${name}</b> — ${miles} mi<br/>
-      <small>${addr || 'Address unavailable'}</small><br/>
-      <a href="${g}" target="_blank" rel="noopener">Open in Google Maps</a>
-      ${tags.phone ? ` &middot; <a href="tel:${tags.phone}">${tags.phone}</a>` : ''}
-      ${tags.website ? ` &middot; <a href="${tags.website}" target="_blank" rel="noopener">Website</a>` : ''}
-    `;
-    ul.appendChild(li);
-  });
-}
+     const li = document.createElement('li');
+     li.style.padding = '8px 0';
+     li.innerHTML = `
+       <b>${name}</b> — ${miles} mi<br/>
+       <small>${addr || 'Address unavailable'}</small><br/>
+       <a href="${g}" target="_blank" rel="noopener">Open in Google Maps</a>
+       ${tags.phone ? ` &middot; <a href="tel:${tags.phone}">${tags.phone}</a>` : ''}
+       ${tags.website ? ` &middot; <a href="${tags.website}" target="_blank" rel="noopener">Website</a>` : ''}
+     `;
+     ul.appendChild(li);
+   });
+ }
 
   // Button wire-up
-  const btn = document.getElementById('findStoresBtn');
-  btn?.addEventListener('click', async () => {
-    const zip = String(document.getElementById('zip')?.value || '').trim();
-    const radiusMi = document.getElementById('radius')?.value || '50';
-    if (!zip) { alert('Please enter a ZIP code.'); return; }
+   const btn = document.getElementById('findStoresBtn');
+   btn?.addEventListener('click', async () => {
+     const zip = String(document.getElementById('zip')?.value || '').trim();
+     const radiusMi = document.getElementById('radius')?.value || '50';
+     if (!zip) { alert('Please enter a ZIP code.'); return; }
 
-    try {
-      btn.disabled = true; btn.textContent = 'Searching...';
-      const { lat, lon } = await geocodeZip(zip);
-      ensureMap(lat, lon, 11);
-      const elements = await findNearbyStores(lat, lon, milesToMeters(radiusMi));
-      renderStoresOnMap(elements);
-      renderStoresList(elements);
-    } catch (e) {
-      console.error(e);
-      ensureMap();
-      const ul = document.getElementById('storeResults');
-      if (ul) ul.innerHTML = '<li>Sorry, we had trouble searching. Try a different ZIP or radius.</li>';
-    } finally {
-      btn.disabled = false; btn.textContent = 'Find Local Stores';
-    }
-  });
-});
+     try {
+       btn.disabled = true; btn.textContent = 'Searching...';
+       const { lat, lon } = await geocodeZip(zip);
+       ensureMap(lat, lon, 11);
+       const elements = await findNearbyStores(lat, lon, milesToMeters(radiusMi));
+       renderStoresOnMap(elements);
+       renderStoresList(elements);
+     } catch (e) {
+       console.error(e);
+       ensureMap();
+       const ul = document.getElementById('storeResults');
+       if (ul) ul.innerHTML = '<li>Sorry, we had trouble searching. Try a different ZIP or radius.</li>';
+     } finally {
+       btn.disabled = false; btn.textContent = 'Find Local Stores';
+     }
+   });
+ });
