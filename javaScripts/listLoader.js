@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!items || typeof items !== 'object' || !Object.keys(items).length) {
     listOutput.innerHTML = '<p>No items in your list yet.</p>';
   } else {
+    document.getElementById('listFunctionWrapper').hidden = false;
     for (const item in items) {
       const listItem = document.createElement('div');
       listItem.classList.add('item-details');
