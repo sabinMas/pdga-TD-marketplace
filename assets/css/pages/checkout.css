@@ -27,12 +27,12 @@
 }
 
 /* cart will contain items pushed from list */
-.cart{
+#cart{
   flex: 1;
   padding-left: 10%;
 }
 
-.cart hr {
+#cart hr {
   border: none;
   height: 10px;
   background-color: #353941;
@@ -40,14 +40,14 @@
   margin-left: 0%;
 }
 
-.cart h2{
+#cart h2{
   padding-left: 2%;
   font-size: 30px;
   padding-top: 1%;
   color: #353941;
 }
 
-.cart h4 {
+#cart h4 {
   padding-left: 4%;
 }
 
@@ -348,7 +348,7 @@
 }
 
 /* === CART IMAGE FIX (matches <img class="item-image">) === */
-.cart .item-image,
+#cart .item-image,
 .items-in-cart .item-image {
   max-width: 100px;
   max-height: 100px;

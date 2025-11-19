@@ -1,6 +1,6 @@
 //recommendation arrows function
 const list = document.getElementById('items');
-
+const output = document.getElementById('cart');
 function scrollLeftBtn() {
     list.scrollBy({left: -250, behavior: 'smooth'});
 }
@@ -10,8 +10,64 @@ function scrollRightBtn() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(sessionStorage.getItem('checkoutList')); 
+    var saved = (sessionStorage.getItem('checkoutList'));
+    var items = JSON.parse(saved);
+    console.log('page load')
+
+    for(const item in items) {
+        const itemInCart = document.createElement('div')
+        itemInCart.classList.add('items-in-cart');
+
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        
+        var img = document.createElement('img');
+        img.classList.add('item-image');
+        cartItem.appendChild(img);
+
+        var itemInfo = document.createElement('div');
+        itemInfo.classList.add('cart-item-info');
+        
+        var itemName = document.createElement('p');
+        itemName.classList.add('cart-item-name');
+        itemName.innerHTML = item;
+        itemInfo.appendChild(itemName);
+
+        var itemDetails = document.createElement('p');
+        itemDetails.classList.add('cart-item-details');
+        itemDetails.innerHTML = 'details';
+        itemInfo.appendChild(itemDetails);
+        
+        cartItem.appendChild(itemInfo);
+
+        var quantity = document.createElement('p');
+        quantity.classList.add('cart-item-quantity')
+        quantity.innerHTML = `Quantity: ${items[item]}`
+        cartItem.appendChild(quantity);
+
+        var price = document.createElement('p');
+        price.classList.add('cart-item-price');
+        price.innerHTML = "$10.00"
+        cartItem.appendChild(price);
+
+        itemInCart.appendChild(cartItem);
+        output.appendChild(itemInCart)
+
+    }
 });
 
 
-
+/*
+<div class="items-in-cart">
+    <div class="cart-item">
+        <img src="https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl" 
+        alt="Landscape Stake" class="item-image">
+        <div class="cart-item-info">
+            <p class="cart-item-name">Landscape Stake</p>
+            <p class="cart-item-details">Length: 12" | minimum quantity 12</p>
+        </div>
+        <p class="cart-item-quantity">Quantity: 12</p>
+        <p class="cart-item-price">$12.78</p>
+    </div>
+</div>
+*/
