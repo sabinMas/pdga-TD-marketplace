@@ -8,3 +8,10 @@ function scrollLeftBtn() {
 function scrollRightBtn() {
     list.scrollBy({left: 250, behavior: 'smooth'});
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log(sessionStorage.getItem('checkoutList')); 
+});
+
+
+

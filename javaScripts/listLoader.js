@@ -5,13 +5,27 @@ checkoutList = {};
 document.getElementById('pre-checkout').addEventListener('click', onlineCheckout);
 
 function onlineCheckout() {
-  var compList = document.getElementsByClassName("item-details");
-  //iterate over each 'item-detail' wrapper
-  for (const c of compList) {
-    
-  }
 
-  /*
+  const radios = document.querySelectorAll('input[type="radio"]');
+  console.log('pre-checkout clicked')
+  //console.log(radios)
+
+  radios.forEach(radio => {
+        
+        if (radio.value === "online" & radio.checked === true) {
+            console.log("Online selected for:", radio.name); 
+            var productName = radio.name;
+            var parent = (radio.closest('div.item-details'));
+            var qtyBought = (parent.children[0].children[0].value);
+            console.log(qtyBought);
+
+            checkoutList[productName] = qtyBought
+        }
+    
+  });
+  console.log(checkoutList);
+  sessionStorage.setItem('checkoutList', JSON.stringify(checkoutList));
+  /*  
   On pre-checkout button press,
   Grab all items in list.html
 
@@ -32,7 +46,6 @@ function onlineCheckout() {
       add the checkoutList to local storage
 
       iterate over online items in local storage and create elements for checkout.html
-    
   */
 }
 function locOnlnUpdate(option) {
