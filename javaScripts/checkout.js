@@ -55,19 +55,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 });
-
-
-/*
-<div class="items-in-cart">
-    <div class="cart-item">
-        <img src="https://mobileimages.lowes.com/productimages/9ee2ded8-d275-4c0c-8d80-8d2124fa6baf/72605293.jpeg?size=xl" 
-        alt="Landscape Stake" class="item-image">
-        <div class="cart-item-info">
-            <p class="cart-item-name">Landscape Stake</p>
-            <p class="cart-item-details">Length: 12" | minimum quantity 12</p>
-        </div>
-        <p class="cart-item-quantity">Quantity: 12</p>
-        <p class="cart-item-price">$12.78</p>
-    </div>
-</div>
-*/
