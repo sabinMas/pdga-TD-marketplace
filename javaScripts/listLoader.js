@@ -51,9 +51,10 @@ function onlineCheckout() {
 function locOnlnUpdate(option) {
   const wrappers = document.getElementsByClassName('locOnlnBtnWrapper');
   for (const w of wrappers) {
+    console.log(w)
     for (let i = 0; i < w.children.length; i++) {
-      if (w.children[i].tagName === 'INPUT') {
-        w.children[i].checked = (w.children[i].value === option);
+      if (w.children[i].tagName === 'INPUT' & w.children[i].value === option) {
+        w.children[i].checked = true;
       }
     }
   }
