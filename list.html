@@ -15,37 +15,37 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script src="javaScripts/listLoader.js" defer></script>
   </head>
-    <body>
+  <body>
     <!-- Inputs for shopping radius -->
-      <section class="site-header">
-        <a href="Index.html">PDGA Martketplace</a>
-        <a href="tournamentItems.html" class="btn">return to stopping</a>
-      </section>
+    <section class="site-header">
+      <a href="Index.html">PDGA Martketplace</a>
+      <a href="tournamentItems.html" class="btn">return to stopping</a>
+    </section>
     <!-- In <body>, replace the radius/select + buttons block -->
-      <section class="card">
-        <p class="showPark">Stores close to: [park name here]</p>
-        <div class="finder-buttons">
-          <label>ZIP Code
+    <section class="card">
+      <p class="showPark">Stores close to: [park name here]</p>
+      <div class="finder-buttons">
+        <label>ZIP Code
           <input id="zip" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 98030" />
-      </label>
+        </label>
 
-      <label>Radius (miles)
-        <select id="radius" name="radius">
-        <option value="10">10mi</option>
-        <option value="25">25mi</option>
-        <option value="50" selected>50mi</option>
-        <option value="100">100mi</option>
-      </select>
-      </label>
+        <label>Radius (miles)
+          <select id="radius" name="radius">
+          <option value="10">10mi</option>
+          <option value="25">25mi</option>
+          <option value="50" selected>50mi</option>
+          <option value="100">100mi</option>
+        </select>
+        </label>
 
-        <div style="margin: 10px 0;">
-          <button id="findStoresBtn" class="btn">Find Local Stores</button>
-        </div>
+      <div style="margin: 10px 0;">
+        <button id="findStoresBtn" class="btn">Find Local Stores</button>
+      </div>
 
 <!-- New: Map and results -->
-  <div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
-  <ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
-</section>
+      <div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
+      <ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
+    </section>
 
 <section class="list-section">
   <h2>Items List</h2>
@@ -55,15 +55,14 @@
   </div>
   
   <!-- Items you added to the list render here -->
-  <section id="listOutput" class="product-list">
-</section>
+    <section id="listOutput" class="product-list">
+    </section>
 
-<p>press "pre-chekout", THEN "checkout"
-<button id="pre-checkout" class="btn">Pre-checkout</button>
-<a href="checkoutpage.html" id="numCheckOut">
-  <button class="btn">Checkout</button>
-  </a>
-</p>
-</main>
-</body>
+    <p>press "pre-chekout", THEN "checkout"
+    <button id="pre-checkout" class="btn">Pre-checkout</button>
+    <a href="checkoutpage.html" id="numCheckOut" hidden="true">
+      <button class="btn" id="checkout">Checkout</button>
+    </a>
+    </p>
+  </body>
 </html>

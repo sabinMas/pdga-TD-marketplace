@@ -5,7 +5,7 @@ checkoutList = {};
 document.getElementById('pre-checkout').addEventListener('click', onlineCheckout);
 
 function onlineCheckout() {
-
+  document.getElementById('numCheckOut').hidden = false;
   const radios = document.querySelectorAll('input[type="radio"]');
   console.log('pre-checkout clicked')
   //console.log(radios)
