@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Check Out - PDGA Marketplace</title>
-    <link rel="stylesheet" href="assets/css/root.css" />  
+    <link rel="stylesheet" href="assets/css/root.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/checkout.css" />
     <script defer src="javaScripts/checkout.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- HEADER -->
     <header class="site-header">
-        <div class="container">
-          <a class="brand" href="index.html">PDGA Marketplace</a>
-          <p>Secure checkout</p>
-        </div>
+      <div class="container">
+        <a class="brand" href="index.html">PDGA Marketplace</a>
+        <p>Secure checkout</p>
+      </div>
     </header>
-    
-    <main class="container-fluid checkout-layout"> 
+
+    <main class="container-fluid checkout-layout">
       <div id="checkoutHeader">
         <h1>Checkout</h1>
-        <hr>
+        <hr />
       </div>
-      
+
       <div class="wrap-content">
         <div id="cart">
           <h2>Cart</h2>
-          <hr>
-          
+          <hr />
+
           <div class="items-in-cart">
             <div class="cart-item">
-              <img src="https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php" 
-              alt="Navigational arrows signs" class="item-image">
+              <img
+                src="https://fluentdisc.com/3ab0d6eeda764e74ad56c0239ee510f1.780x400.7377.media.php"
+                alt="Navigational arrows signs"
+                class="item-image"
+              />
               <div class="cart-item-info">
                 <p class="cart-item-name">High Visibility Navigational Arrows</p>
                 <p class="cart-item-details">Color: Yellow</p>
@@ -69,44 +72,60 @@
               <p class="cart-item-price">$3.99</p>
             </div>
           </div>
-        -->
-        </div>
-          
+        --></div>
+
         <aside class="payment-sidebar">
           <h2>Choose your payment</h2>
 
           <h3>Express Checkout</h3>
-          <hr>
-            <div class="four-payments">
-              <div class="bank-logos">  
-                <a href="https://shop.app/shop-pay/" id="shop-pay" class="bank-button">
-                  <img src="https://cdn.shopify.com/s/files/1/1940/8677/files/ShopPay_-_White.png?v=1707075873" alt="Shop pay logo">
-                </a>
-                <a href="https://www.paypal.com/us/home" id="paypal" class="bank-button">
-                  <img src="https://freepngimg.com/thumb/paypal/2-2-paypal-logo-transparent-png-thumb.png" alt="Paypal logo">
-                </a>
-                <a href="https://pay.amazon.com/" id="amazon-pay" class="bank-button">
-                  <img src="https://www.omt.de/uploads/2020/06/Amazon-Pay-.png" alt="amazon pay logo">
-                </a>
-                <a href="https://www.apple.com/apple-pay/" id="apple-pay" class="bank-button">
-                  <img src="https://cdn-icons-png.flaticon.com/512/5977/5977576.png" alt="apple pay logo">
-                </a>
-              </div>
+          <hr />
+          <div class="four-payments">
+            <div class="bank-logos">
+              <a href="https://shop.app/shop-pay/" id="shop-pay" class="bank-button">
+                <img
+                  src="https://cdn.shopify.com/s/files/1/1940/8677/files/ShopPay_-_White.png?v=1707075873"
+                  alt="Shop pay logo"
+                />
+              </a>
+              <a href="https://www.paypal.com/us/home" id="paypal" class="bank-button">
+                <img
+                  src="https://freepngimg.com/thumb/paypal/2-2-paypal-logo-transparent-png-thumb.png"
+                  alt="Paypal logo"
+                />
+              </a>
+              <a href="https://pay.amazon.com/" id="amazon-pay" class="bank-button">
+                <img
+                  src="https://www.omt.de/uploads/2020/06/Amazon-Pay-.png"
+                  alt="amazon pay logo"
+                />
+              </a>
+              <a href="https://www.apple.com/apple-pay/" id="apple-pay" class="bank-button">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/5977/5977576.png"
+                  alt="apple pay logo"
+                />
+              </a>
             </div>
+          </div>
 
           <h3>Pay with card</h3>
-          <hr>
+          <hr />
           <div class="card-payment-logos">
-            <img src="https://vectorified.com/image/visa-mastercard-american-express-discover-vector-3.jpg" alt="Visa, master card, discover, american express logos">
+            <img
+              src="https://vectorified.com/image/visa-mastercard-american-express-discover-vector-3.jpg"
+              alt="Visa, master card, discover, american express logos"
+            />
           </div>
 
           <div class="total-pay">
             <h3>Order Summary</h3>
-            <hr>
-            <p>Subtotal  $0.00 (0 items) </p>
-            <p>Shipping  $0.00</p>
+            <hr />
+            <p id="playerPackLine">Player Packs $0.00</p>
+            <p id="eventSuppliesLine">Event Supplies $0.00</p>
+            <p id="subtotalLine">Subtotal $0.00 (0 items)</p>
+            <p>Shipping $0.00</p>
             <p>Estimated Taxes $0.00</p>
-            <p><b>Total  $0.00</b></p>
+            <p><b id="totalLine">Total $0.00</b></p>
             <div class="button">
               <button type="button" disabled id="buy-button">Checkout</button>
             </div>
@@ -116,75 +135,96 @@
 
       <div class="recommend-header">
         <h2>Recommended Supplies</h2>
-        <hr>
+        <hr />
       </div>
 
       <div class="recommendation-container">
         <button class="left-arrow" onclick="scrollLeftBtn()">&#10094;</button>
 
-        <div class="recommended-items" id="items" >
-          <div class="item" data-category="course-setup">  <!--change category depending on item-->
-            <img src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950" alt="white spray can">
+        <div class="recommended-items" id="items">
+          <div class="item" data-category="course-setup">
+            <!--change category depending on item-->
+            <img
+              src="https://thepaintstore.com/cdn/shop/products/35099-2.png?v=1698981879&width=950"
+              alt="white spray can"
+            />
             <div class="item-info">
               <h3 class="item-name">Marking Paint Spray Cans</h3>
               <p class="item-price">$9.98</p>
               <button class="add-to-cart">+</button>
             </div>
-          </div> <!--item 1-->
+          </div>
+          <!--item 1-->
 
-          <div class="item" data-category="safety">  <!--change category depending on item-->
-            <img src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism" alt="High visibility safety vest"/>
+          <div class="item" data-category="safety">
+            <!--change category depending on item-->
+            <img
+              src="https://mobileimages.lowes.com/productimages/efb02f24-1868-4038-8e7b-e52704cc31f5/11584815.jpg?size=pdhism"
+              alt="High visibility safety vest"
+            />
             <div class="item-info">
               <h3 class="item-name">High Visibility Vest</h3>
               <p class="item-price">$12.88</p>
               <button class="add-to-cart">+</button>
             </div>
-          </div> <!--item 2-->
+          </div>
+          <!--item 2-->
 
-          <div class="item" data-category="extras">  <!--change category depending on item-->
-            <img src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946" alt="Custom DyeMax disc or marker"/>
+          <div class="item" data-category="extras">
+            <!--change category depending on item-->
+            <img
+              src="https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946"
+              alt="Custom DyeMax disc or marker"
+            />
             <div class="item-info">
               <h3 class="item-name">Custom DyeMax Disc or Marker</h3>
               <p class="item-price">$7.99 – $24.99</p>
               <button class="add-to-cart">+</button>
             </div>
-          </div> <!--item 3-->
-          
-          <div class="item" data-category="course-setup">  <!--change category depending on item-->
+          </div>
+          <!--item 3-->
+
+          <div class="item" data-category="course-setup">
+            <!--change category depending on item-->
             <img
               src="https://fluentdisc.com/aa901ab1b4084b769a17d8772f38bb03.780x400.2416.media.php"
               alt="Mando arrow sign"
-                  />
+            />
             <div class="item-info">
               <h3 class="item-name">High Visibility Mando Arrows</h3>
               <p class="item-price">$30 – $75</p>
               <button class="add-to-cart">+</button>
             </div>
-          </div> <!--item 4-->
+          </div>
+          <!--item 4-->
 
-          <div class="item" data-category="course-setup">  <!--change category depending on item-->
-            <img src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent" alt="Sport-Tek tee" />
+          <div class="item" data-category="course-setup">
+            <!--change category depending on item-->
+            <img
+              src="https://cms.cloudinary.vpsvc.com/image/fetch/c_scale,dpr_2.0,f_auto,w_816/https%3A%2F%2Frendering.documents.cimpress.io%2Fv1%2Flat%2Fpreview%3Fwidth%3D1500%26scene%3Dhttps%253A%252F%252Fassets.documents.cimpress.io%252Fv3%252Fassets%252F197d3086-78e7-4439-a20e-7d78b6adf823%252Fcontent"
+              alt="Sport-Tek tee"
+            />
             <div class="item-info">
               <h3 class="item-name">Sprot-Tek Tee</h3>
               <p class="item-price">$7.53 – $12.90</p>
               <button class="add-to-cart">+</button>
             </div>
-          </div> <!--item 5--> 
+          </div>
+          <!--item 5-->
         </div>
 
         <button class="right-arrow" onclick="scrollRightBtn()">&#10095;</button>
       </div>
 
       <footer>
-      <div class="container footer">
-        <p>
-          <strong>PDGA Marketplace</strong><br />
-          <span class="muted">Built for Tournament Directors & Clubs.</span>
-        </p>
-        <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
-      </div>
-    </footer>
+        <div class="container footer">
+          <p>
+            <strong>PDGA Marketplace</strong><br />
+            <span class="muted">Built for Tournament Directors & Clubs.</span>
+          </p>
+          <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
+        </div>
+      </footer>
     </main>
-
-</body>
+  </body>
 </html>
