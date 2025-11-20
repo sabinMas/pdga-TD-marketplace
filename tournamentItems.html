@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/tournament.css" />
+   <!--
+      The Main.js script handles most of the dynamic behaviour on this page including
+      search, price calculations and cart management. The modifications below
+      rely on new data attributes (data-category, data-min-selections) to
+      enforce minimum selections for player packs and categorise products for
+      cart totals.
+    -->
     <script defer src="javaScripts/Main.js"></script>
     <script defer src="javaScripts/signIn.js"></script>
   </head>
@@ -37,7 +44,7 @@
               <img src="images/cart.svg" alt="cart icon" />
               <span id="cartCount">0</span>
                <!--
-              sepeated so that count can be updated independently
+              separated so that count can be updated independently
                 -->
               <span> :View List</span>
             </a>
@@ -99,8 +106,13 @@
       <section>
         <h2 id="PlayerPacks">Player Packs</h2>
         <div class="product-grid">
-          <!-- Tier A pack -->
-          <article class="product-card flip-card">
+          <!-- Premium pack -->
+          <!--
+            The data-category indicates that this product is a player pack.
+            The data-min-selections attribute defines how many checkbox options
+            must remain selected to build a valid pack. Main.js enforces this.
+          -->
+          <article class="product-card flip-card" data-category="player-pack" data-min-selections="4">
             <div class="flip-inner">
               <!-- FRONT -->
               <div class="flip-front">
@@ -173,8 +185,8 @@
             </div>
           </article>
 
-          <!-- Tier B pack -->
-          <article class="product-card flip-card">
+          <!-- Standard pack -->
+          <article class="product-card flip-card" data-category="player-pack" data-min-selections="3">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -229,8 +241,8 @@
             </div>
           </article>
 
-          <!-- Tier C pack -->
-          <article class="product-card flip-card">
+          <!-- Bargain pack -->
+          <article class="product-card flip-card" data-category="player-pack" data-min-selections="2">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -268,6 +280,62 @@
                   </label>
                   <label
                     >Pack Quantity:
+                    <input type="number" min="1" value="1" />
+                  </label>
+                </div>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Custom player pack -->
+          <article class="product-card flip-card" data-category="player-pack" data-min-selections="4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg"
+                    alt="Custom Player Pack"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3>Custom Player Pack</h3>
+                  <p class="price">$5.00–$60.00</p>
+                  <button class="btn show-details">View Details</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Custom Player Pack — Options</h3>
+                <p class="quantityInfo">Included In Pack (toggle to remove):</p>
+                <ul class="quantityInfo">
+                  <li><label><input type="checkbox" checked /> 2 Discs (Driver + Putter)</label></li>
+                  <li><label><input type="checkbox" checked /> Shirt</label></li>
+                  <li><label><input type="checkbox" checked /> Water Bottle</label></li>
+                  <li><label><input type="checkbox" /> Hat</label></li>
+                  <li><label><input type="checkbox" /> Stickers</label></li>
+                  <li><label><input type="checkbox" /> Mini Disc</label></li>
+                  <li><label><input type="checkbox" /> Golf Towel</label></li>
+                  <li><label><input type="checkbox" /> Custom Bag Tag</label></li>
+                </ul>
+                <div class="quantityInfo" style="display: grid; gap: 0.5rem">
+                  <label>Shirt Size:
+                    <select>
+                      <option>Mixed (S–XL)</option>
+                      <option>Men’s</option>
+                      <option>Women’s</option>
+                      <option>Youth</option>
+                    </select>
+                  </label>
+                  <label>Disc Plastic:
+                    <select>
+                      <option>Premium</option>
+                      <option>Baseline</option>
+                    </select>
+                  </label>
+                  <label>Pack Quantity:
                     <input type="number" min="1" value="1" />
                   </label>
                 </div>
