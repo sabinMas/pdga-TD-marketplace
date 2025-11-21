@@ -182,7 +182,31 @@
 html {
   scroll-behavior: smooth;
 }
+/* allows Extras heading to be centered */
+.product-header:has(#Extras) {
+  display: block;
+  text-align: center;
+}
 
+/* allows headings in seasonal section to be centerd*/
+.seasonal-section .product-header {
+  display: block;
+  text-align: center;
+}
+
+/* allows headings in tournament section to be centerd */
+.tournament-page-layout h2 {
+  text-align: center;
+}
+
+/* spacing for spring tournament heading*/
+.product-header:has(#spring) {
+  margin-top: 6rem;
+}
+/* allows for spacing in between sections for seasonal events section */
+.seasonal-section .product-grid {
+  margin-bottom: 9rem;
+}
 /* offset targets so sticky header + subnav don't cover them */
 .tournament-page-layout h2[id],
 .tournament-page-layout h3[id] {

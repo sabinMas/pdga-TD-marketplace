@@ -1,15 +1,26 @@
 // ===== Cart bootstrap =====
+// We support storing each list entry as an object with quantity, unitPrice and category.
+// When first loading the page we attempt to rebuild this structure from sessionStorage.
 try {
   sessionStorage.removeItem('localList');
 } catch {}
 let list = {};
 try {
-  list = JSON.parse(sessionStorage.getItem('localList') || '{}');
+  const saved = sessionStorage.getItem('localList');
+  if (saved) {
+    list = JSON.parse(saved);
+  }
 } catch {}
 const cartCount = document.getElementById('cartCount');
 function updateCartCountFromList() {
   if (!cartCount) return;
-  const total = Object.values(list).reduce((a, b) => a + Number(b || 0), 0);
+  const total = Object.values(list).reduce((a, b) => {
+    // b may be a number (legacy) or an object with a quantity property
+    if (typeof b === 'object' && b !== null && b.quantity !== undefined) {
+      return a + Number(b.quantity || 0);
+    }
+    return a + Number(b || 0);
+  }, 0);
   cartCount.textContent = total;
 }
 updateCartCountFromList();
@@ -54,7 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', e => {
       const card = e.target.closest('article.product-card'); if (!card) return;
       const name = getCardName(card);
-      list[name] = (Number(list[name]) || 0) + 1;
+      // Determine quantity from the quantity input, defaulting to 1 if missing
+      const qtyInput = card.querySelector('.flip-back input[type="number"]');
+      const qty = qtyInput ? Number(qtyInput.value || 1) : 1;
+      // Determine current price (total for selected quantity) from dataset
+      const currentTotal = parseFloat(card.dataset.currentPrice || '0');
+      const unitPrice = qty > 0 ? currentTotal / qty : currentTotal;
+      // Determine category; default to event-supply if undefined
+      const category = card.dataset.category || 'event-supplies';
+      if (list[name] && typeof list[name] === 'object') {
+        // Accumulate quantity and total price
+        list[name].quantity += qty;
+        list[name].totalPrice += currentTotal;
+      } else {
+        list[name] = {
+          quantity: qty,
+          unitPrice: unitPrice,
+          totalPrice: currentTotal,
+          category: category
+        };
+      }
       // Save updated list in sessionStorage so it persists only within the current session.
       try {
         sessionStorage.setItem('localList', JSON.stringify(list));
@@ -101,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return { min: Math.min(nums[0], nums[1]), max: Math.max(nums[0], nums[1]) };
   }
 
-
+  // Convert colour selects into checkboxes for multi-select
   document.querySelectorAll('.flip-back label').forEach(label => {
     const text = label.textContent || '';
     if (/color:/i.test(text) && label.querySelector('select')) {
@@ -125,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-
   function updateCardPrice(card) {
     if (!card) return;
     const priceEl = card.querySelector('.flip-front .price');
@@ -143,7 +172,41 @@ document.addEventListener('DOMContentLoaded', () => {
       totalOptions = 1;
       selectedCount = 1;
     }
+    // Determine minimum selections from data attribute (default 0 for non-player packs)
+    const minSelections = parseInt(card.dataset.minSelections || '0', 10);
     let perUnitPrice;
+    // If user has selected fewer than the minimum required, show a message instead of price
+    const qtyInput = card.querySelector('.flip-back input[type="number"]');
+    let qty = 1;
+    if (qtyInput) {
+      qty = Number(qtyInput.value) || 1;
+    }
+    if (selectedCount < minSelections) {
+      // Create or update display element
+      let display = card.querySelector('.flip-back .current-price');
+      if (!display) {
+        display = document.createElement('p');
+        display.className = 'current-price';
+        display.style.fontWeight = 'bold';
+        const backPanel = card.querySelector('.flip-back');
+        const heading = backPanel.querySelector('h3');
+        if (heading) {
+          heading.insertAdjacentElement('afterend', display);
+        } else {
+          backPanel.insertBefore(display, backPanel.firstChild);
+        }
+      }
+      display.textContent = `Select at least ${minSelections} item${minSelections > 1 ? 's' : ''} to build your player pack.`;
+      // Set the currentPrice to the minimum price times quantity as a fallback
+      card.dataset.currentPrice = String(minPrice * qty);
+      // disable the addToList button to prevent adding incomplete packs
+      const addBtn = card.querySelector('.addToList');
+      if (addBtn) addBtn.disabled = true;
+      return;
+    }
+    // Re-enable add button if previously disabled
+    const addBtn = card.querySelector('.addToList');
+    if (addBtn) addBtn.disabled = false;
     if (maxPrice > minPrice) {
       const fraction = selectedCount / totalOptions;
       perUnitPrice = minPrice + (maxPrice - minPrice) * fraction;
@@ -151,13 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Single price: scale by number of selected options to allow multiple colours.
       perUnitPrice = minPrice * selectedCount;
     }
-    // Multiply by quantity input value if present
-    const qtyInput = card.querySelector('.flip-back input[type="number"]');
-    let qty = 1;
-    if (qtyInput) {
-      qty = Number(qtyInput.value) || 1;
-    }
     const totalPrice = perUnitPrice * qty;
+    // Save the current total price on the card for use when adding to the list
+    card.dataset.currentPrice = String(totalPrice);
     // Find or create a display element in the flip-back to show the price
     let display = card.querySelector('.flip-back .current-price');
     if (!display) {
