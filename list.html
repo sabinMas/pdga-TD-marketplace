@@ -22,6 +22,25 @@
       <a href="tournamentItems.html" class="btn">return to stopping</a>
     </section>
     <!-- In <body>, replace the radius/select + buttons block -->
+  <main>
+    <section class="list-section">
+    <h2>Items List</h2>
+    <div id="listFunctionWrapper" hidden="true">
+      <button id="allOnline" class="btn">All Online</button>
+      <button id="allLocal" class="btn">All Local</button>
+    </div>
+  
+  <!-- Items you added to the list render here -->
+    <section id="listOutput" class="product-list">
+    </section>
+
+    <p>press "pre-chekout", THEN "checkout"
+    <button id="pre-checkout" class="btn">Pre-checkout</button>
+    <a href="checkoutpage.html" id="numCheckOut" hidden="true">
+      <button class="btn" id="checkout">Checkout</button>
+    </a>
+    </p>
+        
     <section class="card">
       <p class="showPark">Stores close to: [park name here]</p>
       <div class="finder-buttons">
@@ -46,23 +65,8 @@
       <div id="map" style="height:420px;border-radius:10px;overflow:hidden;margin:10px 0;"></div>
       <ul id="storeResults" style="list-style:none;padding:0;margin:0;"></ul>
     </section>
-
-<section class="list-section">
-  <h2>Items List</h2>
-  <div id="listFunctionWrapper" hidden="true">
-    <button id="allOnline" class="btn">All Online</button>
-    <button id="allLocal" class="btn">All Local</button>
-  </div>
   
-  <!-- Items you added to the list render here -->
-    <section id="listOutput" class="product-list">
-    </section>
 
-    <p>press "pre-chekout", THEN "checkout"
-    <button id="pre-checkout" class="btn">Pre-checkout</button>
-    <a href="checkoutpage.html" id="numCheckOut" hidden="true">
-      <button class="btn" id="checkout">Checkout</button>
-    </a>
-    </p>
+  </main>
   </body>
 </html>
