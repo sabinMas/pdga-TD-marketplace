@@ -253,13 +253,27 @@
 }
 
 /* recommended items on the bottom of the checkout page */
+.recommend-header {
+  text-align: center;
+  width: 100%;
+}
+
+.recommendation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
 .recommended-items {
   display: flex;
   gap: 10px;
   scroll-behavior: smooth;
   overflow-x: auto;
-  width: 65%;
-  direction: ltr;
+  max-width: 45%;
 }
 
 .recommended-items::-webkit-scrollbar{
@@ -271,7 +285,6 @@
   align-items: center;
   flex-direction: column;
   min-width: 180px;        /* smaller tile */
-  height: auto;            /* let height adjust */
   background-color: #dedede;
   border-radius: 10px;
   flex-shrink: 0;
@@ -363,7 +376,7 @@
 /* === RECOMMENDED IMAGE FIX (matches your typos intentionally) === */
 /* container:  <div class="reccomendation-container"> ... */
 /* rail:       <div class="reccomended-items" id="items"> ... */
-.recommendation-container .recommended-items .item img {
+ .recommendation-container .recommended-items .item img {
   max-width: 70px;
   max-height: 70px;
   width: auto;
@@ -371,9 +384,9 @@
   object-fit: contain;
   display: block;
   margin: 8px auto;
-}
+} 
 
-/* keep the tiles tidy */
+/*keep the tiles tidy*/
 .recommended-items .item {
   min-width: 180px;
   height: auto;
@@ -381,5 +394,5 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
-}
+}  
 
