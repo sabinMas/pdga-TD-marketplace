@@ -201,7 +201,7 @@ html {
 
 /* spacing for spring tournament heading*/
 .product-header:has(#spring) {
-  margin-top: 6rem;
+  margin-top: 4rem;
 }
 /* allows for spacing in between sections for seasonal events section */
 .seasonal-section .product-grid {
