@@ -359,10 +359,13 @@ html {
 /* === FLIP CARD: force front/back separation & visibility === */
 .product-card.flip-card {
   perspective: 1000px;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card.flip-card .flip-inner {
   position: relative;
+  flex: 1;
   transition: transform 0.8s;
   transform-style: preserve-3d;
   will-change: transform;
