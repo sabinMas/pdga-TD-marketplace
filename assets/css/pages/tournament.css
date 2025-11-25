@@ -44,7 +44,11 @@
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border: 3px solid var(--border);
+
 }
 
 /* Details wrapper with padding */
@@ -167,10 +171,6 @@
 /* Image zoom on hover (tied to card hover) */
 .product-card:hover .product-image img {
   transform: scale(1.05);
-}
-
-.product-image img {
-  transition: transform 0.3s ease;
 }
 
 /* Optional: highlight text color on hover */
