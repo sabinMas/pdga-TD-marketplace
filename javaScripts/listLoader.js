@@ -264,23 +264,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const milesToMeters = (mi) => Number(mi) * 1609.34;
 
-  async function findNearbyStores(lat, lon, radiusMeters) {
-    const query = `
-      [out:json][timeout:25];
-      (
-        node["shop"~"hardware|doityourself|sports"](around:${Math.round(
-          radiusMeters
-        )},${lat},${lon});
-        way["shop"~"hardware|doityourself|sports"](around:${Math.round(
-          radiusMeters
-        )},${lat},${lon});
-        relation["shop"~"hardware|doityourself|sports"](around:${Math.round(
-          radiusMeters
-        )},${lat},${lon});
-      );
-      out center 60;
-    `.trim();
-
+async function findNearbyStores(lat, lon, radiusMeters) {
+  const query = `
+    [out:json][timeout:25];
+    (
+      node["shop"="sports"](around:${Math.round(radiusMeters)},${lat},${lon});
+      way["shop"="sports"](around:${Math.round(radiusMeters)},${lat},${lon});
+      relation["shop"="sports"](around:${Math.round(radiusMeters)},${lat},${lon});
+      node["shop"="sports"]["sport"="disc_golf"](around:${Math.round(radiusMeters)},${lat},${lon});
+      way["shop"="sports"]["sport"="disc_golf"](around:${Math.round(radiusMeters)},${lat},${lon});
+      relation["shop"="sports"]["sport"="disc_golf"](around:${Math.round(radiusMeters)},${lat},${lon});
+    );
+    out center 60;
+  `.trim();
     const res = await fetch('https://overpass-api.de/api/interpreter', {
       method: 'POST',
       body: query,
@@ -292,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = await res.json();
     return data.elements || [];
   }
+
 
   function formatAddress(tags = {}) {
     return [
@@ -305,25 +302,29 @@ document.addEventListener('DOMContentLoaded', () => {
       .join(', ');
   }
 
+
   function googleMapsLink(lat, lon, name = '') {
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       `${lat},${lon} ${name}`.trim()
     )}`;
   }
 
+
   function haversine(lat1, lon1, lat2, lon2) {
-    const R = 6371e3; // meters
+    const R = 6371e3;
     const toRad = (deg) => (deg * Math.PI) / 180;
     const φ1 = toRad(lat1);
     const φ2 = toRad(lat2);
     const Δφ = toRad(lat2 - lat1);
     const Δλ = toRad(lon2 - lon1);
 
+
     const a =
       Math.sin(Δφ / 2) ** 2 +
       Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
     return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
+
 
   function renderStoresOnMap(elements, origin) {
     if (!elements.length) return;
@@ -332,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const c =
         el.type === 'node' ? { lat: el.lat, lon: el.lon } : el.center || el;
       if (!c || typeof c.lat !== 'number' || typeof c.lon !== 'number') return;
+
 
       const tags = el.tags || {};
       const name = tags.name || tags.brand || 'Unnamed store';
@@ -343,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
               1
             )
           : null;
+
 
       const marker = L.marker([c.lat, c.lon]).bindPopup(
         `
@@ -365,22 +368,27 @@ document.addEventListener('DOMContentLoaded', () => {
       `.trim()
       );
 
+
       marker.addTo(markersLayer);
       bounds.push([c.lat, c.lon]);
     });
+
 
     if (bounds.length) {
       map.fitBounds(bounds, { padding: [20, 20] });
     }
   }
 
+
   function renderStoresList(elements, origin) {
     resultsList.innerHTML = '';
+
 
     if (!elements.length) {
       resultsList.innerHTML = '<li>No stores found in this radius.</li>';
       return;
     }
+
 
     const withDist = elements
       .map((el) => {
@@ -395,6 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .sort((a, b) => a._dist - b._dist)
       .slice(0, 10);
 
+
     withDist.forEach((el) => {
       const c = el._coord;
       const tags = el.tags || {};
@@ -402,6 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const addr = formatAddress(tags);
       const g = googleMapsLink(c.lat, c.lon, name);
       const miles = (el._dist / 1609.34).toFixed(1);
+
 
       const li = document.createElement('li');
       li.style.padding = '8px 0';
@@ -424,23 +434,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
   findBtn.addEventListener('click', async () => {
     const zipInput = document.getElementById('zip');
     const radiusSelect = document.getElementById('radius');
     const zip = zipInput ? String(zipInput.value || '').trim() : '';
     const radiusMi = radiusSelect ? radiusSelect.value || '50' : '50';
 
+
     if (!zip) {
       alert('Please enter a ZIP code.');
       return;
     }
 
+
     try {
       findBtn.disabled = true;
       findBtn.textContent = 'Searching...';
 
+
       const { lat, lon } = await geocodeZip(zip);
       ensureMap(lat, lon, 11);
+
 
       const elements = await findNearbyStores(lat, lon, milesToMeters(radiusMi));
       renderStoresOnMap(elements, { lat, lon });
