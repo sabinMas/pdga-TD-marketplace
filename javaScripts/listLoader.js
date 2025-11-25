@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // We store the user's list in sessionStorage under 'localList'.  It maps
   // product names to their quantities.
-  const saved = localStorageStorage.getItem('localList');
+  const saved = localStorage.getItem('localList');
   const items = saved ? JSON.parse(saved) : null;
 
   if (!items || typeof items !== 'object' || !Object.keys(items).length) {
