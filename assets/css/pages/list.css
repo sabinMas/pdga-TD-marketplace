@@ -33,3 +33,7 @@ main {
     height: fit-content;
     z-index: 10;
 }
+
+.site-header {
+    padding-left: 32px;
+}
