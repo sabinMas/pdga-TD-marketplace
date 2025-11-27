@@ -1,4 +1,4 @@
-// recommendation arrows function
+// ===== Recommendation arrows =====
 const list = document.getElementById('items');
 const output = document.getElementById('cart');
 
@@ -14,6 +14,7 @@ function scrollRightBtn() {
   }
 }
 
+// ===== Checkout rendering =====
 document.addEventListener('DOMContentLoaded', () => {
   const saved = sessionStorage.getItem('checkoutList');
   if (!saved) {
@@ -36,32 +37,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!output) return;
 
+  // New payment-category buckets
   let playerPackTotal = 0;
+  let discTotal = 0;
+  let customMerchTotal = 0;
   let eventSuppliesTotal = 0;
+
   let grandTotal = 0;
   let totalItemsCount = 0;
 
   // Build cart UI
   for (const [name, data] of Object.entries(items)) {
+    // quantity and prices
     const quantityVal = Number(data.quantity ?? data.qty ?? 0);
-    const unitPrice = Number(
-      data.price ??
-      data.unitPrice ??
-      0
-    );
-    const category = data.category || 'Event Supplies';
-    const lineTotal = data.total != null
-      ? Number(data.total)
-      : quantityVal * unitPrice;
+    const unitPrice = Number(data.unitPrice ?? data.price ?? 0);
 
-    // accumulate totals
+    // line total: prefer totalPrice / total, fall back to qty * unit
+    const lineTotal =
+      data.totalPrice != null
+        ? Number(data.totalPrice)
+        : data.total != null
+        ? Number(data.total)
+        : quantityVal * unitPrice;
+
+    // categories
+    const storefrontCategory = data.storefrontCategory || data.category || 'Event Supplies';
+    const paymentCategory = data.paymentCategory || 'event-supplies';
+
+    // accumulate global totals
     grandTotal += lineTotal;
     totalItemsCount += quantityVal;
 
-    if (category === 'Player Packs') {
-      playerPackTotal += lineTotal;
-    } else {
-      eventSuppliesTotal += lineTotal;
+    // accumulate by payment category
+    switch (paymentCategory) {
+      case 'player-pack':
+        playerPackTotal += lineTotal;
+        break;
+      case 'disc':
+        discTotal += lineTotal;
+        break;
+      case 'custom-merch':
+        customMerchTotal += lineTotal;
+        break;
+      default:
+        // anything else goes into event supplies
+        eventSuppliesTotal += lineTotal;
+        break;
     }
 
     // --- build DOM card ---
@@ -73,7 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const img = document.createElement('img');
     img.classList.add('item-image');
-    // if you later store image URLs in checkoutList, you can use them here
+    // If you later store image URLs in checkoutList, use them:
+    if (data.imageUrl) {
+      img.src = data.imageUrl;
+    }
     img.alt = name;
     cartItem.appendChild(img);
 
@@ -87,7 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const itemDetails = document.createElement('p');
     itemDetails.classList.add('cart-item-details');
-    itemDetails.textContent = category;
+    // Show storefront category + billing bucket
+    const billingLabelMap = {
+      'player-pack': 'Player Packs',
+      disc: 'Discs',
+      'custom-merch': 'Custom Merchandise',
+      'event-supplies': 'Event Supplies',
+    };
+    const billingLabel = billingLabelMap[paymentCategory] || 'Event Supplies';
+    itemDetails.textContent = `${storefrontCategory} — ${billingLabel}`;
     itemInfo.appendChild(itemDetails);
 
     cartItem.appendChild(itemInfo);
@@ -111,13 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- Update order summary under payment section -----
-  const playerPackLine   = document.getElementById('playerPackLine');
+  const playerPackLine = document.getElementById('playerPackLine');
+  const discLine = document.getElementById('discLine');
+  const customMerchLine = document.getElementById('customMerchLine');
   const eventSuppliesLine = document.getElementById('eventSuppliesLine');
-  const subtotalLine     = document.getElementById('subtotalLine');
-  const totalLine        = document.getElementById('totalLine');
+  const subtotalLine = document.getElementById('subtotalLine');
+  const totalLine = document.getElementById('totalLine');
 
   if (playerPackLine) {
     playerPackLine.textContent = `Player Packs  $${playerPackTotal.toFixed(2)}`;
+  }
+  if (discLine) {
+    discLine.textContent = `Discs  $${discTotal.toFixed(2)}`;
+  }
+  if (customMerchLine) {
+    customMerchLine.textContent = `Custom Merchandise  $${customMerchTotal.toFixed(2)}`;
   }
   if (eventSuppliesLine) {
     eventSuppliesLine.textContent = `Event Supplies  $${eventSuppliesTotal.toFixed(2)}`;
