@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAndRenderUserData();
   }
 
-    /**
+     /**
    * Handle the email submission. This sends a verification email to the user.
    * On success, a message is displayed instructing the user to check their inbox.
    */
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send the email to the backend to trigger a verification email.
-      const res = await fetch('./sendVerification.php', {
+      const res = await fetch('./phpFiles/sendVerification.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -563,8 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * After a user clicks on a verification link, the page will have a "token"
    * parameter in its URL. This function checks for that token and validates it with
-   * the backend. If valid, it either shows event selection (when multiple events
-   * are associated with the user's email) or directly shows recommendations.
+   * the backend. If valid, it shows the event selection dashboard.
    */
   async function checkToken() {
     const params = new URLSearchParams(window.location.search);
@@ -582,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const res = await fetch('./verify.php?token=' + encodeURIComponent(token));
+      const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
         throw new Error('Invalid or expired verification link.');
       }
@@ -601,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Preload personalized lists now that we know the user's email
       await loadAndRenderUserData();
 
+      // Make sure EVENTS is loaded
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
       }
@@ -614,7 +614,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Always land on the dashboard event table for selection
       showEventSelection(matches);
-
     } catch (err) {
       if (errorBox) {
         errorBox.style.display = 'block';
@@ -667,13 +666,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
       }
-
       if (saved && saved.eventId && saved.tier) {
         // Restore the verified email if present in the saved session
         if (saved.email) {
           verifiedEmail = saved.email;
         }
-
         // Load and render purchase history and favorites for the saved email
         loadAndRenderUserData()
           .then(() => {
