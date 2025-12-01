@@ -539,12 +539,6 @@ document.addEventListener('DOMContentLoaded', () => {
         await loadEvents();
       }
 
-      // Load purchase history and favorite items using the verified email
-      await loadPurchaseHistory();
-      await loadFavoriteItems();
-      renderPurchaseHistory();
-      renderFavoriteItems();
-
       const matches = EVENTS.filter((ev) =>
         eventIDs.some((id) => String(ev.eventID) === String(id))
       );
