@@ -226,6 +226,147 @@ document.addEventListener('DOMContentLoaded', () => {
   const eventSelectSection = document.getElementById('eventSelectSection');
   const eventGrid = document.getElementById('eventGrid');
 
+  // New sections for purchase history and favorite items
+  const purchaseHistorySection = document.getElementById('purchaseHistorySection');
+  const favoriteItemsSection = document.getElementById('favoriteItemsSection');
+  const purchaseHistoryList = document.getElementById('purchaseHistoryList');
+  const favoriteItemsList = document.getElementById('favoriteItemsList');
+
+  // Arrays to store filtered data
+  let purchaseHistoryData = [];
+  let favoriteItemsData = [];
+
+  /**
+   * Load purchase history JSON and filter by verifiedEmail.
+   */
+  async function loadPurchaseHistory() {
+    try {
+      const res = await fetch('./purchaseHistory.json');
+      if (!res.ok) throw new Error('Failed to load purchase history');
+      const data = await res.json();
+      purchaseHistoryData = Array.isArray(data)
+        ? data.filter(
+            (p) => p.email && verifiedEmail && p.email.toLowerCase() === verifiedEmail.toLowerCase()
+          )
+        : [];
+    } catch (err) {
+      console.error('Error loading purchase history:', err);
+      purchaseHistoryData = [];
+    }
+  }
+
+  /**
+   * Load favorite items JSON and filter by verifiedEmail.
+   */
+  async function loadFavoriteItems() {
+    try {
+      const res = await fetch('./favoriteItems.json');
+      if (!res.ok) throw new Error('Failed to load favorite items');
+      const data = await res.json();
+      favoriteItemsData = Array.isArray(data)
+        ? data.filter(
+            (f) => f.email && verifiedEmail && f.email.toLowerCase() === verifiedEmail.toLowerCase()
+          )
+        : [];
+    } catch (err) {
+      console.error('Error loading favorite items:', err);
+      favoriteItemsData = [];
+    }
+  }
+
+  /**
+   * Render purchase history cards into purchaseHistoryList.
+   */
+  function renderPurchaseHistory() {
+    if (!purchaseHistoryList) return;
+    purchaseHistoryList.innerHTML = '';
+    purchaseHistoryData.forEach((purchase) => {
+      const card = document.createElement('article');
+      card.className = 'rec-card';
+      card.innerHTML = `
+      <div class="body">
+        <h3 style="margin:0;">${purchase.eventName || 'Purchase'}</h3>
+        <p class="muted small">Date: ${purchase.purchaseDate || ''}</p>
+        <p class="muted small">Total: $${Number(purchase.totalCost || 0).toFixed(2)}</p>
+        <div class="actions">
+          <button class="btn" data-reorder-orderid="${purchase.orderId}">Re‑Order</button>
+        </div>
+      </div>
+    `;
+      purchaseHistoryList.appendChild(card);
+    });
+    // Always show the section after token validation
+    if (purchaseHistorySection) {
+      purchaseHistorySection.style.display = 'block';
+    }
+  }
+
+  /**
+   * Render favorite items cards into favoriteItemsList.
+   */
+  function renderFavoriteItems() {
+    if (!favoriteItemsList) return;
+    favoriteItemsList.innerHTML = '';
+    favoriteItemsData.forEach((fav) => {
+      const card = document.createElement('article');
+      card.className = 'rec-card';
+      card.innerHTML = `
+      <div class="body">
+        <h3 style="margin:0;">${fav.itemName || ''}</h3>
+        <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
+        <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
+        <div class="actions">
+          <button class="btn" data-reorder-favid="${fav.catalogId}">${
+        fav.buttonLabel || 'Re‑Order'
+      }</button>
+        </div>
+      </div>
+    `;
+      favoriteItemsList.appendChild(card);
+    });
+    if (favoriteItemsSection) {
+      favoriteItemsSection.style.display = 'block';
+    }
+  }
+
+  // Event delegation for reorder buttons in purchase history
+  if (purchaseHistoryList) {
+    purchaseHistoryList.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-reorder-orderid]');
+      if (!btn) return;
+      const orderId = btn.getAttribute('data-reorder-orderid');
+      if (!orderId) return;
+      const purchase = purchaseHistoryData.find((p) => String(p.orderId) === String(orderId));
+      if (!purchase) return;
+      (purchase.lineItems || []).forEach((item) => {
+        const qty = Number(item.quantity) || 1;
+        addToLocalList(item.itemName, qty);
+      });
+      btn.textContent = 'Added!';
+      setTimeout(() => {
+        btn.textContent = 'Re‑Order';
+      }, 900);
+    });
+  }
+
+  // Event delegation for reorder buttons in favorite items
+  if (favoriteItemsList) {
+    favoriteItemsList.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-reorder-favid]');
+      if (!btn) return;
+      const favId = btn.getAttribute('data-reorder-favid');
+      if (!favId) return;
+      const fav = favoriteItemsData.find((f) => String(f.catalogId) === String(favId));
+      if (!fav) return;
+      const qty = Number(fav.defaultQuantity) || 1;
+      addToLocalList(fav.itemName, qty);
+      btn.textContent = 'Added!';
+      setTimeout(() => {
+        btn.textContent = fav.buttonLabel || 'Re‑Order';
+      }, 900);
+    });
+  }
+
   function renderRecs(tier) {
     if (!recGrid) return;
     recGrid.innerHTML = '';
@@ -289,25 +430,32 @@ document.addEventListener('DOMContentLoaded', () => {
   function showRecommendationsForEvent(session) {
     if (!session) return;
 
-    // Update UI with the event details. Display the event name in the header.
-    displayName.textContent = session.eventName || '';
-    tierLabel.textContent = session.tier || '';
-    tierCopy.textContent = TIER_COPY[session.tier] || '';
-    renderRecs(session.tier);
+    // Update UI bits that *do* exist
+    if (displayName) displayName.textContent = session.eventName || '';
+    if (tierLabel) tierLabel.textContent = session.tier || '';
+    if (tierCopy) tierCopy.textContent = TIER_COPY[session.tier] || '';
 
-    // Persist the session in a cookie and localStorage. The cookie is used for short‑term
-    // persistence across tabs and browser restarts, and expires after one day.
+    // Persist session
     try {
       setCookie('pdga_event', JSON.stringify(session), 1);
       localStorage.setItem('pdga_event', JSON.stringify(session));
     } catch (_) {}
 
-    // Toggle sections
-    authSection.style.display = 'none';
-    if (eventSelectSection) eventSelectSection.style.display = 'none';
-    recSection.style.display = 'block';
+    // Toggle sections only if they exist
+    if (authSection) authSection.style.display = 'none';
 
-    // Update header buttons for logged‑in state
+    // If you have the new dashboard layout (no recSection),
+    // just show the dashboard section.
+    if (eventSelectSection && !recSection) {
+      eventSelectSection.style.display = 'block';
+    }
+
+    // If the old recommendations section still exists, prefer that.
+    if (recSection) {
+      if (eventSelectSection) eventSelectSection.style.display = 'none';
+      recSection.style.display = 'block';
+    }
+
     updateHeaderForLogin(session);
   }
 
@@ -366,10 +514,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     if (!token) return;
-    // Hide the auth section while verifying token
+
     if (authSection) authSection.style.display = 'none';
     if (errorBox) errorBox.style.display = 'none';
     if (msgBox) msgBox.style.display = 'none';
+
     try {
       const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
@@ -379,42 +528,33 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!data || !data.success) {
         throw new Error(data?.error || 'Invalid or expired verification link.');
       }
-      // Save verified email
+
       verifiedEmail = data.email || null;
       const eventIDs = data.eventIDs || [];
       if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
         throw new Error('No events associated with your email.');
       }
-      // Ensure events are loaded before proceeding
+
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
       }
-      // Filter events by the IDs returned by the backend
+
+      // Load purchase history and favorite items using the verified email
+      await loadPurchaseHistory();
+      await loadFavoriteItems();
+      renderPurchaseHistory();
+      renderFavoriteItems();
+
       const matches = EVENTS.filter((ev) =>
         eventIDs.some((id) => String(ev.eventID) === String(id))
       );
       if (matches.length === 0) {
         throw new Error('No matching events found.');
       }
-      if (matches.length > 1) {
-        // Show event selection UI
-        showEventSelection(matches);
-      } else {
-        // Single event; show recommendations immediately
-        const ev = matches[0];
-        const session = {
-          eventId: ev.eventID,
-          eventName: ev.eventName,
-          tier: ev.tier,
-          eventLocation: ev.eventLocation,
-          eventDates: ev.eventDates,
-          eventUrl: ev.eventUrl,
-          email: verifiedEmail,
-        };
-        showRecommendationsForEvent(session);
-      }
+
+      // New behavior: always land on the dashboard event table
+      showEventSelection(matches);
     } catch (err) {
-      // Show error and display the auth section again
       if (errorBox) {
         errorBox.style.display = 'block';
         errorBox.textContent = err.message || 'Invalid or expired verification link.';
@@ -431,47 +571,42 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function showEventSelection(events) {
     if (!eventSelectSection || !eventGrid) return;
-    // Hide other sections
+
+    // Hide sign-in form, hide rec section if it exists
     if (authSection) authSection.style.display = 'none';
     if (recSection) recSection.style.display = 'none';
-    // Clear grid
+
     eventGrid.innerHTML = '';
+
     events.forEach((ev) => {
-      const card = document.createElement('article');
-      card.className = 'rec-card';
-      card.innerHTML =
-        '<div class="body">' +
-        '<h3 style="margin:0;">' +
-        ev.eventName +
-        '</h3>' +
-        '<p class="muted small">' +
-        ev.eventLocation +
-        ' — ' +
-        ev.eventDates +
-        '</p>' +
-        '<p class="muted small">Tier ' +
-        ev.tier +
-        '</p>' +
-        '<button class="btn" data-select-event="' +
-        ev.eventID +
-        '">Select</button>' +
-        '</div>';
-      eventGrid.appendChild(card);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+      <td>${ev.eventName || ''}</td>
+      <td>${ev.eventYear || ''}</td>
+      <td>${ev.eventDates || ''}</td>
+      <td>${ev.eventID || ''}</td>
+      <td><span class="badge">${ev.eventLocation || ''}</span></td>
+      <td class="text-right">
+        <button class="btn btn-small" data-select-event="${ev.eventID}">Select</button>
+      </td>
+    `;
+      eventGrid.appendChild(tr);
     });
-    // Show the selection section
+
     eventSelectSection.style.display = 'block';
   }
-
   // Handle event selection button clicks
   if (eventGrid) {
     eventGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-select-event]');
       if (!btn) return;
+
       const selectedId = btn.getAttribute('data-select-event');
       if (!selectedId) return;
-      // Find the event from the loaded EVENTS list
+
       const ev = EVENTS.find((event) => String(event.eventID) === String(selectedId));
       if (!ev) return;
+
       const session = {
         eventId: ev.eventID,
         eventName: ev.eventName,
@@ -481,7 +616,15 @@ document.addEventListener('DOMContentLoaded', () => {
         eventUrl: ev.eventUrl,
         email: verifiedEmail,
       };
+
       showRecommendationsForEvent(session);
+      // Hide the event selection table and show recommendations
+      if (eventSelectSection) {
+        eventSelectSection.style.display = 'none';
+      }
+      if (recSection) {
+        recSection.style.display = 'block';
+      }
     });
   }
 
@@ -496,28 +639,46 @@ document.addEventListener('DOMContentLoaded', () => {
         saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
       }
       if (saved && saved.eventId && saved.tier) {
-        showRecommendationsForEvent(saved);
+        // Restore the verified email if present in the saved session
+        if (saved.email) {
+          verifiedEmail = saved.email;
+        }
+        // Load and render purchase history and favorites for the saved email
+        Promise.all([loadPurchaseHistory(), loadFavoriteItems()])
+          .then(() => {
+            renderPurchaseHistory();
+            renderFavoriteItems();
+            showRecommendationsForEvent(saved);
+          })
+          .catch(() => {
+            // Even if data fails to load, still show recommendations
+            showRecommendationsForEvent(saved);
+          });
       }
     } catch (_) {
       // ignore parse errors
     }
   }
 
-  // Bind the email submission handler instead of the legacy login handler
-  loginForm.addEventListener('submit', handleEmailSubmit);
-  logoutBtn.addEventListener('click', () => {
-    // Clear the stored event session from both cookie and localStorage
-    setCookie('pdga_event', '', -1);
-    localStorage.removeItem('pdga_event');
-    recSection.style.display = 'none';
-    authSection.style.display = 'block';
-    loginForm.reset();
-    // Set focus on the email field for convenience
-    const emailField = document.getElementById('email');
-    if (emailField) {
-      emailField.focus();
-    }
-  });
+  // Bind the email submission handler
+  if (loginForm) {
+    loginForm.addEventListener('submit', handleEmailSubmit);
+  }
+
+  // Only add a logout handler if the button actually exists on this page
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      setCookie('pdga_event', '', -1);
+      localStorage.removeItem('pdga_event');
+
+      if (recSection) recSection.style.display = 'none';
+      if (authSection) authSection.style.display = 'block';
+
+      if (loginForm) loginForm.reset();
+      const emailField = document.getElementById('email');
+      if (emailField) emailField.focus();
+    });
+  }
 
   // Load the events file then restore any existing session and check for a verification token.
   loadEvents().then(() => {
