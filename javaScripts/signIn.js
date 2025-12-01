@@ -302,12 +302,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle sections only if they exist
     if (authSection) authSection.style.display = 'none';
+
+    // If you have the new dashboard layout (no recSection),
+    // just show the dashboard section.
     if (eventSelectSection && !recSection) {
-      // For now, just leave the dashboard visible if there is no recSection.
       eventSelectSection.style.display = 'block';
     }
+
+    // If the old recommendations section still exists, prefer that.
     if (recSection) {
-      eventSelectSection && (eventSelectSection.style.display = 'none');
+      if (eventSelectSection) eventSelectSection.style.display = 'none';
       recSection.style.display = 'block';
     }
 
@@ -369,10 +373,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     if (!token) return;
-    // Hide the auth section while verifying token
+
     if (authSection) authSection.style.display = 'none';
     if (errorBox) errorBox.style.display = 'none';
     if (msgBox) msgBox.style.display = 'none';
+
     try {
       const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
@@ -382,17 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!data || !data.success) {
         throw new Error(data?.error || 'Invalid or expired verification link.');
       }
-      // Save verified email
+
       verifiedEmail = data.email || null;
       const eventIDs = data.eventIDs || [];
       if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
         throw new Error('No events associated with your email.');
       }
-      // Ensure events are loaded before proceeding
+
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
       }
-      // Filter events by the IDs returned by the backend
+
       const matches = EVENTS.filter((ev) =>
         eventIDs.some((id) => String(ev.eventID) === String(id))
       );
@@ -400,10 +405,9 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('No matching events found.');
       }
 
-      // Always start on the dashboard event table, even if there is only one event
+      // New behavior: always land on the dashboard event table
       showEventSelection(matches);
     } catch (err) {
-      // Show error and display the auth section again
       if (errorBox) {
         errorBox.style.display = 'block';
         errorBox.textContent = err.message || 'Invalid or expired verification link.';
@@ -443,6 +447,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     eventSelectSection.style.display = 'block';
+  }
+  // Handle event selection button clicks
+  if (eventGrid) {
+    eventGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-select-event]');
+      if (!btn) return;
+
+      const selectedId = btn.getAttribute('data-select-event');
+      if (!selectedId) return;
+
+      const ev = EVENTS.find((event) => String(event.eventID) === String(selectedId));
+      if (!ev) return;
+
+      const session = {
+        eventId: ev.eventID,
+        eventName: ev.eventName,
+        tier: ev.tier,
+        eventLocation: ev.eventLocation,
+        eventDates: ev.eventDates,
+        eventUrl: ev.eventUrl,
+        email: verifiedEmail,
+      };
+
+      showRecommendationsForEvent(session);
+    });
   }
 
   function initFromStorage() {
