@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
   };
 
-  const TIER_COPY = {
+ const TIER_COPY = {
     A: 'Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.',
     B: 'Great fit for solid regional events: reliable packs and course essentials at smart prices.',
     C: 'Starter friendly: cost-effective gear to run smooth local events.',
@@ -231,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const favoriteItemsSection = document.getElementById('favoriteItemsSection');
   const purchaseHistoryList = document.getElementById('purchaseHistoryList');
   const favoriteItemsList = document.getElementById('favoriteItemsList');
+  const purchaseHistoryTable = document.getElementById('previousPurchasesBody');
+  const favoriteItemsTable = document.getElementById('favoriteItemsBody');
 
   // Arrays to store filtered data
   let purchaseHistoryData = [];
@@ -252,6 +254,17 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('Error loading purchase history:', err);
       purchaseHistoryData = [];
+    }
+  }
+
+  async function loadAndRenderUserData() {
+    if (!verifiedEmail) return;
+    try {
+      await Promise.all([loadPurchaseHistory(), loadFavoriteItems()]);
+      renderPurchaseHistory();
+      renderFavoriteItems();
+    } catch (err) {
+      console.error('Error loading user data:', err);
     }
   }
 
@@ -278,26 +291,40 @@ document.addEventListener('DOMContentLoaded', () => {
    * Render purchase history cards into purchaseHistoryList.
    */
   function renderPurchaseHistory() {
-    if (!purchaseHistoryList) return;
-    purchaseHistoryList.innerHTML = '';
-    purchaseHistoryData.forEach((purchase) => {
-      const card = document.createElement('article');
-      card.className = 'rec-card';
-      card.innerHTML = `
-      <div class="body">
-        <h3 style="margin:0;">${purchase.eventName || 'Purchase'}</h3>
-        <p class="muted small">Date: ${purchase.purchaseDate || ''}</p>
-        <p class="muted small">Total: $${Number(purchase.totalCost || 0).toFixed(2)}</p>
-        <div class="actions">
-          <button class="btn" data-reorder-orderid="${purchase.orderId}">Re‑Order</button>
+    if (purchaseHistoryList) {
+      purchaseHistoryList.innerHTML = '';
+      purchaseHistoryData.forEach((purchase) => {
+        const card = document.createElement('article');
+        card.className = 'rec-card';
+        card.innerHTML = `
+        <div class="body">
+          <h3 style="margin:0;">${purchase.eventName || 'Purchase'}</h3>
+          <p class="muted small">Date: ${purchase.purchaseDate || ''}</p>
+          <p class="muted small">Total: $${Number(purchase.totalCost || 0).toFixed(2)}</p>
+          <div class="actions">
+            <button class="btn" data-reorder-orderid="${purchase.orderId}">Re‑Order</button>
+          </div>
         </div>
-      </div>
-    `;
-      purchaseHistoryList.appendChild(card);
-    });
-    // Always show the section after token validation
-    if (purchaseHistorySection) {
-      purchaseHistorySection.style.display = 'block';
+      `;
+        purchaseHistoryList.appendChild(card);
+      });
+      if (purchaseHistorySection) {
+        purchaseHistorySection.style.display = 'block';
+      }
+    } else if (purchaseHistoryTable) {
+      purchaseHistoryTable.innerHTML = '';
+      purchaseHistoryData.forEach((purchase) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${purchase.eventName || 'Purchase'}</td>
+          <td>${purchase.purchaseDate || ''}</td>
+          <td>$${Number(purchase.totalCost || 0).toFixed(2)}</td>
+          <td class="text-right">
+            <button class="link-button" data-reorder-orderid="${purchase.orderId}">add to cart</button>
+          </td>
+        `;
+        purchaseHistoryTable.appendChild(tr);
+      });
     }
   }
 
@@ -305,33 +332,51 @@ document.addEventListener('DOMContentLoaded', () => {
    * Render favorite items cards into favoriteItemsList.
    */
   function renderFavoriteItems() {
-    if (!favoriteItemsList) return;
-    favoriteItemsList.innerHTML = '';
-    favoriteItemsData.forEach((fav) => {
-      const card = document.createElement('article');
-      card.className = 'rec-card';
-      card.innerHTML = `
-      <div class="body">
-        <h3 style="margin:0;">${fav.itemName || ''}</h3>
-        <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
-        <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
-        <div class="actions">
-          <button class="btn" data-reorder-favid="${fav.catalogId}">${
-        fav.buttonLabel || 'Re‑Order'
-      }</button>
+    if (favoriteItemsList) {
+      favoriteItemsList.innerHTML = '';
+      favoriteItemsData.forEach((fav) => {
+        const card = document.createElement('article');
+        card.className = 'rec-card';
+        card.innerHTML = `
+        <div class="body">
+          <h3 style="margin:0;">${fav.itemName || ''}</h3>
+          <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
+          <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
+          <div class="actions">
+            <button class="btn" data-reorder-favid="${fav.catalogId}">${
+          fav.buttonLabel || 'Re‑Order'
+        }</button>
+          </div>
         </div>
-      </div>
-    `;
-      favoriteItemsList.appendChild(card);
-    });
-    if (favoriteItemsSection) {
-      favoriteItemsSection.style.display = 'block';
+      `;
+        favoriteItemsList.appendChild(card);
+      });
+      if (favoriteItemsSection) {
+        favoriteItemsSection.style.display = 'block';
+      }
+    } else if (favoriteItemsTable) {
+      favoriteItemsTable.innerHTML = '';
+      favoriteItemsData.forEach((fav) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${fav.itemName || ''}</td>
+          <td>${fav.defaultQuantity || 1}</td>
+          <td>$${Number(fav.lastOrderedPrice || 0).toFixed(2)}</td>
+          <td class="text-right">
+            <button class="link-button" data-reorder-favid="${fav.catalogId}">${
+          fav.buttonLabel || 'add to cart'
+        }</button>
+          </td>
+        `;
+        favoriteItemsTable.appendChild(tr);
+      });
     }
   }
 
   // Event delegation for reorder buttons in purchase history
-  if (purchaseHistoryList) {
-    purchaseHistoryList.addEventListener('click', (e) => {
+  const purchaseHistoryClickRoot = purchaseHistoryList || purchaseHistoryTable;
+  if (purchaseHistoryClickRoot) {
+    purchaseHistoryClickRoot.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-reorder-orderid]');
       if (!btn) return;
       const orderId = btn.getAttribute('data-reorder-orderid');
@@ -350,8 +395,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Event delegation for reorder buttons in favorite items
-  if (favoriteItemsList) {
-    favoriteItemsList.addEventListener('click', (e) => {
+  const favoriteItemsClickRoot = favoriteItemsList || favoriteItemsTable;
+  if (favoriteItemsClickRoot) {
+    favoriteItemsClickRoot.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-reorder-favid]');
       if (!btn) return;
       const favId = btn.getAttribute('data-reorder-favid');
@@ -396,6 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
       recGrid.appendChild(card);
     });
   }
+
   if (recGrid) {
     recGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-add]');
@@ -406,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let qty;
       if (btn.hasAttribute('data-dynamic')) {
-        // Find the qty input in the same card
         const card = btn.closest('.rec-card');
         const input = card?.querySelector('.qty-input');
         qty = Math.max(1, parseInt(input?.value, 10) || 1);
@@ -422,13 +468,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
   /**
    * Display recommendations for a validated event session.
    *
    * @param {Object} session Object containing eventId, eventName, tier, location, dates and email.
    */
-  function showRecommendationsForEvent(session) {
+  async function showRecommendationsForEvent(session) {
     if (!session) return;
+
+    // Capture the email for downstream data loads
+    if (session.email) {
+      verifiedEmail = session.email;
+    }
 
     // Update UI bits that *do* exist
     if (displayName) displayName.textContent = session.eventName || '';
@@ -457,9 +509,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateHeaderForLogin(session);
+
+    // Fetch purchase history and favorites for this account (if available)
+    loadAndRenderUserData();
   }
 
-  /**
+    /**
    * Handle the email submission. This sends a verification email to the user.
    * On success, a message is displayed instructing the user to check their inbox.
    */
@@ -475,26 +530,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send the email to the backend to trigger a verification email.
-      const res = await fetch('./phpFiles/sendVerification.php', {
+      const res = await fetch('./sendVerification.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: emailRaw }),
       });
+
       if (!res.ok) {
-        throw new Error('Failed to send verification email');
+        throw new Error('Failed to send verification email.');
       }
+
       const data = await res.json();
       if (data && data.success) {
-        // Show success message
         if (msgBox) {
           msgBox.style.display = 'block';
           msgBox.textContent =
             'A verification link has been sent to your email. Please check your inbox.';
         }
       } else {
-        throw new Error(data?.error || 'Failed to send verification email');
+        throw new Error(data?.error || 'Failed to send verification email.');
       }
     } catch (err) {
       if (errorBox) {
@@ -516,14 +572,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!token) return;
 
     if (authSection) authSection.style.display = 'none';
-    if (errorBox) errorBox.style.display = 'none';
-    if (msgBox) msgBox.style.display = 'none';
+    if (errorBox) {
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+    }
+    if (msgBox) {
+      msgBox.style.display = 'none';
+      msgBox.textContent = '';
+    }
 
     try {
-      const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
+      const res = await fetch('./verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
         throw new Error('Invalid or expired verification link.');
       }
+
       const data = await res.json();
       if (!data || !data.success) {
         throw new Error(data?.error || 'Invalid or expired verification link.');
@@ -534,6 +597,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
         throw new Error('No events associated with your email.');
       }
+
+      // Preload personalized lists now that we know the user's email
+      await loadAndRenderUserData();
 
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
@@ -546,8 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('No matching events found.');
       }
 
-      // New behavior: always land on the dashboard event table
+      // Always land on the dashboard event table for selection
       showEventSelection(matches);
+
     } catch (err) {
       if (errorBox) {
         errorBox.style.display = 'block';
@@ -558,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Display multiple events for the user to select from. Each event is rendered as a card with a button.
+   * Display multiple events for the user to select from. Each event is rendered as a row with a button.
    * When a user selects an event, its details are used to show recommendations.
    *
    * @param {Array<Object>} events Array of event objects associated with the user.
@@ -575,51 +642,19 @@ document.addEventListener('DOMContentLoaded', () => {
     events.forEach((ev) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-      <td>${ev.eventName || ''}</td>
-      <td>${ev.eventYear || ''}</td>
-      <td>${ev.eventDates || ''}</td>
-      <td>${ev.eventID || ''}</td>
-      <td><span class="badge">${ev.eventLocation || ''}</span></td>
-      <td class="text-right">
-        <button class="btn btn-small" data-select-event="${ev.eventID}">Select</button>
-      </td>
-    `;
+        <td>${ev.eventName || ''}</td>
+        <td>${ev.eventYear || ''}</td>
+        <td>${ev.eventDates || ''}</td>
+        <td>${ev.eventID || ''}</td>
+        <td><span class="badge">${ev.eventLocation || ''}</span></td>
+        <td class="text-right">
+          <button class="btn btn-small" data-select-event="${ev.eventID}">Select</button>
+        </td>
+      `;
       eventGrid.appendChild(tr);
     });
 
     eventSelectSection.style.display = 'block';
-  }
-  // Handle event selection button clicks
-  if (eventGrid) {
-    eventGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-select-event]');
-      if (!btn) return;
-
-      const selectedId = btn.getAttribute('data-select-event');
-      if (!selectedId) return;
-
-      const ev = EVENTS.find((event) => String(event.eventID) === String(selectedId));
-      if (!ev) return;
-
-      const session = {
-        eventId: ev.eventID,
-        eventName: ev.eventName,
-        tier: ev.tier,
-        eventLocation: ev.eventLocation,
-        eventDates: ev.eventDates,
-        eventUrl: ev.eventUrl,
-        email: verifiedEmail,
-      };
-
-      showRecommendationsForEvent(session);
-      // Hide the event selection table and show recommendations
-      if (eventSelectSection) {
-        eventSelectSection.style.display = 'none';
-      }
-      if (recSection) {
-        recSection.style.display = 'block';
-      }
-    });
   }
 
   function initFromStorage() {
@@ -632,16 +667,16 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
       }
+
       if (saved && saved.eventId && saved.tier) {
         // Restore the verified email if present in the saved session
         if (saved.email) {
           verifiedEmail = saved.email;
         }
+
         // Load and render purchase history and favorites for the saved email
-        Promise.all([loadPurchaseHistory(), loadFavoriteItems()])
+        loadAndRenderUserData()
           .then(() => {
-            renderPurchaseHistory();
-            renderFavoriteItems();
             showRecommendationsForEvent(saved);
           })
           .catch(() => {
@@ -667,41 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (recSection) recSection.style.display = 'none';
       if (authSection) authSection.style.display = 'block';
-
-      if (loginForm) loginForm.reset();
-      const emailField = document.getElementById('email');
-      if (emailField) emailField.focus();
     });
   }
-
-  // Load the events file then restore any existing session and check for a verification token.
-  loadEvents().then(() => {
-    // First, attempt to restore an existing session from storage
-    initFromStorage();
-    // Then, check if a verification token is present in the URL and process it
-    checkToken();
-  });
-
-  const signInLink = document.getElementById('signInLink');
-  const authActions = document.getElementById('authActions');
-
-  function updateHeaderForLogin(session) {
-    if (!authActions) return;
-    if (session) {
-      authActions.innerHTML = `
-      <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
-      <button id="logoutHeaderBtn" class="btn btn-box" type="button">Log out</button>
-    `;
-      document.getElementById('logoutHeaderBtn').addEventListener('click', () => {
-        // Remove the stored session and force a reload to reset UI state
-        setCookie('pdga_event', '', -1);
-        localStorage.removeItem('pdga_event');
-        location.reload();
-      });
-    }
-  }
-
-  // If a session is already stored in localStorage (e.g. page refresh), update the header accordingly.
-  const savedSession = JSON.parse(localStorage.getItem('pdga_event') || 'null');
-  if (savedSession) updateHeaderForLogin(savedSession);
 });
+
