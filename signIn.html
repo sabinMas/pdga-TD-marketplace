@@ -19,14 +19,10 @@
           <li><a href="tournamentItems.html">Event Supplies</a></li>
         </ul>
         <div class="header-actions" id="authActions">
-          <a
-            href="https://www.pdga.com/td/how-to-sanction-event"
-            class="btn btn-box"
+          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
             >Create Event</a
           >
-          <a id="signInLink" href="signIn.html" class="btn btn-box" aria-current="page"
-            >Sign In</a
-          >
+          <a href="signIn.html" id="signInLink" class="btn btn-outline">Sign In</a>
         </div>
       </div>
     </header>
@@ -36,8 +32,8 @@
       <section id="authSection" class="auth-wrap">
         <h2 style="margin-top: 0">Sign in</h2>
         <p class="muted small">
-          Enter your email address to receive a verification link. After verifying, you can
-          access your Tournament Director dashboard and event‑specific recommendations.
+          Enter your email address to receive a verification link. After verifying, you can access
+          your Tournament Director dashboard and event‑specific recommendations.
         </p>
 
         <form id="loginForm" style="margin-top: 16px">
@@ -77,12 +73,21 @@
             <!-- you can swap this to the TD's name later if you store it -->
           </div>
           <div>
-            <span class="pill">
-              Tier <span id="tierLabel"></span>
-            </span>
+            <span class="pill"> Tier <span id="tierLabel"></span> </span>
           </div>
           <p id="tierCopy" class="muted small" style="margin-top: 6px"></p>
         </div>
+        <!-- Recommended Items Viewport -->
+        <section id="recSection" style="display: none; margin-top: 32px">
+          <button id="backToEventsBtn" class="btn" style="margin-bottom: 16px">
+            ← Back to Events
+          </button>
+
+          <h2>Recommended Items for <span id="recEventName"></span></h2>
+          <p class="muted">Recommendations based on tier <span id="recTierLabel"></span>.</p>
+
+          <div id="recGrid" class="rec-grid"></div>
+        </section>
 
         <!-- Upcoming / current events (from events.json filtered by email) -->
         <section class="dashboard-section">

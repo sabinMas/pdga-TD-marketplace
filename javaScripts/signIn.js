@@ -9,6 +9,13 @@
  * who clicked their verification links landed back on the sign‑in form with
  * no feedback. This version addresses that issue by invoking checkToken() and
  * initFromStorage() when the DOM is ready.
+ *
+ * Additional enhancements added here implement a dedicated recommendations
+ * viewport for when a TD selects an event from their dashboard. The "Select"
+ * buttons in the events table are wired up to display a recommendations
+ * section based on the event's tier. A back button allows returning to the
+ * event list. The sign‑in link in the header will update to "Dashboard"
+ * across pages when a session exists.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -236,6 +243,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const eventGrid = document.getElementById('eventGrid');
   const signInLink = document.getElementById('signInLink');
 
+  // New DOM references for recommendations metadata and navigation
+  const recEventName = document.getElementById('recEventName');
+  const recTierLabel = document.getElementById('recTierLabel');
+  const recTierCopy = document.getElementById('recTierCopy');
+  const backToEventsBtn = document.getElementById('backToEventsBtn');
+
   // New sections for purchase history and favorite items
   const purchaseHistorySection = document.getElementById('purchaseHistorySection');
   const favoriteItemsSection = document.getElementById('favoriteItemsSection');
@@ -353,7 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
           <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
           <div class="actions">
-            <button class="btn" data-reorder-favid="${fav.catalogId}">${
+            <button class="btn" data-reorder-favid="${
+              fav.catalogId
+            }">${
           fav.buttonLabel || 'Re‑Order'
         }</button>
           </div>
@@ -373,7 +388,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${fav.defaultQuantity || 1}</td>
           <td>$${Number(fav.lastOrderedPrice || 0).toFixed(2)}</td>
           <td class="text-right">
-            <button class="link-button" data-reorder-favid="${fav.catalogId}">${
+            <button class="link-button" data-reorder-favid="${
+              fav.catalogId
+            }">${
           fav.buttonLabel || 'add to cart'
         }</button>
           </td>
@@ -495,21 +512,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (displayName) displayName.textContent = session.eventName || '';
     if (tierLabel) tierLabel.textContent = session.tier || '';
     if (tierCopy) tierCopy.textContent = TIER_COPY[session.tier] || '';
+    // Also update the recommendation metadata elements, if present
+    if (recEventName) recEventName.textContent = session.eventName || '';
+    if (recTierLabel) recTierLabel.textContent = session.tier || '';
+    if (recTierCopy) recTierCopy.textContent = TIER_COPY[session.tier] || '';
     // Persist session
     try {
       setCookie('pdga_event', JSON.stringify(session), 1);
       localStorage.setItem('pdga_event', JSON.stringify(session));
     } catch (_) {}
-    // Toggle sections only if they exist
+    // Toggle sections
     if (authSection) authSection.style.display = 'none';
-    // If you have the new dashboard layout (no recSection), just show the dashboard section.
-    if (eventSelectSection && !recSection) {
-      eventSelectSection.style.display = 'block';
-    }
-    // If the old recommendations section still exists, prefer that.
+    // When recSection exists we prefer it; otherwise just show event dashboard
     if (recSection) {
       if (eventSelectSection) eventSelectSection.style.display = 'none';
       recSection.style.display = 'block';
+      // Render recommended items for this tier
+      renderRecs(session.tier);
+    } else if (eventSelectSection) {
+      eventSelectSection.style.display = 'block';
     }
     // Fetch purchase history and favorites for this account (if available)
     updateHeaderForLogin(session);
@@ -634,12 +655,39 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${ev.eventID || ''}</td>
         <td><span class="badge">${ev.eventLocation || ''}</span></td>
         <td class="text-right">
-          <button class="btn btn-small" data-select-event="${ev.eventID}">Select</button>
+          <button class="btn btn-small" data-select-event="${ev.eventID}" data-event-name="${
+        ev.eventName || ''
+      }" data-tier="${ev.tier || ''}" data-location="${ev.eventLocation || ''}" data-dates="${
+        ev.eventDates || ''
+      }">
+            Select
+          </button>
         </td>
       `;
       eventGrid.appendChild(tr);
     });
     eventSelectSection.style.display = 'block';
+    // Add click handler for selection. Use one event listener for efficiency.
+    eventGrid.onclick = (e) => {
+      const btn = e.target.closest('button[data-select-event]');
+      if (!btn) return;
+      const id = btn.getAttribute('data-select-event');
+      const tier = btn.getAttribute('data-tier') || '';
+      const name = btn.getAttribute('data-event-name') || '';
+      const location = btn.getAttribute('data-location') || '';
+      const dates = btn.getAttribute('data-dates') || '';
+      // Build session object and show recommendations
+      const session = {
+        eventId: id,
+        eventID: id,
+        tier: tier,
+        eventName: name,
+        eventLocation: location,
+        eventDates: dates,
+        email: verifiedEmail,
+      };
+      showRecommendationsForEvent(session);
+    };
   }
 
   function initFromStorage() {
@@ -683,6 +731,13 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('pdga_event');
       if (recSection) recSection.style.display = 'none';
       if (authSection) authSection.style.display = 'block';
+    });
+  }
+  // Add handler for back button to return to event list
+  if (backToEventsBtn) {
+    backToEventsBtn.addEventListener('click', () => {
+      if (recSection) recSection.style.display = 'none';
+      if (eventSelectSection) eventSelectSection.style.display = 'block';
     });
   }
 
