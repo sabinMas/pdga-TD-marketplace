@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
   };
 
- const TIER_COPY = {
+  const TIER_COPY = {
     A: 'Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.',
     B: 'Great fit for solid regional events: reliable packs and course essentials at smart prices.',
     C: 'Starter friendly: cost-effective gear to run smooth local events.',
@@ -320,7 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${purchase.purchaseDate || ''}</td>
           <td>$${Number(purchase.totalCost || 0).toFixed(2)}</td>
           <td class="text-right">
-            <button class="link-button" data-reorder-orderid="${purchase.orderId}">add to cart</button>
+            <button class="link-button" data-reorder-orderid="${
+              purchase.orderId
+            }">add to cart</button>
           </td>
         `;
         purchaseHistoryTable.appendChild(tr);
@@ -468,7 +470,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
   /**
    * Display recommendations for a validated event session.
    *
@@ -514,12 +515,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAndRenderUserData();
   }
 
-     /**
+  /**
    * Handle the email submission. This sends a verification email to the user.
    * On success, a message is displayed instructing the user to check their inbox.
    */
   async function handleEmailSubmit(e) {
     e.preventDefault();
+
     const emailInputEl = document.getElementById('email');
     const emailRaw = (emailInputEl?.value || '').trim().toLowerCase();
     if (!emailRaw) return;
@@ -529,8 +531,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msgBox) msgBox.style.display = 'none';
 
     try {
-      // Send the email to the backend to trigger a verification email.
-      const res = await fetch('./phpFiles/sendVerification.php', {
+      // Cache-buster added here
+      const res = await fetch(`./phpFiles/sendVerification.php?t=${Date.now()}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -702,4 +704,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
