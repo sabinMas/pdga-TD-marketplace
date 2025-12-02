@@ -11,6 +11,13 @@
  * initFromStorage() when the DOM is ready.
  */
 
+// Recommended items section
+const recSection = document.getElementById('recSection');
+const recGrid = document.getElementById('recGrid');
+const recEventName = document.getElementById('recEventName');
+const recTierLabel = document.getElementById('recTierLabel');
+const backToEventsBtn = document.getElementById('backToEventsBtn');
+
 document.addEventListener('DOMContentLoaded', () => {
   // Load event data from a JSON file. Each event entry should include an eventID, tier,
   // name, location, dates, URL and a list of verified emails. This data is used to
@@ -640,56 +647,94 @@ document.addEventListener('DOMContentLoaded', () => {
       eventGrid.appendChild(tr);
     });
     eventSelectSection.style.display = 'block';
-  }
+    // Attach click handlers for each Select button
+    document.querySelectorAll('[data-select-event]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const eventID = btn.getAttribute('data-select-event');
+        const ev = events.find((e) => e.eventID == eventID);
+        if (!ev) return;
 
-  function initFromStorage() {
-    try {
-      // Attempt to restore the session from a cookie first, then fallback to localStorage.
-      const cookieVal = getCookie('pdga_event');
-      let saved = null;
-      if (cookieVal) {
-        saved = JSON.parse(cookieVal);
-      } else {
-        saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
-      }
-      if (saved && saved.eventId && saved.tier) {
-        // Restore the verified email if present in the saved session
-        if (saved.email) {
-          verifiedEmail = saved.email;
+        // Save active event if you want persistence
+        sessionStorage.setItem('active_event', JSON.stringify(ev));
+
+        // Hide dashboard; show recommendations
+        eventSelectSection.style.display = 'none';
+        recSection.style.display = 'block';
+
+        // Populate event info
+        recEventName.textContent = ev.eventName;
+        recTierLabel.textContent = ev.tier;
+
+        // Generate recommended items
+        renderRecs(ev.tier);
+      });
+
+      function initFromStorage() {
+        try {
+          // Attempt to restore the session from a cookie first, then fallback to localStorage.
+          const cookieVal = getCookie('pdga_event');
+          let saved = null;
+          if (cookieVal) {
+            saved = JSON.parse(cookieVal);
+          } else {
+            saved = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+          }
+          if (saved && saved.eventId && saved.tier) {
+            // Restore the verified email if present in the saved session
+            if (saved.email) {
+              verifiedEmail = saved.email;
+            }
+            // Load and render purchase history and favorites for the saved email
+            loadAndRenderUserData()
+              .then(() => {
+                showRecommendationsForEvent(saved);
+              })
+              .catch(() => {
+                // Even if data fails to load, still show recommendations
+                showRecommendationsForEvent(saved);
+              });
+          }
+        } catch (_) {
+          // ignore parse errors
         }
-        // Load and render purchase history and favorites for the saved email
-        loadAndRenderUserData()
-          .then(() => {
-            showRecommendationsForEvent(saved);
-          })
-          .catch(() => {
-            // Even if data fails to load, still show recommendations
-            showRecommendationsForEvent(saved);
-          });
       }
-    } catch (_) {
-      // ignore parse errors
-    }
-  }
 
-  // Bind the email submission handler
-  if (loginForm) {
-    loginForm.addEventListener('submit', handleEmailSubmit);
-  }
-  // Only add a logout handler if the button actually exists on this page
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      setCookie('pdga_event', '', -1);
-      localStorage.removeItem('pdga_event');
-      if (recSection) recSection.style.display = 'none';
-      if (authSection) authSection.style.display = 'block';
+      // Bind the email submission handler
+      if (loginForm) {
+        loginForm.addEventListener('submit', handleEmailSubmit);
+      }
+      // Only adds a logout handler if the button actually exists on this page
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          setCookie('pdga_event', '', -1);
+          localStorage.removeItem('pdga_event');
+          if (recSection) recSection.style.display = 'none';
+          if (authSection) authSection.style.display = 'block';
+        });
+      }
+      backToEventsBtn.addEventListener('click', () => {
+        recSection.style.display = 'none';
+        eventSelectSection.style.display = 'block';
+      });
+
+      function updateHeaderForLogin() {
+        const saved = sessionStorage.getItem('pdga_user');
+        const signInBtn = document.getElementById('signInLink');
+        if (!signInBtn) return;
+
+        if (saved) {
+          signInBtn.textContent = 'Dashboard';
+          signInBtn.href = 'signIn.html';
+        }
+      }
+      updateHeaderForLogin();
+
+      // ---
+      // Kick off initial page logic.
+      // Attempt to validate a token in the URL; if none exists, attempt to restore an existing session.
+      // Without these calls the original implementation never progressed past the sign‑in screen.
+      checkToken();
+      initFromStorage();
     });
   }
-
-  // ---
-  // Kick off initial page logic.
-  // Attempt to validate a token in the URL; if none exists, attempt to restore an existing session.
-  // Without these calls the original implementation never progressed past the sign‑in screen.
-  checkToken();
-  initFromStorage();
 });

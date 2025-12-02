@@ -38,7 +38,9 @@
 
         <!--How do we incorporate backend for Log-In-->
         <div class="header-actions">
-          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box">Create Event</a>
+          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
+            >Create Event</a
+          >
           <a href="signIn.html" class="btn btn-box">Sign In</a>
         </div>
       </div>
@@ -75,14 +77,16 @@
               <h3>Verify your email</h3>
               <p class="muted">
                 Select the event you'd like to order for
-            <li>
-              <h3>Select event supplies & upload artwork</h3>
-              <p class="muted">Include custom logos/designs for apparel or discs.</p>
-              <p class="muted">Use filters to find materials that fit your course needs.</p>
-            </li>
-            <li>
-              <h3>Checkout or save for later</h3>
-              <p class="muted">Complete payment or print and shop local</p>
+                <li>
+                  <h3>Select event supplies & upload artwork</h3>
+                  <p class="muted">Include custom logos/designs for apparel or discs.</p>
+                  <p class="muted">Use filters to find materials that fit your course needs.</p>
+                </li>
+                <li>
+                  <h3>Checkout or save for later</h3>
+                  <p class="muted">Complete payment or print and shop local</p>
+                </li>
+              </p>
             </li>
           </ol>
         </div>
@@ -127,9 +131,9 @@
         <div class="container">
           <h2>Featured this season</h2>
           <p class="muted">Popular picks for upcoming events.</p>
-          
+
           <div class="cards">
-            <a class="card" href = "tournamentItems.html#Seasonal">
+            <a class="card" href="tournamentItems.html#Seasonal">
               <div class="card-icon">
                 <img src="images/star-shine-linear.svg" alt="Premium Pack Icon" />
               </div>
@@ -145,7 +149,7 @@
               <p class="muted">Browse our certified partners customizable discs</p>
             </a>
 
-            <a class="card" href = "tournamentItems.html#Safety">
+            <a class="card" href="tournamentItems.html#Safety">
               <div class="card-icon">
                 <img src="images/flag.svg" alt="Boundary Flags Icon" />
               </div>
@@ -167,5 +171,14 @@
         <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
       </div>
     </footer>
+    <script>
+      const saved = sessionStorage.getItem('pdga_user');
+      const signInBtn = document.getElementById('signInLink');
+
+      if (saved && signInBtn) {
+        signInBtn.textContent = 'Dashboard';
+        signInBtn.href = 'signIn.html';
+      }
+    </script>
   </body>
 </html>
