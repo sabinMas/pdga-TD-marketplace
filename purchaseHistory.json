@@ -2,6 +2,7 @@
   {
     "orderId": "order001",
     "email": "masonsabin@gmail.com",
+    "email": "perezjcarlos81@gmail.com",
     "eventName": "Spring Invitational",
     "purchaseDate": "Apr-15-2025",
     "totalCost": 120.5,
@@ -23,6 +24,7 @@
   {
     "orderId": "order002",
     "email": "masonsabin@gmail.com",
+    "email": "perezjcarlos81@gmail.com",
     "eventName": "Summer Classic",
     "purchaseDate": "Jul-10-2025",
     "totalCost": 250.0,
