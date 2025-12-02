@@ -234,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logoutBtn');
   const eventSelectSection = document.getElementById('eventSelectSection');
   const eventGrid = document.getElementById('eventGrid');
+  const signInLink = document.getElementById('signInLink');
 
   // New sections for purchase history and favorite items
   const purchaseHistorySection = document.getElementById('purchaseHistorySection');
@@ -471,6 +472,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  function updateHeaderForLogin(session) {
+    if (!signInLink) return;
+
+    signInLink.textContent = 'Dashboard'; // or 'Logged in'
+    signInLink.href = 'signIn.html'; // always point back here
+    signInLink.setAttribute('aria-current', 'page');
+  }
 
   /**
    * Display recommendations for a validated event session.
@@ -504,6 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
       recSection.style.display = 'block';
     }
     // Fetch purchase history and favorites for this account (if available)
+    updateHeaderForLogin(session);
     loadAndRenderUserData();
   }
 
@@ -620,7 +629,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${ev.eventName || ''}</td>
-        <td>${ev.eventYear || ''}</td>
+        <td>${ev.tier || ''}</td>
         <td>${ev.eventDates || ''}</td>
         <td>${ev.eventID || ''}</td>
         <td><span class="badge">${ev.eventLocation || ''}</span></td>
