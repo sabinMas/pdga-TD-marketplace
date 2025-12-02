@@ -1,3 +1,16 @@
+/*
+ * signIn.js
+ *
+ * This file powers the Tournament Director sign‑in page. It handles the email
+ * verification flow, persisting lightweight sessions in cookies/localStorage,
+ * and rendering event data, purchase history and favorite items once the user
+ * has been verified. The original repository omitted calls to initiate the
+ * token verification and session restoration routines on page load, so users
+ * who clicked their verification links landed back on the sign‑in form with
+ * no feedback. This version addresses that issue by invoking checkToken() and
+ * initFromStorage() when the DOM is ready.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   // Load event data from a JSON file. Each event entry should include an eventID, tier,
   // name, location, dates, URL and a list of verified emails. This data is used to
@@ -14,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
       EVENTS = await res.json();
     } catch (err) {
       console.error('Error loading events:', err);
-      document.getElementById('message').textContent = 'Events file missing.';
+      const msgEl = document.getElementById('message');
+      if (msgEl) msgEl.textContent = 'Events file missing.';
     }
   }
 
@@ -103,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         customize: true,
         customizeHref: '',
       },
-
       {
         title: 'Custom DyeMax Disc or Marker',
         img: 'https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946',
@@ -112,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         customizeHref: '',
       },
     ],
-
     // B Tier Recommendations
     B: [
       {
@@ -146,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         href: 'tournamentItems.html#courseSetup',
         qty: 18,
       },
-
       {
         title: 'PDGA T-Shirts Bulk',
         img: 'images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp',
@@ -162,8 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         customizeHref: '',
       },
     ],
-
-    // C tier recommeddations
+    // C tier recommendations
     C: [
       {
         title: 'Starter Player Packs',
@@ -184,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
         href: 'tournamentItems.html#courseSetup',
         qty: 6,
       },
-
       {
         title: 'Orange Safety Cones',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
@@ -257,20 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function loadAndRenderUserData() {
-    if (!verifiedEmail) return;
-    try {
-      await Promise.all([loadPurchaseHistory(), loadFavoriteItems()]);
-      renderPurchaseHistory();
-      renderFavoriteItems();
-    } catch (err) {
-      console.error('Error loading user data:', err);
-    }
-  }
-
-  /**
-   * Load favorite items JSON and filter by verifiedEmail.
-   */
   async function loadFavoriteItems() {
     try {
       const res = await fetch('./favoriteItems.json');
@@ -287,10 +282,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  async function loadAndRenderUserData() {
+    if (!verifiedEmail) return;
+    try {
+      await Promise.all([loadPurchaseHistory(), loadFavoriteItems()]);
+      renderPurchaseHistory();
+      renderFavoriteItems();
+    } catch (err) {
+      console.error('Error loading user data:', err);
+    }
+  }
+
   /**
-   * Render purchase history cards into purchaseHistoryList.
+   * Render purchase history into either a responsive card layout or a table.
    */
   function renderPurchaseHistory() {
+    // Card layout support
     if (purchaseHistoryList) {
       purchaseHistoryList.innerHTML = '';
       purchaseHistoryData.forEach((purchase) => {
@@ -331,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Render favorite items cards into favoriteItemsList.
+   * Render favorite items into either a responsive card layout or a table.
    */
   function renderFavoriteItems() {
     if (favoriteItemsList) {
@@ -423,11 +430,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const qtyUI = hasFixedQty
         ? `<p class="muted small">Suggested qty: ${item.qty}</p>`
         : `<label class="muted small">Qty&nbsp;<input type="number" min="1" step="1" value="1" class="qty-input"></label>`;
-
       const addBtn = hasFixedQty
         ? `<button class="btn" data-add data-title="${item.title}" data-qty="${item.qty}">Add to cart</button>`
         : `<button class="btn" data-add data-title="${item.title}" data-dynamic="1">Add to cart</button>`;
-
       const card = document.createElement('article');
       card.className = 'rec-card';
       card.innerHTML = `
@@ -449,10 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
     recGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-add]');
       if (!btn) return;
-
       const title = btn.getAttribute('data-title');
       if (!title) return;
-
       let qty;
       if (btn.hasAttribute('data-dynamic')) {
         const card = btn.closest('.rec-card');
@@ -461,7 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         qty = Number(btn.getAttribute('data-qty') || 1);
       }
-
       const ok = addToLocalList(title, qty);
       if (ok) {
         btn.textContent = 'Added!';
@@ -477,40 +479,31 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   async function showRecommendationsForEvent(session) {
     if (!session) return;
-
     // Capture the email for downstream data loads
     if (session.email) {
       verifiedEmail = session.email;
     }
-
     // Update UI bits that *do* exist
     if (displayName) displayName.textContent = session.eventName || '';
     if (tierLabel) tierLabel.textContent = session.tier || '';
     if (tierCopy) tierCopy.textContent = TIER_COPY[session.tier] || '';
-
     // Persist session
     try {
       setCookie('pdga_event', JSON.stringify(session), 1);
       localStorage.setItem('pdga_event', JSON.stringify(session));
     } catch (_) {}
-
     // Toggle sections only if they exist
     if (authSection) authSection.style.display = 'none';
-
-    // If you have the new dashboard layout (no recSection),
-    // just show the dashboard section.
+    // If you have the new dashboard layout (no recSection), just show the dashboard section.
     if (eventSelectSection && !recSection) {
       eventSelectSection.style.display = 'block';
     }
-
     // If the old recommendations section still exists, prefer that.
     if (recSection) {
       if (eventSelectSection) eventSelectSection.style.display = 'none';
       recSection.style.display = 'block';
     }
-
     updateHeaderForLogin(session);
-
     // Fetch purchase history and favorites for this account (if available)
     loadAndRenderUserData();
   }
@@ -521,15 +514,12 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   async function handleEmailSubmit(e) {
     e.preventDefault();
-
     const emailInputEl = document.getElementById('email');
     const emailRaw = (emailInputEl?.value || '').trim().toLowerCase();
     if (!emailRaw) return;
-
     // Hide previous messages
     if (errorBox) errorBox.style.display = 'none';
     if (msgBox) msgBox.style.display = 'none';
-
     try {
       // Cache-buster added here
       const res = await fetch(`./phpFiles/sendVerification.php?t=${Date.now()}`, {
@@ -539,11 +529,9 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         body: JSON.stringify({ email: emailRaw }),
       });
-
       if (!res.ok) {
         throw new Error('Failed to send verification email.');
       }
-
       const data = await res.json();
       if (data && data.success) {
         if (msgBox) {
@@ -571,7 +559,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     if (!token) return;
-
     if (authSection) authSection.style.display = 'none';
     if (errorBox) {
       errorBox.style.display = 'none';
@@ -581,39 +568,32 @@ document.addEventListener('DOMContentLoaded', () => {
       msgBox.style.display = 'none';
       msgBox.textContent = '';
     }
-
     try {
       const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
         throw new Error('Invalid or expired verification link.');
       }
-
       const data = await res.json();
       if (!data || !data.success) {
         throw new Error(data?.error || 'Invalid or expired verification link.');
       }
-
       verifiedEmail = data.email || null;
       const eventIDs = data.eventIDs || [];
       if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
         throw new Error('No events associated with your email.');
       }
-
       // Preload personalized lists now that we know the user's email
       await loadAndRenderUserData();
-
       // Make sure EVENTS is loaded
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
       }
-
       const matches = EVENTS.filter((ev) =>
         eventIDs.some((id) => String(ev.eventID) === String(id))
       );
       if (matches.length === 0) {
         throw new Error('No matching events found.');
       }
-
       // Always land on the dashboard event table for selection
       showEventSelection(matches);
     } catch (err) {
@@ -633,13 +613,10 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function showEventSelection(events) {
     if (!eventSelectSection || !eventGrid) return;
-
     // Hide sign-in form, hide rec section if it exists
     if (authSection) authSection.style.display = 'none';
     if (recSection) recSection.style.display = 'none';
-
     eventGrid.innerHTML = '';
-
     events.forEach((ev) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -654,7 +631,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       eventGrid.appendChild(tr);
     });
-
     eventSelectSection.style.display = 'block';
   }
 
@@ -692,15 +668,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', handleEmailSubmit);
   }
-
   // Only add a logout handler if the button actually exists on this page
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       setCookie('pdga_event', '', -1);
       localStorage.removeItem('pdga_event');
-
       if (recSection) recSection.style.display = 'none';
       if (authSection) authSection.style.display = 'block';
     });
   }
+
+  // ---
+  // Kick off initial page logic.
+  // Attempt to validate a token in the URL; if none exists, attempt to restore an existing session.
+  // Without these calls the original implementation never progressed past the sign‑in screen.
+  checkToken();
+  initFromStorage();
 });

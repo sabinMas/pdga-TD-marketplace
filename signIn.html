@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/signIn.css" />
-<<<<<<< HEAD
-=======
-</html>
->>>>>>> e61b9c477cdf5d0537f6610a66bab9bf30271ee4
   </head>
   <body>
     <!-- HEADER -->
@@ -23,21 +19,25 @@
           <li><a href="tournamentItems.html">Event Supplies</a></li>
         </ul>
         <div class="header-actions" id="authActions">
-          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
+          <a
+            href="https://www.pdga.com/td/how-to-sanction-event"
+            class="btn btn-box"
             >Create Event</a
           >
-          <a id="signInLink" href="signIn.html" class="btn btn-box" aria-current="page">Sign In</a>
+          <a id="signInLink" href="signIn.html" class="btn btn-box" aria-current="page"
+            >Sign In</a
+          >
         </div>
       </div>
     </header>
 
     <main class="container">
-      <!-- SIGN-IN STEP -->
+      <!-- SIGN‑IN STEP -->
       <section id="authSection" class="auth-wrap">
         <h2 style="margin-top: 0">Sign in</h2>
         <p class="muted small">
-          Enter your email address to receive a verification link. After verifying, you can access
-          your Tournament Director dashboard and event-specific recommendations.
+          Enter your email address to receive a verification link. After verifying, you can
+          access your Tournament Director dashboard and event‑specific recommendations.
         </p>
 
         <form id="loginForm" style="margin-top: 16px">
@@ -77,7 +77,9 @@
             <!-- you can swap this to the TD's name later if you store it -->
           </div>
           <div>
-            <span class="pill"> Tier <span id="tierLabel"></span> </span>
+            <span class="pill">
+              Tier <span id="tierLabel"></span>
+            </span>
           </div>
           <p id="tierCopy" class="muted small" style="margin-top: 6px"></p>
         </div>
@@ -97,24 +99,11 @@
               </tr>
             </thead>
             <!-- JS will render <tr> rows here based on EVENTS / eventIDs -->
-            <tbody id="eventGrid">
-              <!-- example row for reference; remove once JS is wired
-              <tr>
-                <td>Christmas Special</td>
-                <td>2025</td>
-                <td>12/13/2025</td>
-                <td>123457</td>
-                <td><span class="badge">Kent, WA</span></td>
-                <td class="text-right">
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              -->
-            </tbody>
+            <tbody id="eventGrid"></tbody>
           </table>
         </section>
 
-        <!-- Previous purchases (from a future previousPurchases.json) -->
+        <!-- Previous purchases -->
         <section class="dashboard-section">
           <h2>Previous Purchases</h2>
           <table class="data-table">
@@ -126,25 +115,11 @@
                 <th class="text-right">Re-order</th>
               </tr>
             </thead>
-            <tbody id="previousPurchasesBody">
-              <!-- JS will insert rows like:
-              <tr>
-                <td>Christmas Special</td>
-                <td>12/05/2025</td>
-                <td>$508.68</td>
-                <td class="text-right">
-                  <button
-                    class="link-button"
-                    data-reorder-id="purchase_001"
-                  >add to cart</button>
-                </td>
-              </tr>
-              -->
-            </tbody>
+            <tbody id="previousPurchasesBody"></tbody>
           </table>
         </section>
 
-        <!-- Favorite items (from a future favorites.json) -->
+        <!-- Favorite items -->
         <section class="dashboard-section">
           <h2>Favorite Items</h2>
           <table class="data-table">
@@ -161,6 +136,6 @@
         </section>
       </section>
     </main>
-      <script defer src="javaScripts/signIn.js"></script>
+    <script defer src="javaScripts/signIn.js"></script>
   </body>
 </html>
