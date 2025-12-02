@@ -503,7 +503,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (eventSelectSection) eventSelectSection.style.display = 'none';
       recSection.style.display = 'block';
     }
-    updateHeaderForLogin(session);
     // Fetch purchase history and favorites for this account (if available)
     loadAndRenderUserData();
   }

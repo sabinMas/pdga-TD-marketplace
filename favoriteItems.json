@@ -5,7 +5,7 @@
     "itemName": "High Visibility Safety Vest",
     "defaultQuantity": 5,
     "lastOrderedPrice": 12.88,
-    "buttonLabel": "Buy Vests"
+    "buttonLabel": "add to cart"
   },
   {
     "email": "masonsabin@gmail.com",
@@ -13,7 +13,7 @@
     "itemName": "Standard Player Pack",
     "defaultQuantity": 10,
     "lastOrderedPrice": 20.0,
-    "buttonLabel": "Reorder Packs"
+    "buttonLabel": "add to cart"
   },
   {
     "email": "masonsabin@gmail.com",
@@ -21,6 +21,6 @@
     "itemName": "Custom Disc Golf Stickers",
     "defaultQuantity": 10,
     "lastOrderedPrice": 9.99,
-    "buttonLabel": "Add Stickers"
+    "buttonLabel": "add to cart"
   }
 ]
