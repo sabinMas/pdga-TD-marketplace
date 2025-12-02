@@ -718,15 +718,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       function updateHeaderForLogin() {
-        const saved = sessionStorage.getItem('pdga_user');
-        const signInBtn = document.getElementById('signInLink');
-        if (!signInBtn) return;
+        const link = document.getElementById('signInLink');
+        if (!link) return;
 
-        if (saved) {
-          signInBtn.textContent = 'Dashboard';
-          signInBtn.href = 'signIn.html';
+        if (sessionStorage.getItem('pdga_isLoggedIn') === 'true') {
+          link.textContent = 'Dashboard';
+          link.href = 'signIn.html';
+        } else {
+          link.textContent = 'Sign In';
+          link.href = 'signIn.html';
         }
       }
+
+      // run it when this script loads
       updateHeaderForLogin();
 
       // ---
