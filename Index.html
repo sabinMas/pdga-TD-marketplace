@@ -1,12 +1,10 @@
-<!-- TODO:
-       -Still need to add mobile query
-       -Set it up so they can only purchase items if logged in
-       -How is our accessibility? Should we assign one person to check accessibility?
-       - Remove custom item link on front page - JP
-       - fix linking and re link buttons on pages - JP
-       
-       -->
-
+<!--
+  Modified index.html for the PDGA Marketplace demo.  This version is based off
+  of the original repository file but adds an id to the Sign In link so that
+  our JavaScript can toggle the label to “Dashboard” when a user has an
+  existing session in localStorage.  A short script near the bottom reads
+  the stored pdga_user/pdga_event session and updates the link accordingly.
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,12 +34,16 @@
           <input id="q" name="q" type="search" placeholder="Search…" />
         </form>
 
-        <!--How do we incorporate backend for Log-In-->
+        <!-- Header actions with sign‑in link -->
         <div class="header-actions">
           <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
             >Create Event</a
           >
-          <a href="signIn.html" class="btn btn-box">Sign In</a>
+          <!--
+            Use an id on the sign in link so that JavaScript can toggle the text
+            to “Dashboard” and point back to signIn.html when a session exists.
+          -->
+          <a href="signIn.html" class="btn btn-box" id="signInLink">Sign In</a>
         </div>
       </div>
     </header>
@@ -75,18 +77,16 @@
           <ol class="steps">
             <li>
               <h3>Verify your email</h3>
-              <p class="muted">
-                Click the link in your email
-                <li>
-                  <h3>Select event supplies & upload artwork</h3>
-                  <p class="muted">Include custom logos/designs for apparel or discs.</p>
-                  <p class="muted">Use filters to find materials that fit your course needs.</p>
-                </li>
-                <li>
-                  <h3>Checkout or save for later</h3>
-                  <p class="muted">Complete payment or print and shop local</p>
-                </li>
-              </p>
+              <p class="muted">Select the event you'd like to order for</p>
+            </li>
+            <li>
+              <h3>Select event supplies &amp; upload artwork</h3>
+              <p class="muted">Include custom logos/designs for apparel or discs.</p>
+              <p class="muted">Use filters to find materials that fit your course needs.</p>
+            </li>
+            <li>
+              <h3>Checkout or save for later</h3>
+              <p class="muted">Complete payment or print and shop local</p>
             </li>
           </ol>
         </div>
@@ -166,19 +166,27 @@
       <div class="container footer">
         <p>
           <strong>PDGA Marketplace</strong><br />
-          <span class="muted">Built for Tournament Directors & Clubs.</span>
+          <span class="muted">Built for Tournament Directors &amp; Clubs.</span>
         </p>
         <p class="muted">© <span id="year"></span> PDGA Marketplace</p>
       </div>
     </footer>
-    <script>
-      const saved = sessionStorage.getItem('pdga_user');
-      const signInBtn = document.getElementById('signInLink');
 
-      if (saved && signInBtn) {
-        signInBtn.textContent = 'Dashboard';
-        signInBtn.href = 'signIn.html';
-      }
+    <!-- Session-aware header script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve any stored session. Prefer newer pdga_event, fall back to pdga_user.
+        const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+        const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+        const saved = savedEvent || savedUser;
+
+        // If there is a session, update the sign-in link to be a dashboard link.
+        const signInLink = document.getElementById('signInLink');
+        if (signInLink && saved) {
+          signInLink.textContent = 'Dashboard';
+          signInLink.href = 'signIn.html';
+        }
+      });
     </script>
   </body>
 </html>
