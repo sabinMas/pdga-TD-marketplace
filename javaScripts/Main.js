@@ -28,7 +28,7 @@ updateCartCountFromList();
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('q');
   const searchForm = document.querySelector('form[role="search"]');
-  const saved = JSON.parse(sessionStorage.getItem('pdga_user') || 'null');
+  const saved = JSON.parse(localStorage.getItem('pdga_user') || 'null');
   const userInfo = document.getElementById('userInfo');
   const guestInfo = document.getElementById('guestInfo');
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nameEl) nameEl.textContent = saved.name || saved.username;
     if (tierEl) tierEl.textContent = saved.tier || '';
     document.getElementById('logoutInline')?.addEventListener('click', () => {
-      sessionStorageStorage.removeItem('pdga_user');
+      localStorage.removeItem('pdga_user');
       location.reload();
     });
   } else {
