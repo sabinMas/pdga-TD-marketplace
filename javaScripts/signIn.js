@@ -366,9 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
           <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
           <div class="actions">
-            <button class="btn" data-reorder-favid="${
-              fav.catalogId
-            }">${
+            <button class="btn" data-reorder-favid="${fav.catalogId}">${
           fav.buttonLabel || 'Re‑Order'
         }</button>
           </div>
@@ -388,9 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${fav.defaultQuantity || 1}</td>
           <td>$${Number(fav.lastOrderedPrice || 0).toFixed(2)}</td>
           <td class="text-right">
-            <button class="link-button" data-reorder-favid="${
-              fav.catalogId
-            }">${
+            <button class="link-button" data-reorder-favid="${fav.catalogId}">${
           fav.buttonLabel || 'add to cart'
         }</button>
           </td>
@@ -497,44 +493,35 @@ document.addEventListener('DOMContentLoaded', () => {
     signInLink.setAttribute('aria-current', 'page');
   }
 
-  /**
-   * Display recommendations for a validated event session.
-   *
-   * @param {Object} session Object containing eventId, eventName, tier, location, dates and email.
-   */
-  async function showRecommendationsForEvent(session) {
-    if (!session) return;
-    // Capture the email for downstream data loads
-    if (session.email) {
-      verifiedEmail = session.email;
-    }
-    // Update UI bits that *do* exist
-    if (displayName) displayName.textContent = session.eventName || '';
-    if (tierLabel) tierLabel.textContent = session.tier || '';
-    if (tierCopy) tierCopy.textContent = TIER_COPY[session.tier] || '';
-    // Also update the recommendation metadata elements, if present
-    if (recEventName) recEventName.textContent = session.eventName || '';
-    if (recTierLabel) recTierLabel.textContent = session.tier || '';
-    if (recTierCopy) recTierCopy.textContent = TIER_COPY[session.tier] || '';
-    // Persist session
-    try {
-      setCookie('pdga_event', JSON.stringify(session), 1);
-      localStorage.setItem('pdga_event', JSON.stringify(session));
-    } catch (_) {}
-    // Toggle sections
-    if (authSection) authSection.style.display = 'none';
-    // When recSection exists we prefer it; otherwise just show event dashboard
-    if (recSection) {
-      if (eventSelectSection) eventSelectSection.style.display = 'none';
-      recSection.style.display = 'block';
-      // Render recommended items for this tier
-      renderRecs(session.tier);
-    } else if (eventSelectSection) {
-      eventSelectSection.style.display = 'block';
-    }
-    // Fetch purchase history and favorites for this account (if available)
-    updateHeaderForLogin(session);
-    loadAndRenderUserData();
+  function showRecommendationsForEvent(event) {
+    const recSection = document.getElementById('recSection');
+    const eventSelectSection = document.getElementById('eventSelectSection');
+    const recEventName = document.getElementById('recEventName');
+    const recTierLabel = document.getElementById('recTierLabel');
+    const recGrid = document.getElementById('recGrid');
+
+    // hide dashboard
+    eventSelectSection.style.display = 'none';
+
+    // show recommendations
+    recSection.style.display = 'block';
+    recEventName.textContent = event.name;
+    recTierLabel.textContent = event.tier;
+
+    // clear and rebuild grid
+    recGrid.innerHTML = '';
+    const tierKey = event.tier.toUpperCase();
+
+    (RECS[tierKey] || []).forEach((item) => {
+      const card = document.createElement('div');
+      card.className = 'rec-card';
+      card.innerHTML = `
+      <h3>${item.name}</h3>
+      <p class="muted small">${item.description}</p>
+      <button class="btn" data-product-id="${item.id}">Add To Cart</button>
+    `;
+      recGrid.appendChild(card);
+    });
   }
 
   /**
