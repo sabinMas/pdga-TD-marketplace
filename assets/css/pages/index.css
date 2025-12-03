@@ -38,7 +38,7 @@ section {
 .hero {
   color: #fff;
   border-bottom: none;
-  padding: 200px 0px 200px;
+  padding: 125px 0px 150px;
 }
 .hero .container {
   display: flex;
@@ -64,6 +64,10 @@ section {
   font-size: clamp(20px, 1.2vw, 24px);
 }
 
+.hero h2 {
+  padding-bottom: 30px;
+}
+
 .actions {
   display: flex;
   justify-content: center;
@@ -71,7 +75,7 @@ section {
   align-items: center;
 }
 
-/*background effect for hero class */
+/*background effect for hero class, might get rid or change it */
 .background::before,
 .background::after {
   content: "";
@@ -110,31 +114,57 @@ section {
 
 /*how it works sections */
 .info {
-  background-color: #00417A;
-  padding: 15px 0;
+  padding: 40px 0px 80px;
+  position: relative;
+  box-shadow:  15px 15px 30px #d3d3d3,
+             -15px -15px 30px #ededed;
+  background-color: #F3F5F7;
 }
 
 .info h2 {
   font-size: 35px;
-  color: #fff;
+  color: var(--secondColor);
+  text-align: center;
+}
+
+.info h3, .info p {
+  font-size: 20px;
+}
+
+.info hr {
+  width: 60%;
+  border: none;
+  background-color: #003F7D;
+  height: 5px;
+  margin-bottom: 30px;
 }
 
 .how-steps {
   list-style: none;
   margin: 0;
   padding: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
 
 .step {
-  padding-left: 0;
   margin-bottom: 25px;
 }
 
 .step-box {
   background-color: #fff;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 5px;
+  margin: 0 auto;
   text-align: center;
+  height: 100%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow:  15px 15px 30px #d3dbeb,
+             -15px -15px 30px #edf7ff;
 }
 
 /* Disc animation */
@@ -157,3 +187,44 @@ section {
     transform: rotate(360deg);
   }
 }
+
+/* fade in */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* manufacturers imgs sliding across screen */
+.manufacturers {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.manufacturers h2 {
+  color: #003F7D;
+}
+
+.slider {
+  display: flex;
+  gap: 40px;
+  animation: slide 20s linear infinite;
+}
+
+.slider img {
+ max-height: 50px;
+ object-fit: contain;
+ filter: saturate(1);
+}
+
+@keyframes slide {
+  0% {transform: translateX(0);}
+  100% {transform: translateX(-50%);}
+}
+

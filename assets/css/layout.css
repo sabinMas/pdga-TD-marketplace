@@ -15,11 +15,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
-
-  background: var(--secondColor);
-  color: #fff;
-
-  
+  background: #fff;
+  color: var(--secondColor);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -27,11 +24,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 16px;
+  padding: 1px;
 }
 
 .site-header a {
-  color: #fff;
+  color: var(--secondColor);
   text-decoration: none;
   font-weight: 600;
 }
@@ -130,7 +127,7 @@ footer a:hover {
   padding: 8px 12px;
   border-radius: 9999px;
   
-  color: #fff;
+  color: var(--secondColor);
   text-decoration: none;
   font-weight: 600;
   line-height: 1;
@@ -142,8 +139,8 @@ footer a:hover {
 
 /* Optional “active” look via aria-current */
 .site-header .nav a[aria-current="page"] {
-  background: #fff;
-  color: var(--thirdColor);
+  background: var(--secondColor);
+  color: #fff;
   border-color: transparent;
 }
 

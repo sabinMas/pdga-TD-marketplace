@@ -12,7 +12,7 @@
 }
 .btn.btn-box {
   background: transparent;
-  color: #fff;
+  color: var(--secondColor);
 }
 
 /* === Cards === */
