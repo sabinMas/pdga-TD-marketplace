@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/tournament.css" />
-   <!--
+    <!--
       The Main.js script handles most of the dynamic behaviour on this page including
       search, price calculations and cart management. The modifications below
       rely on new data attributes (data-category, data-min-selections) to
@@ -43,7 +43,7 @@
             <a href="list.html" class="btn btn-box" id="numCheckOut">
               <img src="images/cart.svg" alt="cart icon" />
               <span id="cartCount">0</span>
-               <!--
+              <!--
               separated so that count can be updated independently
                 -->
               <span> :View List</span>
@@ -91,9 +91,7 @@
       </div>
 
       <div id="guestInfo" class="event-user" hidden>
-        <p class="muted" style="margin: 0.25rem 0">
-          Not signed in.
-        </p>
+        <p class="muted" style="margin: 0.25rem 0">Not signed in.</p>
       </div>
 
       <!-- Player Packs section -->
@@ -106,7 +104,11 @@
             The data-min-selections attribute defines how many checkbox options
             must remain selected to build a valid pack. Main.js enforces this.
           -->
-          <article class="product-card flip-card" data-category="player-pack" data-min-selections="4">
+          <article
+            class="product-card flip-card"
+            data-category="player-pack"
+            data-min-selections="4"
+          >
             <div class="flip-inner">
               <!-- FRONT -->
               <div class="flip-front">
@@ -180,7 +182,11 @@
           </article>
 
           <!-- Standard pack -->
-          <article class="product-card flip-card" data-category="player-pack" data-min-selections="3">
+          <article
+            class="product-card flip-card"
+            data-category="player-pack"
+            data-min-selections="3"
+          >
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -236,7 +242,11 @@
           </article>
 
           <!-- Bargain pack -->
-          <article class="product-card flip-card" data-category="player-pack" data-min-selections="2">
+          <article
+            class="product-card flip-card"
+            data-category="player-pack"
+            data-min-selections="2"
+          >
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -286,7 +296,11 @@
           </article>
 
           <!-- Custom player pack -->
-          <article class="product-card flip-card" data-category="player-pack" data-min-selections="4">
+          <article
+            class="product-card flip-card"
+            data-category="player-pack"
+            data-min-selections="4"
+          >
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -305,17 +319,34 @@
                 <h3>Custom Player Pack — Options</h3>
                 <p class="quantityInfo">Included In Pack (toggle to remove):</p>
                 <ul class="quantityInfo">
-                  <li><label><input type="checkbox" checked /> 2 Discs (Driver + Putter)</label></li>
-                  <li><label><input type="checkbox" checked /> Shirt</label></li>
-                  <li><label><input type="checkbox" checked /> Water Bottle</label></li>
-                  <li><label><input type="checkbox" /> Hat</label></li>
-                  <li><label><input type="checkbox" /> Stickers</label></li>
-                  <li><label><input type="checkbox" /> Mini Disc</label></li>
-                  <li><label><input type="checkbox" /> Golf Towel</label></li>
-                  <li><label><input type="checkbox" /> Custom Bag Tag</label></li>
+                  <li>
+                    <label><input type="checkbox" checked /> 2 Discs (Driver + Putter)</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Shirt</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" checked /> Water Bottle</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Hat</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Stickers</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Mini Disc</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Golf Towel</label>
+                  </li>
+                  <li>
+                    <label><input type="checkbox" /> Custom Bag Tag</label>
+                  </li>
                 </ul>
                 <div class="quantityInfo" style="display: grid; gap: 0.5rem">
-                  <label>Shirt Size:
+                  <label
+                    >Shirt Size:
                     <select>
                       <option>Mixed (S–XL)</option>
                       <option>Men’s</option>
@@ -323,13 +354,15 @@
                       <option>Youth</option>
                     </select>
                   </label>
-                  <label>Disc Plastic:
+                  <label
+                    >Disc Plastic:
                     <select>
                       <option>Premium</option>
                       <option>Baseline</option>
                     </select>
                   </label>
-                  <label>Pack Quantity:
+                  <label
+                    >Pack Quantity:
                     <input type="number" min="1" value="1" />
                   </label>
                 </div>
@@ -1049,554 +1082,548 @@
         <div class="product-title">
           <h1 id="seasonalEvents">Seasonal Events</h1>
         </div>
-          <div class="product-header">
-            <h2 id="spring">Spring Tournaments</h2>
-          </div>
-          <div class="product-grid">
-            <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://www.mastercanopy.com/cdn/shop/files/2.1.jpg?v=1740366877"
-                      alt="tent"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Canopy/Tent</h3>
-                    <p class="price">$150</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
+        <div class="product-header">
+          <h2 id="spring">Spring Tournaments</h2>
+        </div>
+        <div class="product-grid">
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://www.mastercanopy.com/cdn/shop/files/2.1.jpg?v=1740366877"
+                    alt="tent"
+                  />
                 </div>
-                <div class="flip-back">
-                  <h3>Canopy/tent — Options</h3>
-                  <label
-                    >Size:
-                    <select>
-                      <option>S</option>
-                      <option>M</option>
-                      <option>L</option>
-                    </select>
-                  </label>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
+                <div class="product-details">
+                  <h3 class="product-name">Canopy/Tent</h3>
+                  <p class="price">$150</p>
+                  <button class="btn show-details">View Options</button>
                 </div>
               </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://mobileimages.lowes.com/productimages/b1ed553f-6691-425f-ae21-26bb7d7424e1/68596060.jpeg?size=pdhz"
-                      alt="Large Umbreallas"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Large Umbrellas</h3>
-                    <p class="price">$30/ea </p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Umbrellas — Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
+              <div class="flip-back">
+                <h3>Canopy/tent — Options</h3>
+                <label
+                  >Size:
+                  <select>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                  </select>
+                </label>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
                 </div>
               </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://mobileimages.lowes.com/productimages/c5db047b-6f5d-4fe0-8900-815ca22ed36d/43873052.jpg?size=pdhism"
-                      alt="water proof bins"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">WaterProof Bins</h3>
-                    <p class="price">$15</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Bin — Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://theeventsagencyhire.com.au/wp-content/uploads/2019/08/bunting.jpg"
-                      alt="Rope/flags"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Rope & OB Flags</h3>
-                    <p class="price">$25</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Rope/OB Flags — Options</h3>
-                    <label>Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://m.media-amazon.com/images/I/91mXRmfBIHL._AC_UF894,1000_QL80_.jpg"
-                      alt="Towels/Drying Rags"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Towels/Drying Rags</h3>
-                    <p class="price">$5/ea</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Towels/Drying Rags — Options</h3>
-                   <label>Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv8KQtieXOOe2CHu3jyip0ZAEneaO3FVhR8A&s"
-                      alt="jackets/sweatshirts"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Jackets/Sweatshirt</h3>
-                    <p>Description:(BRANDED) Staff Apperal</p>
-                    <p class="price">$30</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Jackets/Sweatshirt - Options
-                  </h3>
-                    <label>Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-          
-            <div class="product-header">
-              <h2 id="winter">Winter Tournaments</h2>
             </div>
-            <div class="product-grid">
-          
-              <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://warmers.com/cdn/shop/files/HotHands-SuperWarmers-Bulk-Case-Option-01.jpg?v=1743125728&width=1080"
-                        alt="Hand Warmers (bulk pack)"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Hand Warmers</h3>
-                      <p>DESCRIPTION: Bulk Packs</p>
-                      <p class="price">$35</p>
-                      <button class="btn show-details">View Options</button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>HandWarmers - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to list</button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-               <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://us.alpkit.com/cdn/shop/files/comet-glove-black.jpg?v=1744999646&width=768"
-                        alt="Sports Gloves"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Gloves</h3>
-                      <p class="price">$10/ea</p>
-                      <button class="btn show-details">View Options</button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>Gloves - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to list</button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-  
-               <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://m.media-amazon.com/images/S/aplus-media/vc/c6e106d9-7bd3-4f6f-8c7b-68629a58b8c8.__CR0,0,300,300_PT0_SX300_V1___.png"
-                        alt="Ribbon Markers"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Ribbon Markers</h3>
-                      <p class="price">$10/ea</p>
-                      <button class="btn show-details">View Options</button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>RibbonMarkers - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to list</button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-  
-               <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://mobileimages.lowes.com/productimages/acd61282-3f64-4bd0-8d6f-8c8356f24086/03121737.jpg?size=pdhism"
-                        alt="Ice Melters"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Ice Melters</h3>
-                      <p class="price">$20</p>
-                      <button class="btn show-details">View Options
-                      </button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>Ice Melters - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to List</button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-  
-               <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://i5.walmartimages.com/seo/Comfort-Gear-Portable-Propane-Heater-10-000-BTU-Indoor-Outdoor-Use_91bdcb9d-0b26-4dd4-93dc-0adb8cc69193.af14e0449f5beab72b9c648ba0519993.jpeg?odnHeight=328&odnWidth=328&odnBg=FFFFFF"
-                        alt="Custom DyeMax disc or marker"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Portable Heaters</h3>
-                      <p class="price">$150</p>
-                      <button class="btn show-details">View Options</button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>Portable Heaters - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to List </button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-  
-               <article class="product-card flip-card">
-                <div class="flip-inner">
-                  <div class="flip-front">
-                    <div class="product-image">
-                      <img
-                        src="https://images.thdstatic.com/productImages/5c8335f1-6dc6-4d40-a6a0-e084484ed9cd/svn/powersmith-jobsite-lighting-pwls150h-64_1000.jpg"
-                        alt="Custom DyeMax disc or marker"
-                      />
-                    </div>
-                    <div class="product-details">
-                      <h3 class="product-name">Portable Lighting</h3>
-                      <p class="price">$50</p>
-                      <button class="btn show-details">View Options</button>
-                    </div>
-                  </div>
-                  <div class="flip-back">
-                    <h3>Portable Lighting - Options</h3>
-                    <label
-                      >Quantity:
-                      <input type="number" min="1" value="1" />
-                    </label>
-                    <div class="product-buttons">
-                      <button class="btn addToList">+ Add to List</button>
-                      <button class="btn btn-box close-details">Back</button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              </div>
+          </article>
 
-          <div class="product-header">
-            <h2 id="fall">Fall Tournaments</h2>
-          </div>
-          <div class="product-grid">
-            <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2025-09/DIFFBOT-Model--RY40LB01K-337834.jpg"
-                      alt="Custom DyeMax disc or marker"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Leaf Blowers</h3>
-                    <p class="price">$120</p>
-                    <button class="btn show-details">View Options
-                    </button>
-                  </div>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/b1ed553f-6691-425f-ae21-26bb7d7424e1/68596060.jpeg?size=pdhz"
+                    alt="Large Umbreallas"
+                  />
                 </div>
-                <div class="flip-back">
-                  <h3>Leaf Blowers - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
+                <div class="product-details">
+                  <h3 class="product-name">Large Umbrellas</h3>
+                  <p class="price">$30/ea</p>
+                  <button class="btn show-details">View Options</button>
                 </div>
               </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://theeventsagencyhire.com.au/wp-content/uploads/2019/08/bunting.jpg"
-                      alt="Custom DyeMax disc or marker"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Flags/OB ropes</h3>
-                    <p class="price">$25</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Flags/OB Ropes - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
+              <div class="flip-back">
+                <h3>Umbrellas — Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
                 </div>
               </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS_zFgfJxqPKJLBgbDZBFqs1e_bCRANM-Jy9jFRPS_umlAU8crabgqLOt5EFw6TxVaSNNXyyCPJDKwGBkyiLdqv8GKVkX1HSBcMwBBQsu9SE8fIFekvweRXke5qKG7IBoNdKvCJMA&usqp=CAc"
-                      alt="reflective signage"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Reflective Signage</h3>
-                    <p class="price">$15</p>
-                    <button class="btn show-details">View Options
-                    </button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Reflective Signage - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSo70fgxlzj2aT-yNmMPYO1VChGIIPSHlKtWFE5CSav6_RTNLEFtc1-YqQzHQ0kgO6X_JaQ0roGD1bKnsGBnCafkr7Zs52gsU93ewZc0KHj425RBg-ehbq0e1MPVS25yuwrAKryglU&usqp=CAc"
-                      alt="lighting/lanterns"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Lighting/Lanterns</h3>
-                    <p class="price">$20</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Lighting/Lanterns - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQS5CCXFBovT39ckmqTceK5cWiCcQNad7LA2_VwWi5pIkh7umzW2-NDikZrWHwXT0Y7Mb1vDprxa5FcuGxIRasRmK7yyjHAe9s9TtFnsf6gFJdnD7k1Inis&usqp=CAc"
-                      alt="jacket"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Hooded Jackets</h3>
-                    <p class="price">$30</p>
-                    <button class="btn show-details">View Options</button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Hooded Jackets - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-             <article class="product-card flip-card">
-              <div class="flip-inner">
-                <div class="flip-front">
-                  <div class="product-image">
-                    <img
-                      src="https://www.houckdesign.com/images/tmplt_manor.jpg"
-                      alt="map"
-                    />
-                  </div>
-                  <div class="product-details">
-                    <h3 class="product-name">Course Map Signage</h3>
-                    <p class="price">$15</p>
-                    <button class="btn show-details">View Options
-                    </button>
-                  </div>
-                </div>
-                <div class="flip-back">
-                  <h3>Course Map Signage - Options</h3>
-                  <label
-                    >Quantity:
-                    <input type="number" min="1" value="1" />
-                  </label>
-                  <div class="product-buttons">
-                    <button class="btn addToList">+ Add to List</button>
-                    <button class="btn btn-box close-details">Back</button>
-                  </div>
-                </div>
-              </div>
-            </article>
             </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/c5db047b-6f5d-4fe0-8900-815ca22ed36d/43873052.jpg?size=pdhism"
+                    alt="water proof bins"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">WaterProof Bins</h3>
+                  <p class="price">$15</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Bin — Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://theeventsagencyhire.com.au/wp-content/uploads/2019/08/bunting.jpg"
+                    alt="Rope/flags"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Rope & OB Flags</h3>
+                  <p class="price">$25</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Rope/OB Flags — Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://m.media-amazon.com/images/I/91mXRmfBIHL._AC_UF894,1000_QL80_.jpg"
+                    alt="Towels/Drying Rags"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Towels/Drying Rags</h3>
+                  <p class="price">$5/ea</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Towels/Drying Rags — Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv8KQtieXOOe2CHu3jyip0ZAEneaO3FVhR8A&s"
+                    alt="jackets/sweatshirts"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Jackets/Sweatshirt</h3>
+                  <p>Description:(BRANDED) Staff Apperal</p>
+                  <p class="price">$30</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Jackets/Sweatshirt - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="product-header">
+          <h2 id="winter">Winter Tournaments</h2>
+        </div>
+        <div class="product-grid">
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://warmers.com/cdn/shop/files/HotHands-SuperWarmers-Bulk-Case-Option-01.jpg?v=1743125728&width=1080"
+                    alt="Hand Warmers (bulk pack)"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Hand Warmers</h3>
+                  <p>DESCRIPTION: Bulk Packs</p>
+                  <p class="price">$35</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>HandWarmers - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to list</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://us.alpkit.com/cdn/shop/files/comet-glove-black.jpg?v=1744999646&width=768"
+                    alt="Sports Gloves"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Gloves</h3>
+                  <p class="price">$10/ea</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Gloves - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to list</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://m.media-amazon.com/images/S/aplus-media/vc/c6e106d9-7bd3-4f6f-8c7b-68629a58b8c8.__CR0,0,300,300_PT0_SX300_V1___.png"
+                    alt="Ribbon Markers"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Ribbon Markers</h3>
+                  <p class="price">$10/ea</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>RibbonMarkers - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to list</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://mobileimages.lowes.com/productimages/acd61282-3f64-4bd0-8d6f-8c8356f24086/03121737.jpg?size=pdhism"
+                    alt="Ice Melters"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Ice Melters</h3>
+                  <p class="price">$20</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Ice Melters - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://i5.walmartimages.com/seo/Comfort-Gear-Portable-Propane-Heater-10-000-BTU-Indoor-Outdoor-Use_91bdcb9d-0b26-4dd4-93dc-0adb8cc69193.af14e0449f5beab72b9c648ba0519993.jpeg?odnHeight=328&odnWidth=328&odnBg=FFFFFF"
+                    alt="Custom DyeMax disc or marker"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Portable Heaters</h3>
+                  <p class="price">$150</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Portable Heaters - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://images.thdstatic.com/productImages/5c8335f1-6dc6-4d40-a6a0-e084484ed9cd/svn/powersmith-jobsite-lighting-pwls150h-64_1000.jpg"
+                    alt="Custom DyeMax disc or marker"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Portable Lighting</h3>
+                  <p class="price">$50</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Portable Lighting - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="product-header">
+          <h2 id="fall">Fall Tournaments</h2>
+        </div>
+        <div class="product-grid">
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2025-09/DIFFBOT-Model--RY40LB01K-337834.jpg"
+                    alt="Custom DyeMax disc or marker"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Leaf Blowers</h3>
+                  <p class="price">$120</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Leaf Blowers - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://theeventsagencyhire.com.au/wp-content/uploads/2019/08/bunting.jpg"
+                    alt="Custom DyeMax disc or marker"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Flags/OB ropes</h3>
+                  <p class="price">$25</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Flags/OB Ropes - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS_zFgfJxqPKJLBgbDZBFqs1e_bCRANM-Jy9jFRPS_umlAU8crabgqLOt5EFw6TxVaSNNXyyCPJDKwGBkyiLdqv8GKVkX1HSBcMwBBQsu9SE8fIFekvweRXke5qKG7IBoNdKvCJMA&usqp=CAc"
+                    alt="reflective signage"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Reflective Signage</h3>
+                  <p class="price">$15</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Reflective Signage - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSo70fgxlzj2aT-yNmMPYO1VChGIIPSHlKtWFE5CSav6_RTNLEFtc1-YqQzHQ0kgO6X_JaQ0roGD1bKnsGBnCafkr7Zs52gsU93ewZc0KHj425RBg-ehbq0e1MPVS25yuwrAKryglU&usqp=CAc"
+                    alt="lighting/lanterns"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Lighting/Lanterns</h3>
+                  <p class="price">$20</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Lighting/Lanterns - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQS5CCXFBovT39ckmqTceK5cWiCcQNad7LA2_VwWi5pIkh7umzW2-NDikZrWHwXT0Y7Mb1vDprxa5FcuGxIRasRmK7yyjHAe9s9TtFnsf6gFJdnD7k1Inis&usqp=CAc"
+                    alt="jacket"
+                  />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Hooded Jackets</h3>
+                  <p class="price">$30</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Hooded Jackets - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card flip-card">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="product-image">
+                  <img src="https://www.houckdesign.com/images/tmplt_manor.jpg" alt="map" />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">Course Map Signage</h3>
+                  <p class="price">$15</p>
+                  <button class="btn show-details">View Options</button>
+                </div>
+              </div>
+              <div class="flip-back">
+                <h3>Course Map Signage - Options</h3>
+                <label
+                  >Quantity:
+                  <input type="number" min="1" value="1" />
+                </label>
+                <div class="product-buttons">
+                  <button class="btn addToList">+ Add to List</button>
+                  <button class="btn btn-box close-details">Back</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
 
         <div class="product-header">
           <h2 id="summer">Summer Tournaments</h2>
@@ -1631,7 +1658,7 @@
             </div>
           </article>
 
-           <article class="product-card flip-card">
+          <article class="product-card flip-card">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -1660,7 +1687,7 @@
             </div>
           </article>
 
-           <article class="product-card flip-card">
+          <article class="product-card flip-card">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -1691,7 +1718,7 @@
             </div>
           </article>
 
-           <article class="product-card flip-card">
+          <article class="product-card flip-card">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -1720,7 +1747,7 @@
             </div>
           </article>
 
-           <article class="product-card flip-card">
+          <article class="product-card flip-card">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -1749,7 +1776,7 @@
             </div>
           </article>
 
-           <article class="product-card flip-card">
+          <article class="product-card flip-card">
             <div class="flip-inner">
               <div class="flip-front">
                 <div class="product-image">
@@ -1777,7 +1804,7 @@
               </div>
             </div>
           </article>
-          </div>
+        </div>
       </section>
     </main>
 
@@ -1791,77 +1818,89 @@
       </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          // Retrieve any stored session. Prefer newer pdga_event, fall back to pdga_user.
-          const savedUser  = JSON.parse(localStorage.getItem('pdga_user')  || 'null');
-          const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
-          const saved      = savedEvent || savedUser;
+      document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve any stored session. Prefer newer pdga_event, fall back to pdga_user.
+        const savedUser = JSON.parse(localStorage.getItem('pdga_user') || 'null');
+        const savedEvent = JSON.parse(localStorage.getItem('pdga_event') || 'null');
+        const saved = savedEvent || savedUser;
 
-          // Cards
-          const userInfo  = document.getElementById('userInfo');
-          const guestInfo = document.getElementById('guestInfo');
+        // Cards
+        const userInfo = document.getElementById('userInfo');
+        const guestInfo = document.getElementById('guestInfo');
 
-          // Event detail targets
-          const evtNameEl = document.getElementById('evtName');
-          const evtTierEl = document.getElementById('evtTier');
-          const evtMetaEl = document.getElementById('evtMeta');
-          const evtIdEl   = document.getElementById('evtId');
+        // Event detail targets
+        const evtNameEl = document.getElementById('evtName');
+        const evtTierEl = document.getElementById('evtTier');
+        const evtMetaEl = document.getElementById('evtMeta');
+        const evtIdEl = document.getElementById('evtId');
 
-          // Add a CSS hook so we can hide #guestInfo via CSS if desired
-          document.body.classList.toggle(
-            'logged-in',
-            !!(saved && (saved.username || saved.email || saved.eventName))
-          );
+        // Add a CSS hook so we can hide #guestInfo via CSS if desired
+        document.body.classList.toggle(
+          'logged-in',
+          !!(saved && (saved.username || saved.email || saved.eventName))
+        );
 
-          if (saved && (saved.eventName || saved.email || saved.username)) {
-            // Show ordering card; hide guest card
-            userInfo.hidden  = false; userInfo.style.display  = '';
-            guestInfo.hidden = true;  guestInfo.style.display = 'none';
+        if (saved && (saved.eventName || saved.email || saved.username)) {
+          // Show ordering card; hide guest card
+          userInfo.hidden = false;
+          userInfo.style.display = '';
+          guestInfo.hidden = true;
+          guestInfo.style.display = 'none';
 
-            // Determine tier from either `tier` (new) or `eventTier` (legacy)
-            const tier = saved.tier || saved.eventTier || '';
+          // Determine tier from either `tier` (new) or `eventTier` (legacy)
+          const tier = saved.tier || saved.eventTier || '';
 
-            if (saved.eventName) {
-              evtNameEl.innerHTML = saved.eventUrl
-                ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
-                : saved.eventName;
+          if (saved.eventName) {
+            evtNameEl.innerHTML = saved.eventUrl
+              ? `<a href="${saved.eventUrl}" target="_blank" rel="noopener">${saved.eventName}</a>`
+              : saved.eventName;
 
-              evtTierEl.textContent = tier ? `${tier}-Tier Event` : '';
+            evtTierEl.textContent = tier ? `${tier}-Tier Event` : '';
 
-              const location = saved.eventLocation || saved.location || '';
-              const dates    = saved.eventDates    || saved.dates    || '';
-              evtMetaEl.textContent = (location && dates) ? `${location} • ${dates}` : `${location}${dates}`;
-            } else {
-              // No event linked, keep the card but clear details
-              evtNameEl.textContent = 'No event linked yet';
-              evtTierEl.textContent = '';
-              evtMetaEl.textContent = '';
-            }
-
-            // Event ID (supports eventId or legacy eventID)
-            if (saved.eventId || saved.eventID) {
-              const eventId = saved.eventId || saved.eventID;
-              evtIdEl.textContent = `Event ID: ${eventId}`;
-            } else {
-              evtIdEl.textContent = '';
-            }
-
-            // Logout: clear both keys + cookie, reload
-            const logoutBtn = document.getElementById('logoutInline');
-            if (logoutBtn) {
-              logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('pdga_user');
-                localStorage.removeItem('pdga_event');
-                document.cookie = 'pdga_event=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                location.reload();
-              });
-            }
+            const location = saved.eventLocation || saved.location || '';
+            const dates = saved.eventDates || saved.dates || '';
+            evtMetaEl.textContent =
+              location && dates ? `${location} • ${dates}` : `${location}${dates}`;
           } else {
-            // Not signed in: show guest, hide ordering card
-            guestInfo.hidden = false; guestInfo.style.display = '';
-            userInfo.hidden  = true;  userInfo.style.display  = 'none';
+            // No event linked, keep the card but clear details
+            evtNameEl.textContent = 'No event linked yet';
+            evtTierEl.textContent = '';
+            evtMetaEl.textContent = '';
           }
-        });
-</script>
+
+          // Event ID (supports eventId or legacy eventID)
+          if (saved.eventId || saved.eventID) {
+            const eventId = saved.eventId || saved.eventID;
+            evtIdEl.textContent = `Event ID: ${eventId}`;
+          } else {
+            evtIdEl.textContent = '';
+          }
+
+          // Logout: clear both keys + cookie, reload
+          const logoutBtn = document.getElementById('logoutInline');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+              localStorage.removeItem('pdga_user');
+              localStorage.removeItem('pdga_event');
+              document.cookie = 'pdga_event=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+              location.reload();
+            });
+          }
+        } else {
+          // Not signed in: show guest, hide ordering card
+          guestInfo.hidden = false;
+          guestInfo.style.display = '';
+          userInfo.hidden = true;
+          userInfo.style.display = 'none';
+        }
+      });
+      const saved = sessionStorage.getItem('pdga_user');
+      const signInBtn = document.getElementById('signInLink');
+
+      if (saved && signInBtn) {
+        signInBtn.textContent = 'Dashboard';
+        signInBtn.href = 'signIn.html';
+      }
+    </script>
   </body>
 </html>

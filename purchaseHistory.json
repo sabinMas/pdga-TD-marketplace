@@ -3,7 +3,7 @@
     "orderId": "order001",
     "email": "masonsabin@gmail.com",
     "eventName": "Spring Invitational",
-    "purchaseDate": "2025-04-15",
+    "purchaseDate": "Apr-15-2025",
     "totalCost": 120.5,
     "lineItems": [
       {
@@ -24,7 +24,7 @@
     "orderId": "order002",
     "email": "masonsabin@gmail.com",
     "eventName": "Summer Classic",
-    "purchaseDate": "2025-07-10",
+    "purchaseDate": "Jul-10-2025",
     "totalCost": 250.0,
     "lineItems": [
       {

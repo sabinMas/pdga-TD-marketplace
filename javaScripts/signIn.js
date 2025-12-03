@@ -1,3 +1,23 @@
+/*
+ * signIn.js
+ *
+ * This file powers the Tournament Director sign‑in page. It handles the email
+ * verification flow, persisting lightweight sessions in cookies/localStorage,
+ * and rendering event data, purchase history and favorite items once the user
+ * has been verified. The original repository omitted calls to initiate the
+ * token verification and session restoration routines on page load, so users
+ * who clicked their verification links landed back on the sign‑in form with
+ * no feedback. This version addresses that issue by invoking checkToken() and
+ * initFromStorage() when the DOM is ready.
+ *
+ * Additional enhancements added here implement a dedicated recommendations
+ * viewport for when a TD selects an event from their dashboard. The "Select"
+ * buttons in the events table are wired up to display a recommendations
+ * section based on the event's tier. A back button allows returning to the
+ * event list. The sign‑in link in the header will update to "Dashboard"
+ * across pages when a session exists.
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   // Load event data from a JSON file. Each event entry should include an eventID, tier,
   // name, location, dates, URL and a list of verified emails. This data is used to
@@ -14,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
       EVENTS = await res.json();
     } catch (err) {
       console.error('Error loading events:', err);
-      document.getElementById('message').textContent = 'Events file missing.';
+      const msgEl = document.getElementById('message');
+      if (msgEl) msgEl.textContent = 'Events file missing.';
     }
   }
 
@@ -103,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         customize: true,
         customizeHref: '',
       },
-
       {
         title: 'Custom DyeMax Disc or Marker',
         img: 'https://shop.discgolfdojo.com/cdn/shop/files/PXL_20230628_190946727.jpg?v=1687980915&width=1946',
@@ -112,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         customizeHref: '',
       },
     ],
-
     // B Tier Recommendations
     B: [
       {
@@ -146,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
         href: 'tournamentItems.html#courseSetup',
         qty: 18,
       },
-
       {
         title: 'PDGA T-Shirts Bulk',
         img: 'images/PDGAWorlds2025teeWhiteDMSE_2048x2048.webp',
@@ -162,8 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         customizeHref: '',
       },
     ],
-
-    // C tier recommeddations
+    // C tier recommendations
     C: [
       {
         title: 'Starter Player Packs',
@@ -184,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         href: 'tournamentItems.html#courseSetup',
         qty: 6,
       },
-
       {
         title: 'Orange Safety Cones',
         img: 'https://mobileimages.lowes.com/productimages/75c4c573-aa34-4b99-894f-5743b2d40065/64483884.jpg?size=pdhism',
@@ -207,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
   };
 
- const TIER_COPY = {
+  const TIER_COPY = {
     A: 'Built for A-tier/elite events: premium packs, full course kits, and high-visibility signage.',
     B: 'Great fit for solid regional events: reliable packs and course essentials at smart prices.',
     C: 'Starter friendly: cost-effective gear to run smooth local events.',
@@ -225,6 +241,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const logoutBtn = document.getElementById('logoutBtn');
   const eventSelectSection = document.getElementById('eventSelectSection');
   const eventGrid = document.getElementById('eventGrid');
+  const signInLink = document.getElementById('signInLink');
+
+  // New DOM references for recommendations metadata and navigation
+  const recEventName = document.getElementById('recEventName');
+  const recTierLabel = document.getElementById('recTierLabel');
+  const recTierCopy = document.getElementById('recTierCopy');
+  const backToEventsBtn = document.getElementById('backToEventsBtn');
 
   // New sections for purchase history and favorite items
   const purchaseHistorySection = document.getElementById('purchaseHistorySection');
@@ -257,20 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function loadAndRenderUserData() {
-    if (!verifiedEmail) return;
-    try {
-      await Promise.all([loadPurchaseHistory(), loadFavoriteItems()]);
-      renderPurchaseHistory();
-      renderFavoriteItems();
-    } catch (err) {
-      console.error('Error loading user data:', err);
-    }
-  }
-
-  /**
-   * Load favorite items JSON and filter by verifiedEmail.
-   */
   async function loadFavoriteItems() {
     try {
       const res = await fetch('./favoriteItems.json');
@@ -287,10 +296,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  async function loadAndRenderUserData() {
+    if (!verifiedEmail) return;
+    try {
+      await Promise.all([loadPurchaseHistory(), loadFavoriteItems()]);
+      renderPurchaseHistory();
+      renderFavoriteItems();
+    } catch (err) {
+      console.error('Error loading user data:', err);
+    }
+  }
+
   /**
-   * Render purchase history cards into purchaseHistoryList.
+   * Render purchase history into either a responsive card layout or a table.
    */
   function renderPurchaseHistory() {
+    // Card layout support
     if (purchaseHistoryList) {
       purchaseHistoryList.innerHTML = '';
       purchaseHistoryData.forEach((purchase) => {
@@ -320,7 +341,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${purchase.purchaseDate || ''}</td>
           <td>$${Number(purchase.totalCost || 0).toFixed(2)}</td>
           <td class="text-right">
-            <button class="link-button" data-reorder-orderid="${purchase.orderId}">add to cart</button>
+            <button class="link-button" data-reorder-orderid="${
+              purchase.orderId
+            }">add to cart</button>
           </td>
         `;
         purchaseHistoryTable.appendChild(tr);
@@ -329,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Render favorite items cards into favoriteItemsList.
+   * Render favorite items into either a responsive card layout or a table.
    */
   function renderFavoriteItems() {
     if (favoriteItemsList) {
@@ -343,7 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="muted small">Qty: ${fav.defaultQuantity || 1}</p>
           <p class="muted small">Last Price: $${Number(fav.lastOrderedPrice || 0).toFixed(2)}</p>
           <div class="actions">
-            <button class="btn" data-reorder-favid="${fav.catalogId}">${
+            <button class="btn" data-reorder-favid="${
+              fav.catalogId
+            }">${
           fav.buttonLabel || 'Re‑Order'
         }</button>
           </div>
@@ -363,7 +388,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${fav.defaultQuantity || 1}</td>
           <td>$${Number(fav.lastOrderedPrice || 0).toFixed(2)}</td>
           <td class="text-right">
-            <button class="link-button" data-reorder-favid="${fav.catalogId}">${
+            <button class="link-button" data-reorder-favid="${
+              fav.catalogId
+            }">${
           fav.buttonLabel || 'add to cart'
         }</button>
           </td>
@@ -421,11 +448,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const qtyUI = hasFixedQty
         ? `<p class="muted small">Suggested qty: ${item.qty}</p>`
         : `<label class="muted small">Qty&nbsp;<input type="number" min="1" step="1" value="1" class="qty-input"></label>`;
-
       const addBtn = hasFixedQty
         ? `<button class="btn" data-add data-title="${item.title}" data-qty="${item.qty}">Add to cart</button>`
         : `<button class="btn" data-add data-title="${item.title}" data-dynamic="1">Add to cart</button>`;
-
       const card = document.createElement('article');
       card.className = 'rec-card';
       card.innerHTML = `
@@ -447,10 +472,8 @@ document.addEventListener('DOMContentLoaded', () => {
     recGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-add]');
       if (!btn) return;
-
       const title = btn.getAttribute('data-title');
       if (!title) return;
-
       let qty;
       if (btn.hasAttribute('data-dynamic')) {
         const card = btn.closest('.rec-card');
@@ -459,7 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         qty = Number(btn.getAttribute('data-qty') || 1);
       }
-
       const ok = addToLocalList(title, qty);
       if (ok) {
         btn.textContent = 'Added!';
@@ -467,7 +489,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  function updateHeaderForLogin(session) {
+    if (!signInLink) return;
 
+    signInLink.textContent = 'Dashboard'; // or 'Logged in'
+    signInLink.href = 'signIn.html'; // always point back here
+    signInLink.setAttribute('aria-current', 'page');
+  }
 
   /**
    * Display recommendations for a validated event session.
@@ -476,45 +504,40 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   async function showRecommendationsForEvent(session) {
     if (!session) return;
-
     // Capture the email for downstream data loads
     if (session.email) {
       verifiedEmail = session.email;
     }
-
     // Update UI bits that *do* exist
     if (displayName) displayName.textContent = session.eventName || '';
     if (tierLabel) tierLabel.textContent = session.tier || '';
     if (tierCopy) tierCopy.textContent = TIER_COPY[session.tier] || '';
-
+    // Also update the recommendation metadata elements, if present
+    if (recEventName) recEventName.textContent = session.eventName || '';
+    if (recTierLabel) recTierLabel.textContent = session.tier || '';
+    if (recTierCopy) recTierCopy.textContent = TIER_COPY[session.tier] || '';
     // Persist session
     try {
       setCookie('pdga_event', JSON.stringify(session), 1);
       localStorage.setItem('pdga_event', JSON.stringify(session));
     } catch (_) {}
-
-    // Toggle sections only if they exist
+    // Toggle sections
     if (authSection) authSection.style.display = 'none';
-
-    // If you have the new dashboard layout (no recSection),
-    // just show the dashboard section.
-    if (eventSelectSection && !recSection) {
-      eventSelectSection.style.display = 'block';
-    }
-
-    // If the old recommendations section still exists, prefer that.
+    // When recSection exists we prefer it; otherwise just show event dashboard
     if (recSection) {
       if (eventSelectSection) eventSelectSection.style.display = 'none';
       recSection.style.display = 'block';
+      // Render recommended items for this tier
+      renderRecs(session.tier);
+    } else if (eventSelectSection) {
+      eventSelectSection.style.display = 'block';
     }
-
-    updateHeaderForLogin(session);
-
     // Fetch purchase history and favorites for this account (if available)
+    updateHeaderForLogin(session);
     loadAndRenderUserData();
   }
 
-     /**
+  /**
    * Handle the email submission. This sends a verification email to the user.
    * On success, a message is displayed instructing the user to check their inbox.
    */
@@ -523,25 +546,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInputEl = document.getElementById('email');
     const emailRaw = (emailInputEl?.value || '').trim().toLowerCase();
     if (!emailRaw) return;
-
     // Hide previous messages
     if (errorBox) errorBox.style.display = 'none';
     if (msgBox) msgBox.style.display = 'none';
-
     try {
-      // Send the email to the backend to trigger a verification email.
-      const res = await fetch('./phpFiles/sendVerification.php', {
+      // Cache-buster added here
+      const res = await fetch(`./phpFiles/sendVerification.php?t=${Date.now()}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: emailRaw }),
       });
-
       if (!res.ok) {
         throw new Error('Failed to send verification email.');
       }
-
       const data = await res.json();
       if (data && data.success) {
         if (msgBox) {
@@ -569,7 +588,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
     if (!token) return;
-
     if (authSection) authSection.style.display = 'none';
     if (errorBox) {
       errorBox.style.display = 'none';
@@ -579,39 +597,32 @@ document.addEventListener('DOMContentLoaded', () => {
       msgBox.style.display = 'none';
       msgBox.textContent = '';
     }
-
     try {
       const res = await fetch('./phpFiles/verify.php?token=' + encodeURIComponent(token));
       if (!res.ok) {
         throw new Error('Invalid or expired verification link.');
       }
-
       const data = await res.json();
       if (!data || !data.success) {
         throw new Error(data?.error || 'Invalid or expired verification link.');
       }
-
       verifiedEmail = data.email || null;
       const eventIDs = data.eventIDs || [];
       if (!Array.isArray(eventIDs) || eventIDs.length === 0) {
         throw new Error('No events associated with your email.');
       }
-
       // Preload personalized lists now that we know the user's email
       await loadAndRenderUserData();
-
       // Make sure EVENTS is loaded
       if (!Array.isArray(EVENTS) || EVENTS.length === 0) {
         await loadEvents();
       }
-
       const matches = EVENTS.filter((ev) =>
         eventIDs.some((id) => String(ev.eventID) === String(id))
       );
       if (matches.length === 0) {
         throw new Error('No matching events found.');
       }
-
       // Always land on the dashboard event table for selection
       showEventSelection(matches);
     } catch (err) {
@@ -631,29 +642,52 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function showEventSelection(events) {
     if (!eventSelectSection || !eventGrid) return;
-
     // Hide sign-in form, hide rec section if it exists
     if (authSection) authSection.style.display = 'none';
     if (recSection) recSection.style.display = 'none';
-
     eventGrid.innerHTML = '';
-
     events.forEach((ev) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${ev.eventName || ''}</td>
-        <td>${ev.eventYear || ''}</td>
+        <td>${ev.tier || ''}</td>
         <td>${ev.eventDates || ''}</td>
         <td>${ev.eventID || ''}</td>
         <td><span class="badge">${ev.eventLocation || ''}</span></td>
         <td class="text-right">
-          <button class="btn btn-small" data-select-event="${ev.eventID}">Select</button>
+          <button class="btn btn-small" data-select-event="${ev.eventID}" data-event-name="${
+        ev.eventName || ''
+      }" data-tier="${ev.tier || ''}" data-location="${ev.eventLocation || ''}" data-dates="${
+        ev.eventDates || ''
+      }">
+            Select
+          </button>
         </td>
       `;
       eventGrid.appendChild(tr);
     });
-
     eventSelectSection.style.display = 'block';
+    // Add click handler for selection. Use one event listener for efficiency.
+    eventGrid.onclick = (e) => {
+      const btn = e.target.closest('button[data-select-event]');
+      if (!btn) return;
+      const id = btn.getAttribute('data-select-event');
+      const tier = btn.getAttribute('data-tier') || '';
+      const name = btn.getAttribute('data-event-name') || '';
+      const location = btn.getAttribute('data-location') || '';
+      const dates = btn.getAttribute('data-dates') || '';
+      // Build session object and show recommendations
+      const session = {
+        eventId: id,
+        eventID: id,
+        tier: tier,
+        eventName: name,
+        eventLocation: location,
+        eventDates: dates,
+        email: verifiedEmail,
+      };
+      showRecommendationsForEvent(session);
+    };
   }
 
   function initFromStorage() {
@@ -690,16 +724,27 @@ document.addEventListener('DOMContentLoaded', () => {
   if (loginForm) {
     loginForm.addEventListener('submit', handleEmailSubmit);
   }
-
   // Only add a logout handler if the button actually exists on this page
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       setCookie('pdga_event', '', -1);
       localStorage.removeItem('pdga_event');
-
       if (recSection) recSection.style.display = 'none';
       if (authSection) authSection.style.display = 'block';
     });
   }
-});
+  // Add handler for back button to return to event list
+  if (backToEventsBtn) {
+    backToEventsBtn.addEventListener('click', () => {
+      if (recSection) recSection.style.display = 'none';
+      if (eventSelectSection) eventSelectSection.style.display = 'block';
+    });
+  }
 
+  // ---
+  // Kick off initial page logic.
+  // Attempt to validate a token in the URL; if none exists, attempt to restore an existing session.
+  // Without these calls the original implementation never progressed past the sign‑in screen.
+  checkToken();
+  initFromStorage();
+});

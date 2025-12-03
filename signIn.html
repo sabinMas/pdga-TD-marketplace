@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="assets/css/components.css" />
     <link rel="stylesheet" href="assets/css/utilities.css" />
     <link rel="stylesheet" href="assets/css/pages/signIn.css" />
-</html>
   </head>
   <body>
     <!-- HEADER -->
@@ -23,18 +22,18 @@
           <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
             >Create Event</a
           >
-          <a id="signInLink" href="signIn.html" class="btn btn-box" aria-current="page">Sign In</a>
+          <a href="signIn.html" id="signInLink" class="btn btn-outline">Sign In</a>
         </div>
       </div>
     </header>
 
     <main class="container">
-      <!-- SIGN-IN STEP -->
+      <!-- SIGN‑IN STEP -->
       <section id="authSection" class="auth-wrap">
         <h2 style="margin-top: 0">Sign in</h2>
         <p class="muted small">
           Enter your email address to receive a verification link. After verifying, you can access
-          your Tournament Director dashboard and event-specific recommendations.
+          your Tournament Director dashboard and event‑specific recommendations.
         </p>
 
         <form id="loginForm" style="margin-top: 16px">
@@ -63,7 +62,7 @@
       <section id="eventSelectSection" class="td-dashboard" style="display: none">
         <div class="td-dashboard-header">
           <h1>Tournament Director Dashboard</h1>
-          <a href="tournamentItems.html" class="btn btn-box">Continue Shopping</a>
+          <a href="tournamentItems.html" class="btn">Continue Shopping</a>
         </div>
 
         <!-- Event + tier context from current session -->
@@ -78,6 +77,17 @@
           </div>
           <p id="tierCopy" class="muted small" style="margin-top: 6px"></p>
         </div>
+        <!-- Recommended Items Viewport -->
+        <section id="recSection" style="display: none; margin-top: 32px">
+          <button id="backToEventsBtn" class="btn" style="margin-bottom: 16px">
+            ← Back to Events
+          </button>
+
+          <h2>Recommended Items for <span id="recEventName"></span></h2>
+          <p class="muted">Recommendations based on tier <span id="recTierLabel"></span>.</p>
+
+          <div id="recGrid" class="rec-grid"></div>
+        </section>
 
         <!-- Upcoming / current events (from events.json filtered by email) -->
         <section class="dashboard-section">
@@ -86,32 +96,19 @@
             <thead>
               <tr>
                 <th>Event Name</th>
-                <th>Year</th>
+                <th>Tier</th>
                 <th>Date</th>
                 <th>Event ID</th>
                 <th>Location</th>
-                <th class="text-right">Completed</th>
+                <th class="text-right">Order for</th>
               </tr>
             </thead>
             <!-- JS will render <tr> rows here based on EVENTS / eventIDs -->
-            <tbody id="eventGrid">
-              <!-- example row for reference; remove once JS is wired
-              <tr>
-                <td>Christmas Special</td>
-                <td>2025</td>
-                <td>12/13/2025</td>
-                <td>123457</td>
-                <td><span class="badge">Kent, WA</span></td>
-                <td class="text-right">
-                  <input type="checkbox" />
-                </td>
-              </tr>
-              -->
-            </tbody>
+            <tbody id="eventGrid"></tbody>
           </table>
         </section>
 
-        <!-- Previous purchases (from a future previousPurchases.json) -->
+        <!-- Previous purchases -->
         <section class="dashboard-section">
           <h2>Previous Purchases</h2>
           <table class="data-table">
@@ -123,25 +120,11 @@
                 <th class="text-right">Re-order</th>
               </tr>
             </thead>
-            <tbody id="previousPurchasesBody">
-              <!-- JS will insert rows like:
-              <tr>
-                <td>Christmas Special</td>
-                <td>12/05/2025</td>
-                <td>$508.68</td>
-                <td class="text-right">
-                  <button
-                    class="link-button"
-                    data-reorder-id="purchase_001"
-                  >add to cart</button>
-                </td>
-              </tr>
-              -->
-            </tbody>
+            <tbody id="previousPurchasesBody"></tbody>
           </table>
         </section>
 
-        <!-- Favorite items (from a future favorites.json) -->
+        <!-- Favorite items -->
         <section class="dashboard-section">
           <h2>Favorite Items</h2>
           <table class="data-table">
@@ -158,6 +141,6 @@
         </section>
       </section>
     </main>
-      <script defer src="javaScripts/signIn.js"></script>
+    <script defer src="javaScripts/signIn.js"></script>
   </body>
 </html>
