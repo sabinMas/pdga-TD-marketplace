@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- Update order summary under payment section -----
+  // try to implement ids from checkoutpage.html and loop it with this function 
   const playerPackLine = document.getElementById('playerPackLine');
   const discLine = document.getElementById('discLine');
   const customMerchLine = document.getElementById('customMerchLine');
