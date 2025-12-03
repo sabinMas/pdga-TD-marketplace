@@ -31,10 +31,7 @@
           <li><a href="tournamentItems.html">Event Supplies</a></li>
         </ul>
 
-        <form role="search" class="search">
-          <label for="q" class="sr-only">Search</label>
-          <input id="q" name="q" type="search" placeholder="Search…" />
-        </form>
+        
 
         <!--How do we incorporate backend for Log-In-->
         <div class="header-actions">
@@ -47,21 +44,23 @@
     <main>
       <!-- HERO -->
       <section class="hero">
-        <div class="container">
-          <div>
-            <h1>The #1 Store for Tournament Directors of the PDGA</h1>
-            <p>
-              Build your own player packs, order course materials, and upload custom designs for
-              event merch.
-            </p>
-            <p class="actions">
-              <a href="tournamentItems.html" class="btn btn-box">Shop Tournament Items</a>
-            </p>
+        <div class="background">
+          <div class="container">
+            <div>
+              <h1>The #1 Store for Tournament Directors of the PDGA</h1>
+              <p>
+                Build your own player packs, order course materials, and upload custom designs for
+                event merch.
+              </p>
+              <p class="actions">
+                <a href="tournamentItems.html" class="btn btn-box">Shop Tournament Items</a>
+              </p>
+            </div>
+            <!--Spinning Disc animation-->
+            <!-- <figure aria-hidden="true">
+              <img class="disc spin" src="images/spinningDiscLogo.png" alt="PDGA Disc Logo" />
+            </figure> -->
           </div>
-          <!--Spinning Disc animation-->
-          <figure aria-hidden="true">
-            <img class="disc spin" src="images/spinningDiscLogo.png" alt="PDGA Disc Logo" />
-          </figure>
         </div>
       </section>
 
@@ -70,19 +69,28 @@
       <section class="info">
         <div class="container">
           <h2>How ordering works</h2>
-          <ol class="steps">
-            <li>
-              <h3>Verify your email</h3>
-              <p class="muted">
-                Select the event you'd like to order for
-            <li>
-              <h3>Select event supplies & upload artwork</h3>
-              <p class="muted">Include custom logos/designs for apparel or discs.</p>
-              <p class="muted">Use filters to find materials that fit your course needs.</p>
+
+          <ol class="how-steps">
+            <li class="step">
+              <div class="step-box">
+                <h3>Verify your email</h3>
+                <p class="muted"> Select the event you'd like to order for </p>
+              </div>
             </li>
-            <li>
-              <h3>Checkout or save for later</h3>
-              <p class="muted">Complete payment or print and shop local</p>
+
+            <li class="step">
+              <div class="step-box">
+                <h3>Select event supplies & upload artwork</h3>
+                <p class="muted">Include custom logos/designs for apparel or discs.</p>
+                <p class="muted">Use filters to find materials that fit your course needs.</p>
+              </div>
+            </li>
+
+            <li class="step">
+              <div class="step-box">
+                <h3>Checkout or save for later</h3>
+                <p class="muted">Complete payment or print and shop local</p>
+              </div>
             </li>
           </ol>
         </div>
