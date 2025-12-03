@@ -15,9 +15,11 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--accentGradient);
+
+  background: var(--secondColor);
   color: #fff;
-  border-bottom: none;
+
+  
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -25,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 6px 16px;
 }
 
 .site-header a {
@@ -48,19 +50,26 @@
   gap: 20px;
 }
 
+.site-header .header-actions {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 /* Buttons inside header (Create Event / Sign In) */
 .site-header .btn {
   background: #fff;
   color: var(--thirdColor);
-  border: 1px solid transparent;
+  
   padding: 8px 14px;
-  border-radius: var(--radius);
+  border-radius: 9999px;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .site-header .btn:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* === Section Spacing (Global) === */
@@ -106,7 +115,7 @@ footer a:hover {
 /* Make header <ul class="nav"> behave like the old buttons/links */
 .site-header .nav {
   list-style: none;
-  margin: 0;
+  margin-left: auto;
   padding: 0;
   display: flex;
   align-items: center;
@@ -120,7 +129,7 @@ footer a:hover {
   gap: 6px;
   padding: 8px 12px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  
   color: #fff;
   text-decoration: none;
   font-weight: 600;

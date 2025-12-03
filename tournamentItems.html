@@ -35,20 +35,11 @@
         </form>
 
         <!--How do we incorporate backend for Log-In-->
-        <div class="header-actions">
-          <a href="https://www.pdga.com/td/how-to-sanction-event" class="btn btn-box"
-            >Create Event</a
-          >
-          <div class="icon">
-            <a href="list.html" class="btn btn-box" id="numCheckOut">
-              <img src="images/cart.svg" alt="cart icon" />
-              <span id="cartCount">0</span>
-              <!--
-              separated so that count can be updated independently
-                -->
-              <span> :View List</span>
-            </a>
-          </div>
+        <div class="header-actions" id="authActions">
+          <a href="list.html" class="btn btn-outline">View List</a>
+
+          <!-- Added -->
+          <a href="signIn.html" id="signInLink" class="btn btn-outline">Sign In</a>
         </div>
       </div>
     </header>

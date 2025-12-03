@@ -1,6 +1,5 @@
 <!--
-  Modified index.html for the PDGA Marketplace demo.  This version is based off
-  of the original repository file but adds an id to the Sign In link so that
+  added an id to the Sign In link so that
   our JavaScript can toggle the label to “Dashboard” when a user has an
   existing session in localStorage.  A short script near the bottom reads
   the stored pdga_user/pdga_event session and updates the link accordingly.
@@ -29,10 +28,7 @@
           <li><a href="tournamentItems.html">Event Supplies</a></li>
         </ul>
 
-        <form role="search" class="search">
-          <label for="q" class="sr-only">Search</label>
-          <input id="q" name="q" type="search" placeholder="Search…" />
-        </form>
+        
 
         <!-- Header actions with sign‑in link -->
         <div class="header-actions">
@@ -51,21 +47,23 @@
     <main>
       <!-- HERO -->
       <section class="hero">
-        <div class="container">
-          <div>
-            <h1>The #1 Store for Tournament Directors of the PDGA</h1>
-            <p>
-              Build your own player packs, order course materials, and upload custom designs for
-              event merch.
-            </p>
-            <p class="actions">
-              <a href="tournamentItems.html" class="btn btn-box">Shop Tournament Items</a>
-            </p>
+        <div class="background">
+          <div class="container">
+            <div>
+              <h1>The #1 Store for Tournament Directors of the PDGA</h1>
+              <p>
+                Build your own player packs, order course materials, and upload custom designs for
+                event merch.
+              </p>
+              <p class="actions">
+                <a href="tournamentItems.html" class="btn btn-box">Shop Tournament Items</a>
+              </p>
+            </div>
+            <!--Spinning Disc animation-->
+            <!-- <figure aria-hidden="true">
+              <img class="disc spin" src="images/spinningDiscLogo.png" alt="PDGA Disc Logo" />
+            </figure> -->
           </div>
-          <!--Spinning Disc animation-->
-          <figure aria-hidden="true">
-            <img class="disc spin" src="images/spinningDiscLogo.png" alt="PDGA Disc Logo" />
-          </figure>
         </div>
       </section>
 
@@ -74,19 +72,28 @@
       <section class="info">
         <div class="container">
           <h2>How ordering works</h2>
-          <ol class="steps">
-            <li>
-              <h3>Verify your email</h3>
-              <p class="muted">Select the event you'd like to order for</p>
+
+          <ol class="how-steps">
+            <li class="step">
+              <div class="step-box">
+                <h3>Verify your email</h3>
+                <p class="muted">Select the event you'd like to order for</p>
+              </div>
             </li>
-            <li>
-              <h3>Select event supplies &amp; upload artwork</h3>
-              <p class="muted">Include custom logos/designs for apparel or discs.</p>
-              <p class="muted">Use filters to find materials that fit your course needs.</p>
+
+            <li class="step">
+              <div class="step-box">
+                <h3>Select event supplies & upload artwork</h3>
+                <p class="muted">Include custom logos/designs for apparel or discs.</p>
+                <p class="muted">Use filters to find materials that fit your course needs.</p>
+              </div>
             </li>
-            <li>
-              <h3>Checkout or save for later</h3>
-              <p class="muted">Complete payment or print and shop local</p>
+
+            <li class="step">
+              <div class="step-box">
+                <h3>Checkout or save for later</h3>
+                <p class="muted">Complete payment or print and shop local</p>
+              </div>
             </li>
           </ol>
         </div>

@@ -9,6 +9,10 @@ section {
   padding: 56px 0;
 }
 /* === Home Page Icon Tweaks === */
+.brand {
+  font-size: 25px;
+}
+
 .card {
   transition: transform 0.25s, box-shadow 0.25s ease;
 }
@@ -32,30 +36,107 @@ section {
 
 
 .hero {
-  background: var(--accentGradient);
   color: #fff;
   border-bottom: none;
+  padding: 200px 0px 200px;
 }
 .hero .container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   gap: 28px;
+  text-align: center;
+}
+
+.hero .btn {
+  color: #fff;
+  background-color: #003F7D;
 }
 .hero h1 {
   margin: 0 0 10px;
   font-size: clamp(28px, 3.4vw, 44px);
-  color: #fff;
+  color: #003F7D;
 }
+
 .hero p {
   margin: 0 0 18px;
-  color: #f0f6f8;
+  color: #003F7D;
+  font-size: clamp(20px, 1.2vw, 24px);
 }
 
 .actions {
   display: flex;
+  justify-content: center;
   gap: 12px;
+  align-items: center;
 }
+
+/*background effect for hero class */
+.background::before,
+.background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #003F7D, transparent);
+  animation: shooting 3s linear infinite;
+  opacity: 0.5;
+}
+
+/* Put a second line with different speed */
+.background::after {
+  top: 50%;
+  animation-duration: 5s;
+  opacity: 0.3;
+}
+
+
+.hero .background {
+  position:relative;
+  overflow: hidden;
+}
+
+
+@keyframes shooting {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/*how it works sections */
+.info {
+  background-color: #00417A;
+  padding: 15px 0;
+}
+
+.info h2 {
+  font-size: 35px;
+  color: #fff;
+}
+
+.how-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  padding-left: 0;
+  margin-bottom: 25px;
+}
+
+.step-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
 /* Disc animation */
 .disc {
   width: 220px;
