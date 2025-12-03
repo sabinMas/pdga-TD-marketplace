@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recGrid.innerHTML = '';
     const tierKey = event.tier.toUpperCase();
 
-    (RECOMMENDATIONS[tierKey] || []).forEach((item) => {
+    (RECS[tierKey] || []).forEach((item) => {
       const card = document.createElement('div');
       card.className = 'rec-card';
       card.innerHTML = `
