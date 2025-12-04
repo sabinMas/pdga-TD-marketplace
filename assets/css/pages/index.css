@@ -15,12 +15,29 @@ section {
 
 .card {
   transition: transform 0.25s, box-shadow 0.25s ease;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.cards {
+  gap: 35px;
 }
 
 .card:hover {
   transform: translate(-6px);
-  box-shadow: 0 12px 24px rgba(0, 91, 170, 0.15);
+  box-shadow: 0 7px 0 -2px #0052A3,
+  0 15px 0 -4px #0066CC,
+  0 16px 10px -3px #007AF5;
 }
+
+.card:active{
+ transition: all 0.2s;
+ transform: translateY(-5px);
+ box-shadow: 0 2px 0 -2px #0052A3,
+  0 8px 0 -4px #0066CC,
+  0 12px 10px -3px #007AF5;
+}
+
 .cards .card-icon {
   width: 36px;
   height: 36px;
@@ -34,18 +51,32 @@ section {
   display: block;
 }
 
+.card-icon{
+  margin: 0 auto;
+}
+
 
 .hero {
-  color: #fff;
+  color: #F3F5F7;
   border-bottom: none;
   padding: 125px 0px 150px;
 }
 .hero .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   gap: 28px;
   text-align: center;
+}
+
+.hero .container > div {
+  grid-column: 1 / 4;  
+}
+
+.hero .container figure {
+  grid-column: 4 / 5;
+  justify-self: center; 
 }
 
 .hero .btn {
@@ -75,50 +106,30 @@ section {
   align-items: center;
 }
 
-/*background effect for hero class, might get rid or change it */
-.background::before,
-.background::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 2px;
-  background: linear-gradient(to right, transparent, #003F7D, transparent);
-  animation: shooting 3s linear infinite;
-  opacity: 0.5;
+.actions .btn {
+  transition: all 0.4s ease;
 }
 
-/* Put a second line with different speed */
-.background::after {
-  top: 50%;
-  animation-duration: 5s;
-  opacity: 0.3;
+.actions .btn:hover {
+  transform: translateY(-7px);
+   box-shadow: 0 7px 0 -2px #0052A3,
+  0 15px 0 -4px #0066CC,
+  0 16px 10px -3px #007AF5;
 }
 
-
-.hero .background {
-  position:relative;
-  overflow: hidden;
-}
-
-
-@keyframes shooting {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+.actions .btn:active {
+transition: all 0.2s;
+ transform: translateY(-5px);
+ box-shadow: 0 2px 0 -2px #0052A3,
+  0 8px 0 -4px #0066CC,
+  0 12px 10px -3px #007AF5;
 }
 
 /*how it works sections */
 .info {
   padding: 40px 0px 80px;
   position: relative;
-  box-shadow:  15px 15px 30px #d3d3d3,
-             -15px -15px 30px #ededed;
-  background-color: #F3F5F7;
+  background-color: #fff;
 }
 
 .info h2 {
@@ -200,31 +211,43 @@ section {
   transform: translateY(0);
 }
 
-/* manufacturers imgs sliding across screen */
-.manufacturers {
-  overflow: hidden;
-  width: 100%;
-  margin-top: 20px;
+/* featured & start order sections*/
+.featured-wrapper {
+  background-color: #f6f8f9;
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  padding: 20px 80px;
 }
 
-.manufacturers h2 {
-  color: #003F7D;
-}
-
-.slider {
+.featured-wrapper h1 {
   display: flex;
-  gap: 40px;
-  animation: slide 20s linear infinite;
 }
 
-.slider img {
- max-height: 50px;
- object-fit: contain;
- filter: saturate(1);
+.start-order, .featured-season {
+  background-color: #F3F5F7;
+  border-radius: 5px;
+  padding: 40px 0px 60px;
+  width: 70%;
+  margin: 0 auto;
+  border: solid 2px #858585;
+  box-shadow:  0px 0px 20px #858585;
 }
 
-@keyframes slide {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(-50%);}
+.start-order h2, .start-order p, .start-order .card,
+.featured-season h2, .featured-season p, .featured-season .card {
+  text-align: center;
 }
 
+/*get started header & hr */
+.get-started {
+  text-align: center;
+  padding-top: 30px;
+  font-size: 45px;
+  color: var(--secondColor);
+}
+.start-hr {
+  width: 50%;
+  border: none;
+  background-color: #003F7D;
+  height: 5px;
+}
