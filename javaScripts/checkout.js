@@ -16,6 +16,9 @@ function scrollRightBtn() {
 
 // ===== Checkout rendering =====
 document.addEventListener('DOMContentLoaded', () => {
+  /* plugged in the checkout rendering calculation into a function 
+  called calculateTotalsFromSavedDate() */
+  function calculateTotalsFromSavedData() {
   const saved = sessionStorage.getItem('checkoutList');
   if (!saved) {
     console.log('No checkoutList found in sessionStorage');
@@ -84,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         eventSuppliesTotal += lineTotal;
         break;
     }
+  }
 
     // --- build DOM card ---
     const itemInCart = document.createElement('div');
@@ -143,8 +147,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- Update order summary under payment section -----
-  // try to implement ids from checkoutpage.html and loop it with this function 
-  const playerPackLine = document.getElementById('playerPackLine');
+  // try to implement ids from checkoutpage.html and loop it with this function
+
+  function updateorderSummary() {
+    const totals = calculateTotalsFromSavedData();
+
+    const playerPackTotal = totals.playerPackTotal;
+    const discTotal = totals.discTotal;
+    const customMerchTotal = totals.customMerchTotal;
+    const eventSuppliesTotal = totals.eventSuppliesTotal;
+    const grandTotal = totals.grandTotal;
+    const totalItemsCount = totals.totalItemsCount;
+
+    const summaryLines = [
+      {id : 'playerPackLine', text: `Player Packs $${playerPackTotal.toFixed(2)}`},
+      {id : 'discLine', text: `Discs $${discTotal.toFixed(2)}`},
+      {id : 'customMerchLine', text: `Custom Merchandise $${customMerchTotal.toFixed(2)}`},
+      {id : 'eventSuppliesLine', text: `Event Supplies $${eventSuppliesTotal.toFixed(2)}`},
+      {id : 'subtotalLine', text: `Subtotal $${grandTotal.toFixed(2)} (${totalItemsCount} items)`},
+      {id : 'totalLine', text: `Total $${grandTotal.toFixed(2)}`},  
+    ];
+    // Logic to find prodcuts in the summaryLine Array and preform action.
+    for (let i =0; i < summaryLines.length; i++) {
+      const line = summaryLines[i];
+      const element = document.getElementById(line.id);
+      if(element) {
+        element.textContent = line.text;
+      }
+    }
+  }
+
+
+ /* const playerPackLine = document.getElementById('playerPackLine');
   const discLine = document.getElementById('discLine');
   const customMerchLine = document.getElementById('customMerchLine');
   const eventSuppliesLine = document.getElementById('eventSuppliesLine');
@@ -169,4 +203,4 @@ document.addEventListener('DOMContentLoaded', () => {
   if (totalLine) {
     totalLine.textContent = `Total  $${grandTotal.toFixed(2)}`;
   }
-});
+}); */
