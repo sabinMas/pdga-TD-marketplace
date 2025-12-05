@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- Update order summary under payment section -----
-  // try to implement ids from checkoutpage.html and loop it with this function
+  // add prices to show up in the chart
   
   function updateorderSummary() {
     const totals = calculateTotalsFromSavedData();
