@@ -494,34 +494,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showRecommendationsForEvent(event) {
-    const recSection = document.getElementById('recSection');
-    const eventSelectSection = document.getElementById('eventSelectSection');
-    const recEventName = document.getElementById('recEventName');
-    const recTierLabel = document.getElementById('recTierLabel');
-    const recGrid = document.getElementById('recGrid');
+    if (eventSelectSection) {
+      eventSelectSection.style.display = 'none';
+    }
+    if (recSection) {
+      recSection.style.display = 'block';
+    }
 
-    // hide dashboard
-    eventSelectSection.style.display = 'none';
+    if (recEventName) {
+      recEventName.textContent = event.eventName || event.name || '';
+    }
 
-    // show recommendations
-    recSection.style.display = 'block';
-    recEventName.textContent = event.name;
-    recTierLabel.textContent = event.tier;
+    const tierKey = (event.tier || '').toUpperCase();
 
-    // clear and rebuild grid
-    recGrid.innerHTML = '';
-    const tierKey = event.tier.toUpperCase();
+    if (recTierLabel) {
+      recTierLabel.textContent = tierKey;
+    }
+    if (recTierCopy) {
+      recTierCopy.textContent = TIER_COPY[tierKey] || '';
+    }
 
-    (RECS[tierKey] || []).forEach((item) => {
-      const card = document.createElement('div');
-      card.className = 'rec-card';
-      card.innerHTML = `
-      <h3>${item.name}</h3>
-      <p class="muted small">${item.description}</p>
-      <button class="btn" data-product-id="${item.id}">Add To Cart</button>
-    `;
-      recGrid.appendChild(card);
-    });
+    renderRecs(tierKey);
   }
 
   /**
