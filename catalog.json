@@ -4,7 +4,7 @@
     "name": "Premium Player Pack",
     "section": "Player Packs",
     "category": "player-pack",
-    "paymentCategory": "player-pack",
+    "paymentCategory": "player-pack", 
     "price": "$35.00–$50.00",
     "imageUrl": "https://www.innovadiscs.com/wp-content/uploads/2023/01/player-pack_300.jpg",
     "altText": "Premium Player Pack",

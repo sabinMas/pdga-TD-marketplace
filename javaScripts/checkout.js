@@ -175,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         element.textContent = line.text;
       }
     }
+    
     // disables the buy button if chart is emtpy.
     const buyButton = document.getElementById('buy-button');
     if (buyButton) {
