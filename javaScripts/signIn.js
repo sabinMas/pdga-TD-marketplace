@@ -494,35 +494,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showRecommendationsForEvent(event) {
-    const recSection = document.getElementById('recSection');
-    const eventSelectSection = document.getElementById('eventSelectSection');
-    const recEventName = document.getElementById('recEventName');
-    const recTierLabel = document.getElementById('recTierLabel');
-    const recGrid = document.getElementById('recGrid');
-
-    // hide dashboard
+  // Hide the dashboard event list
+  if (eventSelectSection) {
     eventSelectSection.style.display = 'none';
-
-    // show recommendations
-    recSection.style.display = 'block';
-    recEventName.textContent = event.name;
-    recTierLabel.textContent = event.tier;
-
-    // clear and rebuild grid
-    recGrid.innerHTML = '';
-    const tierKey = event.tier.toUpperCase();
-
-    (RECS[tierKey] || []).forEach((item) => {
-      const card = document.createElement('div');
-      card.className = 'rec-card';
-      card.innerHTML = `
-      <h3>${item.name}</h3>
-      <p class="muted small">${item.description}</p>
-      <button class="btn" data-product-id="${item.id}">Add To Cart</button>
-    `;
-      recGrid.appendChild(card);
-    });
   }
+
+  // Show the recommendations section
+  if (recSection) {
+    recSection.style.display = 'block';
+  }
+
+  // Update the heading text
+  if (recEventName) {
+    // eventName is what you set on the button; fall back to event.name just in case
+    recEventName.textContent = event.eventName || event.name || '';
+  }
+
+  // Normalize tier + update label
+  const tierKey = (event.tier || '').toUpperCase();
+  if (recTierLabel) {
+    recTierLabel.textContent = tierKey;
+  }
+
+  // If you want tier-specific marketing copy in this section,
+  // make sure you have <p id="recTierCopy"> in your HTML and then:
+  if (recTierCopy) {
+    recTierCopy.textContent = TIER_COPY[tierKey] || '';
+  }
+
+  // Use the existing, correct renderer that matches RECS
+  renderRecs(tierKey);
+}
+
 
   /**
    * Handle the email submission. This sends a verification email to the user.
