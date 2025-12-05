@@ -29,15 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  let playerPackList = document.createElement('ul');
+  playerPackList.innerText = "Player packs";
+
+  let discList = document.createElement('ul');
+  discList.innerHTML = "Disks"
+
+  let eventSuppliesList = document.createElement('ul');
+  eventSuppliesList.innerText = "Event Supplies";
+
+  let extrasList = document.createElement('ul');
+  extrasList.innerText = "Extras";
+
   for (const item in items) {
-    let playerPackList = document.createElement('ul');
-    playerPackList.innerText = "Player packs";
-    let discList = document.createElement('ul');
-    let customMerchListl = document.createElement('ul');
-    let eventSuppliesList = document.createElement('ul');
-    eventSuppliesList.innerText = "Event Supplies";
-    let extrasList = document.createElement('ul');
-    extrasList.innerText = "Extras";
 
     fetch('./catalog.json')
     .then(response => response.json())
@@ -54,18 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
           qtyInput.min = '1';
       
           const bullet = document.createElement('li');
-          bullet.append(`item: ${item} \u2014 Qty: `);
+          bullet.append(`${item} \u2014 Qty: `);
           bullet.appendChild(qtyInput);
           listItem.appendChild(bullet);
-          if(data[i].category == "player-pack") {
+          if(data[i].paymentCategory == "player-pack") {
             playerPackList.appendChild(listItem);
-            listOutput.appendChild(playerPackList);
-          } else if(data[i].category == "ourse-setup" || data[i].category == "safety") {
+          } else if(data[i].paymentCategory == "event-supplies") {
             eventSuppliesList.appendChild(listItem);
-            listOutput.appendChild(eventSuppliesList);
+          } else if (data[i].category == "custom-merch") {
+            customMerchList.appendChild(listItem);
           } else {
-            extrasList.appendChild(listItem);
-            listOutput.appendChild(extrasList);
+            discList.appendChild(listItem);
           } 
 
       
@@ -74,13 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
     .catch(error => console.log(error));
-    /*
-    listOutput.appendChild(playerPackList);
-    listOutput.appendChild(eventSuppliesList);
-    listOutput.appendChild(extrasList);
-    */
-  
+    
+    
   }
+  listOutput.appendChild(playerPackList);
+  listOutput.appendChild(eventSuppliesList);
+  listOutput.appendChild(extrasList);
+  listOutput.appendChild(discList);
+  
 
   /* plugged in the checkout rendering calculation into a function 
   called calculateTotalsFromSavedDate() */
