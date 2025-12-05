@@ -494,38 +494,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showRecommendationsForEvent(event) {
-  // Hide the dashboard event list
-  if (eventSelectSection) {
-    eventSelectSection.style.display = 'none';
+    if (eventSelectSection) {
+      eventSelectSection.style.display = 'none';
+    }
+    if (recSection) {
+      recSection.style.display = 'block';
+    }
+
+    if (recEventName) {
+      recEventName.textContent = event.eventName || event.name || '';
+    }
+
+    const tierKey = (event.tier || '').toUpperCase();
+
+    if (recTierLabel) {
+      recTierLabel.textContent = tierKey;
+    }
+    if (recTierCopy) {
+      recTierCopy.textContent = TIER_COPY[tierKey] || '';
+    }
+
+    renderRecs(tierKey);
   }
-
-  // Show the recommendations section
-  if (recSection) {
-    recSection.style.display = 'block';
-  }
-
-  // Update the heading text
-  if (recEventName) {
-    // eventName is what you set on the button; fall back to event.name just in case
-    recEventName.textContent = event.eventName || event.name || '';
-  }
-
-  // Normalize tier + update label
-  const tierKey = (event.tier || '').toUpperCase();
-  if (recTierLabel) {
-    recTierLabel.textContent = tierKey;
-  }
-
-  // If you want tier-specific marketing copy in this section,
-  // make sure you have <p id="recTierCopy"> in your HTML and then:
-  if (recTierCopy) {
-    recTierCopy.textContent = TIER_COPY[tierKey] || '';
-  }
-
-  // Use the existing, correct renderer that matches RECS
-  renderRecs(tierKey);
-}
-
 
   /**
    * Handle the email submission. This sends a verification email to the user.
