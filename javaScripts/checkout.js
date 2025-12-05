@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ----- Update order summary under payment section -----
   // add prices to show up in the chart
-  
+  // 
   function updateorderSummary() {
     const totals = calculateTotalsFromSavedData();
 
