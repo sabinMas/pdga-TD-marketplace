@@ -55,12 +55,14 @@ section {
   margin: 0 auto;
 }
 
-
 .hero {
   color: #F3F5F7;
   border-bottom: none;
   padding: 125px 0px 150px;
+  overflow: hidden;
+  position: relative;
 }
+
 .hero .container {
   display: grid;
   grid-template-rows: 1fr;
@@ -251,3 +253,27 @@ transition: all 0.2s;
   background-color: #003F7D;
   height: 5px;
 }
+
+/* text focus animation */
+.text-focus-in-normal { 
+  opacity: 0;
+  filter: blur(12px);
+  will-change: opacity, filter, transform;
+  animation-name: text-focus-in;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+@keyframes text-focus-in {
+  0% { 
+    filter: blur(12px); 
+    opacity: 0; 
+  } 
+  100% { 
+    filter: blur(0px); 
+    opacity: 1;
+  } 
+}
+
