@@ -280,6 +280,7 @@ html {
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
 }
+
 #planning li {
   margin: 0;
   padding: 0;
@@ -490,4 +491,19 @@ body.logged-in #guestInfo {
 
 .site-header .search{
   padding-left: 30px;
+}
+
+.cart-logo {
+  width: 25px;
+  margin-left: -30px;
+}
+
+#cartCount {
+  font-size: 20px;
+}
+
+.cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
