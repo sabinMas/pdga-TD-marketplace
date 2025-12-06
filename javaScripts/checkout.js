@@ -16,6 +16,76 @@ function scrollRightBtn() {
 
 // ===== Checkout rendering =====
 document.addEventListener('DOMContentLoaded', () => {
+  const listOutput = document.getElementById('cart');
+  if (!listOutput) return;
+
+  // We store the user's list in sessionStorage under 'localList'.  It maps
+  // product names to their quantities.
+  const saved = sessionStorage.getItem('localList');
+  const items = saved ? JSON.parse(saved) : null;
+
+  if (!items || typeof items !== 'object' || !Object.keys(items).length) {
+    listOutput.innerHTML = '<p>No items in your list yet.</p>';
+    return;
+  }
+
+  let playerPackList = document.createElement('ul');
+  playerPackList.innerText = "Player packs";
+
+  let discList = document.createElement('ul');
+  discList.innerHTML = "Disks"
+
+  let eventSuppliesList = document.createElement('ul');
+  eventSuppliesList.innerText = "Event Supplies";
+
+  let extrasList = document.createElement('ul');
+  extrasList.innerText = "Extras";
+
+  for (const item in items) {
+
+    fetch('./catalog.json')
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length;i++) {
+        if(data[i].name == item) {
+      
+          const listItem = document.createElement('div');
+          listItem.classList.add('item-details');
+      
+          const qtyInput = document.createElement('input');
+          qtyInput.type = 'number';
+          qtyInput.value = items[item];
+          qtyInput.min = '1';
+      
+          const bullet = document.createElement('li');
+          bullet.append(`${item} \u2014 Qty: `);
+          bullet.appendChild(qtyInput);
+          listItem.appendChild(bullet);
+          if(data[i].paymentCategory == "player-pack") {
+            playerPackList.appendChild(listItem);
+          } else if(data[i].paymentCategory == "event-supplies") {
+            eventSuppliesList.appendChild(listItem);
+          } else if (data[i].category == "custom-merch") {
+            customMerchList.appendChild(listItem);
+          } else {
+            discList.appendChild(listItem);
+          } 
+
+      
+
+        }
+      }
+    })
+    .catch(error => console.log(error));
+    
+    
+  }
+  listOutput.appendChild(playerPackList);
+  listOutput.appendChild(eventSuppliesList);
+  listOutput.appendChild(extrasList);
+  listOutput.appendChild(discList);
+  
+
   /* plugged in the checkout rendering calculation into a function 
   called calculateTotalsFromSavedDate() */
   function calculateTotalsFromSavedData() {
@@ -147,8 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----- Update order summary under payment section -----
-  // try to implement ids from checkoutpage.html and loop it with this function
-
+  // add prices to show up in the chart
+  // 
   function updateorderSummary() {
     const totals = calculateTotalsFromSavedData();
 
@@ -168,17 +238,23 @@ document.addEventListener('DOMContentLoaded', () => {
       {id : 'totalLine', text: `Total $${grandTotal.toFixed(2)}`},  
     ];
     // Logic to find prodcuts in the summaryLine Array and preform action.
-    for (let i =0; i < summaryLines.length; i++) {
+    for (let i = 0; i < summaryLines.length; i++) {
       const line = summaryLines[i];
       const element = document.getElementById(line.id);
       if(element) {
         element.textContent = line.text;
       }
     }
+    
+    // disables the buy button if chart is emtpy.
+    const buyButton = document.getElementById('buy-button');
+    if (buyButton) {
+      buyButton.disabled = totalItemsCount === 0;
+    }
   }
+  /*
 
-
- /* const playerPackLine = document.getElementById('playerPackLine');
+  const playerPackLine = document.getElementById('playerPackLine');
   const discLine = document.getElementById('discLine');
   const customMerchLine = document.getElementById('customMerchLine');
   const eventSuppliesLine = document.getElementById('eventSuppliesLine');
@@ -203,4 +279,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (totalLine) {
     totalLine.textContent = `Total  $${grandTotal.toFixed(2)}`;
   }
-}); */
+  */
+}); 
