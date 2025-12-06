@@ -83,7 +83,7 @@ section {
 
 .hero .btn {
   color: #fff;
-  background-color: #003F7D;
+  background: var(--accentGradient);
 }
 .hero h1 {
   margin: 0 0 10px;
@@ -124,7 +124,7 @@ transition: all 0.2s;
  transform: translateY(-5px);
  box-shadow: 0 2px 0 -2px #0052A3,
   0 8px 0 -4px #0066CC,
-  0 12px 10px -3px #007AF5;
+  0 12px 10px -3px #016f52;
 }
 
 /*how it works sections */
