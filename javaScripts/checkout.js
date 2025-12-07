@@ -122,16 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
             infoText.appendChild(qtyInput);
             listItem.appendChild(infoText);
 
-            /* //split the items into their category 
-          if(data[i].paymentCategory == "player-pack") {
-            playerPackList.appendChild(listItem);
-          } else if(data[i].paymentCategory == "event-supplies") {
-            eventSuppliesList.appendChild(listItem);
-          } else if (data[i].category == "custom-merch") {
-            customMerchList.appendChild(listItem);
-          } else {
-            discList.appendChild(listItem);
-          } */
             // Function to add items to their category list
             addToCategory(listItem, data[i].paymentCategory);
           }
@@ -152,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cartItem = document.createElement('div');
   cartItem.classList.add('cart-item');
-  /*
+  
     // start image creation
   const img = document.createElement('img');
   img.classList.add('item-image');
