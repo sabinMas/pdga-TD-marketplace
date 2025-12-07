@@ -494,6 +494,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showRecommendationsForEvent(event) {
+    if (!event) return;
+
+    // Hide event table, show recommendations section
     if (eventSelectSection) {
       eventSelectSection.style.display = 'none';
     }
@@ -501,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
       recSection.style.display = 'block';
     }
 
+    // Update text for the selected event
     if (recEventName) {
       recEventName.textContent = event.eventName || event.name || '';
     }
@@ -514,7 +518,16 @@ document.addEventListener('DOMContentLoaded', () => {
       recTierCopy.textContent = TIER_COPY[tierKey] || '';
     }
 
+    // Render tier-based recommendations
     renderRecs(tierKey);
+    try {
+      const serialized = JSON.stringify(event);
+      setCookie('pdga_event', serialized, 1); // 1-day cookie
+      localStorage.setItem('pdga_event', serialized);
+    } catch (e) {
+      console.error('Failed to persist pdga_event session:', e);
+    }
+    updateHeaderForLogin(event);
   }
 
   /**

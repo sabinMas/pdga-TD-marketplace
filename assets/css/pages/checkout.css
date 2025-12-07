@@ -5,7 +5,7 @@
 /* Small utility tweaks kept intentionally minimal */
 
 /* Checkout page css  */
-#checkoutHeader h1{
+#checkoutHeader h1 {
   padding-left: 6%;
   color: #353941;
 }
@@ -16,18 +16,22 @@
   background-color: #353941;
 }
 
-/* class to display both cart and payment sidebar */
+/* === FIXED LAYOUT: Cart + Payment sidebar grid === */
 .wrap-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;  /* LEFT COLUMN | RIGHT COLUMN */
+  align-items: flex-start;
+  gap: 40px;
+
   background-color: #EEEEEE;
   border-radius: 20px;
-  display: flex;
-  align-items: flex-start;
-  grid-template-columns: 1300px 400px;
-  padding-bottom: 50px;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* cart will contain items pushed from list */
-#cart{
+#cart {
   flex: 1;
   padding-left: 10%;
 }
@@ -40,7 +44,7 @@
   margin-left: 0%;
 }
 
-#cart h2{
+#cart h2 {
   padding-left: 2%;
   font-size: 30px;
   padding-top: 1%;
@@ -52,79 +56,106 @@
 }
 
 /*Cart in items styling */
-.items-in-cart{
+.items-in-cart {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-right:5%;
+  padding-right: 5%;
   margin-top: 15px;
 }
 
-.cart-item{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: whitesmoke;
-  border: solid 1px black;
-  border-radius: 2px;
-  width: 100%;
-  padding: 12px 20px;
-  box-shadow: 0 2px 4px gray;
+/* Collapsed category items */
+.cart-items.collapsed {
+  display: none;
 }
 
-/*images of the item in cart */
-.item-image{
-  /* Restrict cart item images to a consistent width while maintaining aspect ratio. */
-  max-width: 80px;
+/* === Cart item layout (image + text + price) === */
+.cart-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 8px 12px;
+}
+
+/* Cart item image only inside cart */
+#cart .item-image,
+.items-in-cart .item-image {
+  max-width: 100px;
+  max-height: 100px;
+  width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 5px;
-  margin-right: 20px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 20px 0 0;
 }
 
-/*name of item next to image */
+.cart-item .item-image {
+  grid-row: 1 / span 2; /* Image takes full height */
+  grid-column: 1 / 2;
+}
+
 .cart-item-info {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.cart-item-name{
-  font-weight: bold;
-  font-size: 18px;
-  color: #353941;
+.cart-item-text {
+  grid-column: 2 / 3;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 25px;
 }
 
-.cart-item-details {
-  font-size: 14px;
-  color: #353941;
-  margin-top: 4px;
+.cart-item-text input {
+  width: 55px;
+  padding: 4px;
+  font-size: 1rem;
 }
 
-.cart-item-quantity, .cart-item-price {
-  font-size: 17px;
-  color: #353941;
-  font-weight: bold;
+.cart-item-quantity input {
+  width: 55px;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.cart-item-price {
+  grid-column: 3 / 4;
   text-align: right;
-  min-width: 85px;
+  font-weight: bold;
 }
 
-/* Sidebar with payment option and total amount */
+/* === FIXED payment sidebar alignment === */
 .payment-sidebar {
   background-color: whitesmoke;
   border: solid 1px #353941;
   border-radius: 2px;
-  margin: 90px 100px 0 0;
   box-shadow: 0 5px 15px 2px rgb(165, 165, 165);
   color: #353941;
+
   position: sticky;
-  width: 400px;
-  align-self: flex-start;
+  top: 20px;
+  margin: 0;
+  
+  width: 100%;
+  max-width: 420px;
 }
 
-.payment-sidebar h2{
+.payment-sidebar h2 {
   text-align: center;
 }
 
-.payment-sidebar h3, .payment-sidebar p {
+.payment-sidebar h3, 
+.payment-sidebar p {
   padding-left: 15px;
 }
 
@@ -137,7 +168,7 @@
 }
 
 /*4 payment buttons, just link to images website for now */
-.four-payments{
+.four-payments {
   grid-template-columns: 50px 50px;
   padding-left: 7%;
 }
@@ -202,7 +233,10 @@
   box-shadow: 0 2px 4px grey;
 }
 
-#paypal:active, #shop-pay:active, #amazon-pay:active, #apple-pay:active{
+#paypal:active, 
+#shop-pay:active, 
+#amazon-pay:active, 
+#apple-pay:active {
   transform: translateY(2px);
 }
 
@@ -215,11 +249,12 @@
   box-shadow: 0 4px 10px 2px rgb(78, 78, 78);
   border: 1px solid rgb(92, 92, 92);
 }
+
 .card-payment-logos {
   transition: all 0.2s ease-in-out;
 }
 
-.card-payment-logos:hover{
+.card-payment-logos:hover {
   transform: scale(1.05);
 }
 
@@ -234,7 +269,7 @@
   align-content: center;
 }
 
-#buy-button{
+#buy-button {
   background-color: #DEDEDE;
   border-radius: 50px;
   border: 1px solid black;
@@ -244,11 +279,11 @@
   transition: all 0.2s ease-in-out;
 }
 
-#buy-button:hover{
+#buy-button:hover {
   transform: scale(1.05);
 }
 
-#buy-button:active{
+#buy-button:active {
   transform: translateY(2px);
 }
 
@@ -276,33 +311,35 @@
   max-width: 45%;
 }
 
-.recommended-items::-webkit-scrollbar{
+.recommended-items::-webkit-scrollbar {
   display: none;
 }
 
-.item {
+/* Recommended item tiles */
+.recommended-items .item {
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-width: 180px;        /* smaller tile */
+  min-width: 180px;
+  height: auto;
   background-color: #dedede;
   border-radius: 10px;
   flex-shrink: 0;
   padding: 10px;
 }
 
-.item:hover {
+.recommended-items .item:hover {
   border: 1px solid #003f7d;
 }
 
-.item img {
-  /* keep images small but responsive */
+.recommended-items .item img {
   max-width: 70px;
   max-height: 70px;
-  height: auto;
   width: auto;
+  height: auto;
   object-fit: contain;
-  margin-bottom: 8px;
+  display: block;
+  margin: 8px auto;
 }
 
 .item-info {
@@ -314,7 +351,6 @@
   margin-bottom: 4px;
   font-size: 0.9rem;
 }
-
 
 /* button to add recommended items to cart */
 .add-to-cart {
@@ -332,12 +368,13 @@
   transform: scale(1.05);
 }
 
-.add-to-cart:active{
+.add-to-cart:active {
   transform: translateY(2px) scale(0.98);
 }
 
 /* left & right nav arrows */
-.left-arrow, .right-arrow {
+.left-arrow, 
+.right-arrow {
   background-color: #DEDEDE;
   border: gray 1px solid;
   cursor: pointer;
@@ -348,7 +385,8 @@
   transition: background-color 0.3s;
 }
 
-.left-arrow:hover, .right-arrow:hover {
+.left-arrow:hover, 
+.right-arrow:hover {
   background-color: #003F7D;
 }
 
@@ -360,39 +398,49 @@
   margin-left: 15px;
 }
 
-/* === CART IMAGE FIX (matches <img class="item-image">) === */
-#cart .item-image,
-.items-in-cart .item-image {
-  max-width: 100px;
-  max-height: 100px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-  display: block;
-  margin: 0 20px 0 0;  /* keeps spacing before item text */
+/* === Cart category as a card === */
+.cart-category {
+  background: #ffffff;
+  border: 1px solid #d3d7dd;
+  border-radius: 12px;
+  margin: 16px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  overflow: hidden;              /* keeps header + items in one clean box */
 }
 
-/* === RECOMMENDED IMAGE FIX (matches your typos intentionally) === */
-/* container:  <div class="reccomendation-container"> ... */
-/* rail:       <div class="reccomended-items" id="items"> ... */
- .recommendation-container .recommended-items .item img {
-  max-width: 70px;
-  max-height: 70px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  margin: 8px auto;
-} 
-
-/*keep the tiles tidy*/
-.recommended-items .item {
-  min-width: 180px;
-  height: auto;
+/* Header row inside the card */
+.cart-category-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px;
-}  
+  padding: 12px 16px;
+  background: #e8edf3;           /* soft tinted header bg */
+  cursor: pointer;
+}
 
+.cart-category-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #353941;
+}
+
+.category-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.category-summary span {
+  white-space: nowrap;
+}
+
+/* little arrow button */
+.toggle-category {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
