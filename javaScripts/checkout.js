@@ -62,12 +62,30 @@ document.addEventListener('DOMContentLoaded', () => {
           const itemInfo = document.createElement('div');
           itemInfo.classList.add('cart-item-info');
           const qtyInput = document.createElement('input');
+          qtyInput.classList.add('cart-item-quantity');
+
           //add unit price right after input box
           
           qtyInput.type = 'number';
           qtyInput.value = item[1].quantity;
           qtyInput.min = '1';
           
+          var pricing = document.createElement('div')
+          var unitPrice = document.createElement('div')
+          unitPrice.textContent = ('$' + data[i].price);
+          unitPrice.classList.add('cart-item-price');
+
+
+          var itemTotal = document.createElement('div');
+          itemTotal.textContent = ('$' + Math.round(
+            100 * (data[i].price * item[1].quantity) / 100)
+          ); //to 2 decimal places
+          itemTotal.classList.add('cart-item-price');
+
+          pricing.appendChild(unitPrice);
+          pricing.appendChild(itemTotal);
+
+
           //total for this item at the end
 
               // start image creation
@@ -82,9 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
           listItem.appendChild(img);
             // end image creation
           
-          const bullet = document.createElement('li');
-          bullet.append(`${itemName} \u2014 Qty: `);
+          const bullet = document.createElement('div');
+          bullet.classList.add('cart-item-details');
+
+          bullet.textContent = (`${itemName} \u2014 Qty: `);
           bullet.appendChild(qtyInput);
+          bullet.appendChild(pricing);
           listItem.appendChild(bullet);
           
           //split the items into their category 
@@ -113,12 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
   //end of rendering items onto checkout
     
   // --- build DOM card ---
+  /*
   const itemInCart = document.createElement('div');
   itemInCart.classList.add('items-in-cart');
 
   const cartItem = document.createElement('div');
   cartItem.classList.add('cart-item');
-  /*
+  
     // start image creation
   const img = document.createElement('img');
   img.classList.add('item-image');
@@ -130,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   img.alt = name;
   cartItem.appendChild(img);
     // end image creation
-  */
+  
   const itemInfo = document.createElement('div');
   itemInfo.classList.add('cart-item-info');
 
@@ -171,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   itemInCart.appendChild(cartItem);
   output.appendChild(itemInCart);
-  
+  */
 
   calculateTotalsFromSavedData(saved);
   //updateorderSummary();
