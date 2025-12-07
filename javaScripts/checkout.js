@@ -77,6 +77,30 @@ document.addEventListener('DOMContentLoaded', () => {
             qtyInput.type = 'number';
             qtyInput.value = item[1].quantity;
             qtyInput.min = '1';
+            
+            // added event listener for product qty input
+            qtyInput.addEventListener('input', function() {
+              // safe checks for nulls or less than 1 values.
+              let newQty = parseInt(qtyInput.value);
+              if(isNaN(newQty) || newQty < 1) {
+                newQty = 1;
+                qtyInput.value = newQty
+              }
+
+              const savedKey = 'localList';
+              // converts JSON string into useable data and stored in items
+              let items = JSON.parse(sessionStorage.getItem(savedKey));
+              const currentItemName = item[0];
+
+              if (items && items [currentItemName]) {
+                items[currentItemName].quantity = newQty;
+              }
+              const updatedSaved = JSON.stringify(items);
+              sessionStorage.setItem(savedKey, updatedSaved);
+
+              calculateTotalsFromSavedData(updatedSaved);
+            });
+              
 
             //total for this item at the end
 
@@ -262,12 +286,14 @@ function calculateTotalsFromSavedData(saved) {
     const quantityVal = Number(data.quantity ?? data.qty ?? 0);
     const unitPrice = Number(data.unitPrice ?? data.price ?? 0);
 
-    const lineTotal =
+    const lineTotal = quantityVal * unitPrice;
+
+   /* const lineTotal =
       data.totalPrice != null
         ? Number(data.totalPrice)
         : data.total != null
         ? Number(data.total)
-        : quantityVal * unitPrice;
+        : quantityVal * unitPrice; */
 
     const paymentCategory = data.paymentCategory || 'event-supplies';
 
