@@ -151,6 +151,18 @@
   display: flex;
   gap: 10px;
 }
+/* footer area under recommendations */
+.rec-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rec-footer .btn {
+  min-width: 190px;
+  text-align: center;
+}
+
 
 /* Errors */
 .error {
