@@ -27,14 +27,70 @@
       </div>
 
       <div class="wrap-content">
+        <!-- LEFT: CART -->
         <div id="cart">
-          <h2>Cart</h2>
-          <hr />
+          <div class="cart-header-row">
+            <h2>Cart</h2>
+            <a href="list.html" class="view-list-link">View list</a>
+          </div>
 
-          <a href="list.html">view list</a>
+          <section class="cart-category" data-cat="playerpacks">
+            <div class="cart-category-header">
+              <h3>Player Packs</h3>
+
+              <div class="category-summary">
+                <span id="count-playerpacks">0 items</span>
+                <span id="total-playerpacks">$0.00</span>
+                <button class="toggle-category">▼</button>
+              </div>
+            </div>
+
+            <div class="cart-items" id="cat-playerpacks"></div>
+          </section>
+
+          <section class="cart-category" data-cat="eventsupplies">
+            <div class="cart-category-header">
+              <h3>Event Supplies</h3>
+
+              <div class="category-summary">
+                <span id="count-eventsupplies">0 items</span>
+                <span id="total-eventsupplies">$0.00</span>
+                <button class="toggle-category">▼</button>
+              </div>
+            </div>
+
+            <div class="cart-items" id="cat-eventsupplies"></div>
+          </section>
+
+          <section class="cart-category" data-cat="customitems">
+            <div class="cart-category-header">
+              <h3>Custom Items</h3>
+
+              <div class="category-summary">
+                <span id="count-customitems">0 items</span>
+                <span id="total-customitems">$0.00</span>
+                <button class="toggle-category">▼</button>
+              </div>
+            </div>
+
+            <div class="cart-items" id="cat-customitems"></div>
+          </section>
+          <section class="cart-category" data-cat="customdiscs">
+            <div class="cart-category-header">
+              <h3>Custom Discs</h3>
+
+              <div class="category-summary">
+                <span id="count-customdiscs">0 items</span>
+                <span id="total-customdiscs">$0.00</span>
+                <button class="toggle-category">▼</button>
+              </div>
+            </div>
+
+            <div class="cart-items" id="cat-customdiscs"></div>
+          </section>
         </div>
-        
 
+        <!-- RIGHT: PAYMENT SIDEBAR -->
         <aside class="payment-sidebar">
           <h2>Choose your payment</h2>
 
@@ -77,25 +133,24 @@
               alt="Visa, master card, discover, american express logos"
             />
           </div>
-          <!-- use the class "total-pay" and 
-           implement it to checkout.js to divide the checkout page into 4 sections-->
+
           <div class="total-pay">
-          <h3>Order Summary</h3>
-          <hr />
-          <p id="playerPackLine">Player Packs $0.00</p>
-          <p id="discLine">Discs $0.00</p>
-          <p id="customMerchLine">Custom Merchandise $0.00</p>
-          <p id="eventSuppliesLine">Event Supplies $0.00</p>
-          <p id="subtotalLine">Subtotal $0.00 (0 items)</p>
-          <p>Shipping $0.00</p>
-          <p>Estimated Taxes $0.00</p>
-          <p><b id="totalLine">Total $0.00</b></p>
-          <div class="button">
-            <button type="button" disabled id="buy-button">Checkout</button>
+            <h3>Order Summary</h3>
+            <hr />
+            <p id="playerPackLine">Player Packs $0.00</p>
+            <p id="discLine">Discs $0.00</p>
+            <p id="customMerchLine">Custom Merchandise $0.00</p>
+            <p id="eventSuppliesLine">Event Supplies $0.00</p>
+            <p id="subtotalLine">Subtotal $0.00 (0 items)</p>
+            <p>Shipping $0.00</p>
+            <p>Estimated Taxes $0.00</p>
+            <p><b id="totalLine">Total $0.00</b></p>
+            <div class="button">
+              <button type="button" disabled id="buy-button">Checkout</button>
+            </div>
           </div>
-        </div>
-
-
+        </aside>
+      </div>
       <div class="recommend-header">
         <h2>Recommended Supplies</h2>
         <hr />
