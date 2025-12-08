@@ -150,10 +150,11 @@ footer a:hover {
 }
 
 .tournament-page-layout h2 {
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto;
   color: var(--text);
-  border-bottom: 2px solid var(--border);
+  border-bottom: 5px solid var(--secondColor);
   padding-bottom: 0.25rem;
+  width: 65%;
 }
 /* shared grid for all product sections */
 .product-grid {

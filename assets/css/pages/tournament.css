@@ -271,31 +271,50 @@ html {
   top: 64px; /* below header */
   z-index: 40;
   list-style: none;
-  margin: 0;
-  padding: 12px 0;
+  margin: 0 auto;
+  padding: 15px 0;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: var(--accentGradient);
   overflow-x: auto;
+  gap: 25px;
 }
 
 #planning li {
   margin: 0;
-  padding: 0;
 }
+
 #planning a {
   text-decoration: none;
   font-weight: 600;
-  color: var(--thirdColor);
+  color: var(--bg);
   padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+  
 }
 #planning a:hover {
-  background: var(--lightgrey);
-  color: var(--mainColor);
+  background: var(--secondColor);
+  color: var(--bg);
+  transform: translateY(-7px);
+  box-shadow: 0 7px 0 -2px #0052A3,
+  0 15px 0 -4px #0066CC,
+  0 16px 10px -3px #007AF5;
+}
+
+#planning a:active {
+  transition: all 0.2s;
+  transform: translateY(-5px);
+  box-shadow: 0 2px 0 -2px #0052A3,
+  0 8px 0 -4px #0066CC,
+  0 12px 10px -3px #016f52;
+}
+
+#planning li a {
+  display: block;
+  color: var(--bg);
+  text-align: center;
+  text-decoration: none;
 }
 
 .icon img {
@@ -451,12 +470,11 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(to right, #016f52, #003F7D, #005baa);
-  padding: 10px;
+  background: var(--secondColor);
   margin: 10px 0;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
   position: sticky;
-  top: 113px;
+  top: 133px;
   z-index: 100;
 }
 
@@ -506,4 +524,9 @@ body.logged-in #guestInfo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+
+.search {
+  
 }

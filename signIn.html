@@ -27,111 +27,120 @@
       </div>
     </header>
 
-    <main class="container">
-      <!-- SIGN-IN STEP -->
-      <section id="authSection" class="auth-wrap">
-        <h2 style="margin-top: 0">Sign in</h2>
-        <p class="muted small">
-          Enter your email address to receive a verification link. After verifying, you can access
-          your Tournament Director dashboard and event-specific recommendations.
-        </p>
+    <main class="sign-in-bg">
+      <div class='ripple-background'>
+          <div class='circle xxlarge shade1'></div>
+          <div class='circle xlarge shade2'></div>
+          <div class='circle large shade3'></div>
+          <div class='circle medium shade4'></div>
+          <div class='circle small2 shade5'></div>
+      </div>
+      <div class="container">
+        <!-- SIGN-IN STEP -->
+        <section id="authSection" class="auth-wrap">
+          <h2 style="margin-top: 0">Sign in</h2>
+          <p class="muted small">
+            Enter your email address to receive a verification link. After verifying, you can access
+            your Tournament Director dashboard and event-specific recommendations.
+          </p>
 
-        <form id="loginForm" style="margin-top: 16px">
-          <div class="field">
-            <label for="email"><b>Email</b></label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <button class="btn" type="submit">Send Verification Link</button>
+          <form id="loginForm" style="margin-top: 16px">
+            <div class="field">
+              <label for="email"><b>Email</b></label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <button class="btn" type="submit">Send Verification Link</button>
 
-          <div id="message" class="muted small" role="alert" style="display: none"></div>
-          <div id="error" class="error" role="alert" style="display: none"></div>
-        </form>
-      </section>
-
-      <!-- DASHBOARD (shown after login + token validated) -->
-      <section id="eventSelectSection" class="td-dashboard" style="display: none">
-        <div class="td-dashboard-header">
-          <h1>Tournament Director Dashboard</h1>
-          <a href="tournamentItems.html" class="btn">Continue Shopping</a>
-        </div>
-
-        <!-- ACCOUNT CONTEXT -->
-        <div class="td-dashboard-meta muted small">
-          <div>
-            <strong>Active account:</strong>
-            <span id="displayName"></span>
-          </div>
-          <div>
-            <span class="pill">Tier <span id="tierLabel"></span></span>
-          </div>
-          <p id="tierCopy" class="muted small" style="margin-top: 6px"></p>
-        </div>
-
-        <!-- UPCOMING EVENTS -->
-        <section class="dashboard-section">
-          <h2>Upcoming Events</h2>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Event Name</th>
-                <th>Tier</th>
-                <th>Date</th>
-                <th>Event ID</th>
-                <th>Location</th>
-                <th class="text-right">Order for</th>
-              </tr>
-            </thead>
-            <tbody id="eventGrid"></tbody>
-          </table>
+            <div id="message" class="muted small" role="alert" style="display: none"></div>
+            <div id="error" class="error" role="alert" style="display: none"></div>
+          </form>
         </section>
 
-        <!-- PREVIOUS PURCHASES -->
-        <section class="dashboard-section" id="purchaseHistorySection">
-          <h2>Previous Purchases</h2>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Event Name</th>
-                <th>Date of Purchase</th>
-                <th>Cost</th>
-                <th class="text-right">Re-order</th>
-              </tr>
-            </thead>
-            <tbody id="previousPurchasesBody"></tbody>
-          </table>
+        <!-- DASHBOARD (shown after login + token validated) -->
+        <section id="eventSelectSection" class="td-dashboard" style="display: none">
+          <div class="td-dashboard-header">
+            <h1>Tournament Director Dashboard</h1>
+            <a href="tournamentItems.html" class="btn">Continue Shopping</a>
+          </div>
+
+          <!-- ACCOUNT CONTEXT -->
+          <div class="td-dashboard-meta muted small">
+            <div>
+              <strong>Active account:</strong>
+              <span id="displayName"></span>
+            </div>
+            <div>
+              <span class="pill">Tier <span id="tierLabel"></span></span>
+            </div>
+            <p id="tierCopy" class="muted small" style="margin-top: 6px"></p>
+          </div>
+
+          <!-- UPCOMING EVENTS -->
+          <section class="dashboard-section">
+            <h2>Upcoming Events</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Tier</th>
+                  <th>Date</th>
+                  <th>Event ID</th>
+                  <th>Location</th>
+                  <th class="text-right">Order for</th>
+                </tr>
+              </thead>
+              <tbody id="eventGrid"></tbody>
+            </table>
+          </section>
+
+          <!-- PREVIOUS PURCHASES -->
+          <section class="dashboard-section" id="purchaseHistorySection">
+            <h2>Previous Purchases</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Date of Purchase</th>
+                  <th>Cost</th>
+                  <th class="text-right">Re-order</th>
+                </tr>
+              </thead>
+              <tbody id="previousPurchasesBody"></tbody>
+            </table>
+          </section>
+
+          <!-- FAVORITES -->
+          <section class="dashboard-section" id="favoriteItemsSection">
+            <h2>Favorite Items</h2>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Cost</th>
+                  <th class="text-right">Re-order</th>
+                </tr>
+              </thead>
+              <tbody id="favoriteItemsBody"></tbody>
+            </table>
+          </section>
         </section>
 
-        <!-- FAVORITES -->
-        <section class="dashboard-section" id="favoriteItemsSection">
-          <h2>Favorite Items</h2>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Cost</th>
-                <th class="text-right">Re-order</th>
-              </tr>
-            </thead>
-            <tbody id="favoriteItemsBody"></tbody>
-          </table>
+        <!-- RECOMMENDATIONS (now OUTSIDE dashboard container) -->
+        <section id="recSection" style="display: none; margin-top: 32px">
+          <button id="backToEventsBtn" class="btn" style="margin-bottom: 16px">
+            ← Back to Events
+          </button>
+
+          <h2>Recommended Items for <span id="recEventName"></span></h2>
+          <p class="muted">Recommendations based on tier <span id="recTierLabel"></span>.</p>
+
+          <div id="recGrid" class="recommend-grid"></div>
+          <div class="rec-footer">
+            <a href="tournamentItems.html" class="btn btn-box">Continue Ordering</a>
+          </div>
         </section>
-      </section>
-
-      <!-- RECOMMENDATIONS (now OUTSIDE dashboard container) -->
-      <section id="recSection" style="display: none; margin-top: 32px">
-        <button id="backToEventsBtn" class="btn" style="margin-bottom: 16px">
-          ← Back to Events
-        </button>
-
-        <h2>Recommended Items for <span id="recEventName"></span></h2>
-        <p class="muted">Recommendations based on tier <span id="recTierLabel"></span>.</p>
-
-        <div id="recGrid" class="recommend-grid"></div>
-        <div class="rec-footer">
-          <a href="tournamentItems.html" class="btn btn-box">Continue Ordering</a>
-        </div>
-      </section>
+      </div>
     </main>
 
     <script defer src="javaScripts/signIn.js"></script>
