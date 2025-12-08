@@ -178,16 +178,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // For each item, render the quantity input and radio options
   for (const item in items) {
+    console.log();
     const listItem = document.createElement('div');
     listItem.classList.add('item-details');
 
-    const qtyInput = document.createElement('input');
+    const qtyInput = document.createElement('div');
     qtyInput.type = 'number';
-    qtyInput.value = items[item];
-    qtyInput.min = '1';
+    qtyInput.innerHTML = `${items[item].quantity} ea`
 
     const p = document.createElement('p');
-    p.append(`item: ${item} \u2014 Qty: `);
+    p.textContent = (`item: ${item}`);
     p.appendChild(qtyInput);
     listItem.appendChild(p);
 

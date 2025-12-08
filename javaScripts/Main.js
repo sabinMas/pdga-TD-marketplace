@@ -1,16 +1,15 @@
 // ===== Cart bootstrap =====
 // We support storing each list entry as an object with quantity, unitPrice and category.
 // When first loading the page we attempt to rebuild this structure from sessionStorage.
-// try {
-//  sessionStorage.removeItem('localList');
-// } catch {}
 let list = {};
 try {
   const saved = sessionStorage.getItem('localList');
   if (saved) {
     list = JSON.parse(saved);
   }
-} catch {}
+} catch {console.log("WARNING: items not saving in session storage")}
+
+//Counter for number of items in your cart from tournementItems
 const cartCount = document.getElementById('cartCount');
 function updateCartCountFromList() {
   if (!cartCount) return;
@@ -23,7 +22,8 @@ function updateCartCountFromList() {
   }, 0);
   cartCount.textContent = total;
 }
-updateCartCountFromList();
+
+updateCartCountFromList(); //initializes the cart count
 
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('q');
@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const userInfo = document.getElementById('userInfo');
   const guestInfo = document.getElementById('guestInfo');
 
-  //-- load catalog to map names to IDs
-  // Fetch loop that allows the Catalog to be read in asynchronously
+  //load catalog to map names to IDs
+  //Fetch loop that allows the Catalog to be read in asynchronously
   fetch('catalog.json')
     .then((res) => res.json())
     .then((catalog) => {
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch((err) => {
       console.error('Error loading catalog.json:', err);
     });
+
 
   // --- sign-in UI ---
   if (saved && saved.username) {
@@ -165,7 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.classList.remove('flipped');
       sizeFlipCards();
     });
-  });
+  }); 
+  //---------end of flip and sizing---------
 
   // re-measure after images load
   document.querySelectorAll('.flip-card .product-image img').forEach((img) => {
@@ -188,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return { min: Math.min(nums[0], nums[1]), max: Math.max(nums[0], nums[1]) };
   }
 
-  // Convert colour selects into checkboxes for multi-select
+  // Convert colour selects into checkboxes for multi-select options on flip-cards
   document.querySelectorAll('.flip-back label').forEach((label) => {
     const text = label.textContent || '';
     if (/color:/i.test(text) && label.querySelector('select')) {
@@ -211,7 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
       label.remove();
     }
   });
+  //---------end color multi-select---------
 
+
+  /*
+  //Description: event function to udpate the price of cards based off of the options the 
+  //             user chooses on the flip cards
+  //Input: the target flip card (node)
+  */
   function updateCardPrice(card) {
     if (!card) return;
     const priceEl = card.querySelector('.flip-front .price');
@@ -292,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     display.textContent = `Estimated Price: $${totalPrice.toFixed(2)}`;
   }
+  //---------end of updateCardPrice---------
 
   // Attach change listeners to checkboxes and quantity inputs for each product card
   document.querySelectorAll('article.product-card').forEach((card) => {
@@ -311,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+//---------end of adding event Listeners for checkboxes and qty's---------
 
 
 // fade in javascript
