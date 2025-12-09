@@ -41,19 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bucketId = buckets[paymentCategory] || 'cat-eventsupplies';
     document.getElementById(bucketId).appendChild(listItem);
   }
-  /*
-  let playerPackList = document.createElement('ul');
-  playerPackList.innerText = "Player packs";
 
-  let discList = document.createElement('ul');
-  discList.innerHTML = "Disks"
-
-  let eventSuppliesList = document.createElement('ul');
-  eventSuppliesList.innerText = "Event Supplies";
-
-  let extrasList = document.createElement('ul');
-  extrasList.innerText = "Extras";
-  */
   let itemsAsArray = Object.entries(items);
   console.log('itemsAsArray');
   for (let k = 0; k < itemsAsArray.length; k++) {
@@ -129,105 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch((error) => console.log(error));
   }
-  //listOutput.appendChild(playerPackList);
-  //listOutput.appendChild(eventSuppliesList);
-  //listOutput.appendChild(extrasList);
-  //listOutput.appendChild(discList);
-
-  //end of rendering items onto checkout
-  // Trying Something new above, commenting out below for now. 12/6/2023
-  /* --- build DOM card ---
-  const itemInCart = document.createElement('div');
-  itemInCart.classList.add('items-in-cart');
-
-  const cartItem = document.createElement('div');
-  cartItem.classList.add('cart-item');
-  
-    // start image creation
-  const img = document.createElement('img');
-  img.classList.add('item-image');
-
-  // If you later store image URLs in checkoutList, use them:
-  if (data.imageUrl) {
-    img.src = data.imageUrl;
-  }
-  img.alt = name;
-  cartItem.appendChild(img);
-    // end image creation
-  
-  const itemInfo = document.createElement('div');
-  itemInfo.classList.add('cart-item-info');
-
-  const itemName = document.createElement('p');
-  itemName.classList.add('cart-item-name');
-  itemName.textContent = name;
-  itemInfo.appendChild(itemName);
-
-  const itemDetails = document.createElement('p');
-  itemDetails.classList.add('cart-item-details');
-
-  // Show storefront category + billing bucket
-  const billingLabelMap = {
-    'player-pack': 'Player Packs',
-    disc: 'Discs',
-    'custom-merch': 'Custom Merchandise',
-    'event-supplies': 'Event Supplies',
-  };
-  const billingLabel = billingLabelMap[paymentCategory] || 'Event Supplies';
-  itemDetails.textContent = `${storefrontCategory} — ${billingLabel}`;
-  itemInfo.appendChild(itemDetails);
-
-  cartItem.appendChild(itemInfo);
-
-  const quantity = document.createElement('p');
-  quantity.classList.add('cart-item-quantity');
-  quantity.textContent = `Quantity: ${quantityVal}`;
-  cartItem.appendChild(quantity);
-
-  const price = document.createElement('p');
-  price.classList.add('cart-item-price');
-  if (unitPrice > 0) {
-    price.textContent = `$${unitPrice.toFixed(2)} ea — $${lineTotal.toFixed(2)} total`;
-  } else {
-    price.textContent = `$${lineTotal.toFixed(2)}`;
-  }
-  cartItem.appendChild(price);
-
-  itemInCart.appendChild(cartItem);
-  output.appendChild(itemInCart); 
-  */
-
   calculateTotalsFromSavedData(saved);
-  //updateorderSummary();
 
-  /*
-
-  const playerPackLine = document.getElementById('playerPackLine');
-  const discLine = document.getElementById('discLine');
-  const customMerchLine = document.getElementById('customMerchLine');
-  const eventSuppliesLine = document.getElementById('eventSuppliesLine');
-  const subtotalLine = document.getElementById('subtotalLine');
-  const totalLine = document.getElementById('totalLine');
-
-  if (playerPackLine) {
-    playerPackLine.textContent = `Player Packs  $${playerPackTotal.toFixed(2)}`;
-  }
-  if (discLine) {
-    discLine.textContent = `Discs  $${discTotal.toFixed(2)}`;
-  }
-  if (customMerchLine) {
-    customMerchLine.textContent = `Custom Merchandise  $${customMerchTotal.toFixed(2)}`;
-  }
-  if (eventSuppliesLine) {
-    eventSuppliesLine.textContent = `Event Supplies  $${eventSuppliesTotal.toFixed(2)}`;
-  }
-  if (subtotalLine) {
-    subtotalLine.textContent = `Subtotal  $${grandTotal.toFixed(2)} (${totalItemsCount} items)`;
-  }
-  if (totalLine) {
-    totalLine.textContent = `Total  $${grandTotal.toFixed(2)}`;
-  }
-  */
   document.querySelectorAll('.cart-category').forEach((section) => {
     const header = section.querySelector('.cart-category-header');
     const items = section.querySelector('.cart-items');
@@ -243,7 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
 /* plugged in the checkout rendering calculation into a function 
 called calculateTotalsFromSavedDate() */
 
+/*
+*Function Calculate the total of each payment category in the users cart
+*@Param: String saved, a object string of the users cart
+*/
 function calculateTotalsFromSavedData(saved) {
+  console.log('inside calculate total')
+  console.log(typeof(saved));
+  console.log(saved);
   if (!saved) return;
 
   let items;
@@ -278,13 +176,6 @@ function calculateTotalsFromSavedData(saved) {
 
     const lineTotal = quantityVal * unitPrice;
 
-   /* const lineTotal =
-      data.totalPrice != null
-        ? Number(data.totalPrice)
-        : data.total != null
-        ? Number(data.total)
-        : quantityVal * unitPrice; */
-
     const paymentCategory = data.paymentCategory || 'event-supplies';
 
     grandTotal += lineTotal;
@@ -317,7 +208,8 @@ function calculateTotalsFromSavedData(saved) {
   const eventSuppliesLine = document.getElementById('eventSuppliesLine');
   const subtotalLine = document.getElementById('subtotalLine');
   const totalLine = document.getElementById('totalLine');
-
+  
+  //truthy statements to add text content to summary line of each payment category
   if (playerPackLine) {
     playerPackLine.textContent = `Player Packs $${playerPackTotal.toFixed(2)}`;
   }
@@ -366,4 +258,4 @@ function calculateTotalsFromSavedData(saved) {
   if (buyButton) {
     buyButton.disabled = totalItemsCount === 0;
   }
-}
+} // end of calculateTotalsFromSavedData

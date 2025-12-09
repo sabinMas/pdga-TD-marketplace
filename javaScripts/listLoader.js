@@ -1,3 +1,4 @@
+
 // --- Buttons (safe-guard if not found) ---
 const allOnlineBtn = document.getElementById('allOnline');
 const allLocalBtn  = document.getElementById('allLocal');
@@ -178,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // For each item, render the quantity input and radio options
   for (const item in items) {
-    console.log();
     const listItem = document.createElement('div');
     listItem.classList.add('item-details');
 
@@ -214,7 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     listItem.appendChild(wrapperDiv);
     listOutput.appendChild(listItem);
+    //end creating a single list item
   }
+  //end creatining all list items
 });
 
 // ================== MAP + LOCAL STORE SEARCH ==================
@@ -471,3 +473,4 @@ async function findNearbyStores(lat, lon, radiusMeters) {
     }
   });
 });
+// ================== END of map and local store search ==================
